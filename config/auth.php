@@ -46,6 +46,20 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        /**
+         * Custom guards
+         */
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+        'admin-api' => [
+            'driver' => 'token',
+            'provider' => 'admins',
+            'hash' => false,
+        ],
+
     ],
 
     /*
@@ -75,6 +89,14 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        /**
+         * Custom provicers
+         */
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
+        ],
     ],
 
     /*
@@ -98,6 +120,16 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
+
+        /**
+         * Custom password_resets
+         */
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+
     ],
 
 ];
