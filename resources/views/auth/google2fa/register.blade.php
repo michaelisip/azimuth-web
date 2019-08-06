@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Set up Google Authenticator</div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Set up Google Authenticator</div>
 
-                    <div class="panel-body" style="text-align: center;">
+                    <div class="card-body text-center">
                         <p>Set up your two factor authentication by scanning the barcode below. Alternatively, you can use the code {{ $secret }}</p>
                         <div>
                             <img src="{{ $QR_Image }}">

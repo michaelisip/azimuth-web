@@ -2,30 +2,22 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Register</div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Verification</div>
 
-                    <div class="panel-body">
+                    <div class="card-body">
                         <form class="form-horizontal" method="POST" action="{{ route('2fa') }}">
                             {{ csrf_field() }}
 
                             <div class="form-group">
-                                <label for="one_time_password" class="col-md-4 control-label">One Time Password</label>
+                                <label for="one_time_password">One Time Password</label>
+                                <input type="number" class="form-control" id="one_time_password" name="one_time_password" aria-describedby="otp_description" placeholder="Enter One Time Password">
 
-                                <div class="col-md-6">
-                                    <input id="one_time_password" type="number" class="form-control" name="one_time_password" required autofocus>
-                                </div>
+                                <small id="otp_description" class="form-text text-muted">Enter the digits from your Google Authenticator.</small>
                             </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Login
-                                    </button>
-                                </div>
-                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </form>
                     </div>
                 </div>
