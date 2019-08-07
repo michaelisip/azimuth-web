@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Artisan;
 
 class CreateUsersTable extends Migration
 {
@@ -21,12 +22,14 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('mobile')->nullable();
             $table->text('address')->nullable();
-            $table->string('city')->nullable();
-            $table->char('role')->nullable();
             $table->longText('google2fa_secret')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
+
+        // Run seeder
+        Artisan::call('db:seed --class=UsersSeeder');
     }
 
     /**

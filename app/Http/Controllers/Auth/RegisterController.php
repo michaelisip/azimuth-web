@@ -58,6 +58,8 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             // make password min:8 on production
             'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'mobile' => ['nullable', 'regex:^(09|\+639|9)\d{9}$'],
+            'address' => ['string', 'max:255']
         ]);
     }
 
