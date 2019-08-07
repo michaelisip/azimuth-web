@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Artisan;
 
 class CreateAdminsTable extends Migration
 {
@@ -22,6 +23,9 @@ class CreateAdminsTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        // Seed Admin Account
+        Artisan::call('db:seed --class=AdminSeeder');
     }
 
     /**

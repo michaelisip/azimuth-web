@@ -21,7 +21,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="/admin" class="nav-link active">
+                    <a href="/admin" class="nav-link @if(Route::currentRouteName() == 'admin.dashboard') active @endif">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p> Dashboard </p>
                     </a>
@@ -30,7 +30,7 @@
                 {{-- Students --}}
                 <li class="nav-header">STUDENTS</li>
                 <li class="nav-item">
-                    <a href="pages/calendar.html" class="nav-link">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link @if(Route::currentRouteName() == 'admin.users.index') active @endif"">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             All Students

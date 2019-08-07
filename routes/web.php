@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\PreventUserFromAdminAccess;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,30 +13,54 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+/**
+ *  User Routes
+ */
+
+Route::group(['prefix' => ''], function () {
+
+    Route::view('', 'welcome');
+
+    // Authentication
+    Auth::routes();
+    Route::get('/complete-registration', 'Auth\RegisterController@completeRegistration');
+    Route::group(['middleware' => ['2fa']], function () {
+        Route::post('2fa', function () {
+            return redirect(URL()->previous());
+        })->name('2fa');
+    });
+
+    Route::get('/home', 'HomeController@index')->name('home');
+    
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/complete-registration', 'Auth\RegisterController@completeRegistration');
-
-Route::post('/2fa', function () {
-    return redirect(URL()->previous());
-})->name('2fa')->middleware('2fa');
-
-Route::post('/complete-registration', 'Auth\RegisterController@completeRegistration');
+/**
+ * Admin Routes
+ */
 
 Route::name('admin.')->group(function(){
-    Route::group(['prefix' => 'admin/'], function () {
+    Route::group(['prefix' => 'admin'], function () {
+        Route::namespace('Admin')->group(function () {
 
-        Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
+            // Authentication
+            Route::get('login', 'LoginController@showLoginForm')->name('login');
+            Route::post('login', 'LoginController@login')->name('login.submit');
+            Route::post('logout', 'LoginController@logout')->name('logout');
 
-        Route::get('login', 'Admin\LoginController@showLoginForm')->name('login');
-        Route::post('login', 'Admin\LoginController@login')->name('login.submit');
 
-        Route::get('logout', 'Admin\LoginController@logout')->name('logout');
+            // Admin Functions
+            Route::group(['middleware' => ['auth:admin']], function () {
+
+                Route::view('/', 'admin.index')->name('dashboard');
+
+                Route::resource('users', 'UsersController');
+                Route::post('users/import', 'UsersController@import')->name('users.import');
+
+                Route::view('quizzes', 'admin.quizzes.index')->name('quizzes');
+
+                Route::view('questions', 'admin.quizzes.questions')->name('questions');
+            });
+        });
     });
 });

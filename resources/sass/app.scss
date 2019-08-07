@@ -1,8 +1,11 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800&display=swap');
 
 // Variables
 @import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
 
 // Font Awesome
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
@@ -10,13 +13,11 @@
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 
 // Admin LTE
-@import "~admin-lte/dist/css/adminlte.min.css";
 @import "~admin-lte/plugins/iCheck/flat/blue.css";
 @import "~admin-lte/plugins/morris/morris.css";
 @import "~admin-lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css";
 @import "~admin-lte/plugins/daterangepicker/daterangepicker-bs3.css";
 @import "~admin-lte/plugins/datatables/dataTables.bootstrap4.css";
+@import "~admin-lte/dist/css/adminlte.min.css";
 // @import "~admin-lte/plugins/fontawesome-free/css/all.min.css";
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';

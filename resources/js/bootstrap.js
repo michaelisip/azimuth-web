@@ -14,6 +14,7 @@ try {
     require('jquery');
     require('admin-lte');
     require('bootstrap');
+    
 } catch (e) {}
 
 /**

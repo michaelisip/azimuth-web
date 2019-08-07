@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         PragmaRX\Google2FALaravel\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -231,6 +232,7 @@ return [
          * Packages
          */
         'Google2FA' => PragmaRX\Google2FALaravel\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

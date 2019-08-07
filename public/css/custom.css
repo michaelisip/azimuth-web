@@ -1,0 +1,29 @@
+@media (min-width: 480px) { 
+    .container {
+        min-width: 480px;
+    }
+ }
+
+@media (min-width: 736px) { 
+    .container {
+        min-width: 736px;
+    }
+ }
+
+@media (min-width: 980px) { 
+    .container {
+        min-width: 980px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        min-width: 1280px;
+    }
+}
+
+@media (min-width: 1690px) {
+    .container {
+        min-width: 1690px;
+    }
+}
