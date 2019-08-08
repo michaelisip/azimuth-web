@@ -14,12 +14,13 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
+        $password = 'password';
+
         User::create([
             'name' => 'User Azimuth',
             'email' => 'user@info.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'password' => Hash::make($password),
         ]);
 
         factory(App\User::class, 100)->create();

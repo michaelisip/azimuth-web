@@ -20,7 +20,8 @@ use App\Http\Middleware\PreventUserFromAdminAccess;
 
 Route::group(['prefix' => ''], function () {
 
-    Route::view('', 'welcome');
+    // Route::view('', 'welcome');
+    Route::redirect('', 'home');
 
     // Authentication
     Auth::routes();
