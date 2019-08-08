@@ -7,17 +7,21 @@
         {{-- Header --}}
         <section class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="d-inline align-middle mr-3"> Students </h1>
-                        <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addUser"> Add Student </button>
-                        <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importUsers">Import Students </button>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active"> Users </li>
-                        </ol>
+                <div class="card shadow-none border-0">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="d-inline align-middle mr-3"> <strong> Students </strong> </h1>
+                                <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addUser"> Add Student </button>
+                                <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importUsers">Import Students </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                                    <li class="breadcrumb-item active"> Users </li>
+                                </ol>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -25,54 +29,53 @@
 
         <!-- Main content -->
         <section class="content">
-            <div class="row">
-                <div class="col-12">
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Total number of students registered</h3>
-                        </div>
-                        <div class="card-body">
-                            <table id="table" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $key => $user)
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+    
+                        <div class="card shadow-none border-0">
+                            <div class="card-body">
+                                <table id="table" class="table table-bordered table-hover">
+                                    <thead>
                                         <tr>
-                                            <td>{{ ++$key }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-{{$user->id}}">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-{{$user->id}}">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-{{$user->id}}">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th></th>
                                         </tr>
-                                    @endforeach
-                                <tfoot>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th></th>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($users as $key => $user)
+                                            <tr>
+                                                <td>{{ ++$key }}</td>
+                                                <td>{{ $user->name }}</td>
+                                                <td>{{ $user->email }}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-{{$user->id}}">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-{{$user->id}}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-{{$user->id}}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    <tfoot>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
+    
                     </div>
-
                 </div>
             </div>
         </section>

@@ -23,7 +23,7 @@ class CreateQuizzesTable extends Migration
             $table->timestamps();
         });
 
-        factory(App\Quiz::class, 10)->create();
+        // seeding moved to questions migration
     }
 
     /**
