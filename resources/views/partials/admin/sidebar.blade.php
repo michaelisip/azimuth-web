@@ -42,13 +42,15 @@
                 {{-- Students --}}
                 <li class="nav-header">EXAMS</li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.quizzes.index') }}" class="nav-link @if(Route::currentRouteName() == 'admin.quizzes.index') active @endif">
+                    <a href="{{ route('admin.quizzes.index') }}" class="nav-link 
+                            @if(Route::currentRouteName() == 'admin.quizzes.index' 
+                                || Route::currentRouteName() == 'admin.questions.show') active @endif">
                         <i class="nav-icon fas fa-book"></i>
                         <p> All Quizzes </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/calendar.html" class="nav-link">
+                    <a href="{{ route('admin.questions.index', 'all') }}" class="nav-link @if(Route::currentRouteName() == 'admin.questions.index') active @endif">
                         <i class="nav-icon fas fa-question-circle"></i>
                         <p> All Questions </p>
                     </a>

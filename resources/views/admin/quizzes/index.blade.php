@@ -6,17 +6,21 @@
         {{-- Header --}}
         <section class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="d-inline align-middle mr-3"> Quizzes </h1>
-                        <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addQuiz"> Add Quiz </button>
-                        <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importQuizzes">Import Quizzes </button>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active"> Quizzes </li>
-                        </ol>
+                <div class="card shadow-none border-0">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="d-inline align-middle mr-3"> Quizzes </h1>
+                                <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addQuiz"> Add Quiz </button>
+                                <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importQuizzes">Import Quizzes </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                                    <li class="breadcrumb-item active"> Quizzes </li>
+                                </ol>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -24,39 +28,41 @@
 
         <!-- Main content -->
         <section class="content">
-            <div class="row">
-                <div class="col-12">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
 
-                    <div class="card shadow-none border-0">
-                        <div class="card-body">
+                        <div class="card shadow-none border-0">
+                            <div class="card-body">
 
-                            {{-- Quizzes cards --}}
-                            <div class="row justify-content-center">
-                                @foreach ($quizzes as $key => $quiz)
-                                    <div class="col-12 col-md-3 col-xl-4">
-                                        <div class="card border-0 rounded-lg shadow">
-                                            <div class="card-body">
-                                                <h6 class="card-subtitle mb-2 text-muted">{{ $quiz->timer }} minutes</h6>
-                                                <h5 class="card-title">{{ str_limit($quiz->title, 40) }}</h5>
-                                                <p class="card-text">
-                                                    @if (is_null($quiz->description))
-                                                        <em> No Description </em>
-                                                    @else
-                                                        {{ str_limit($quiz->description, 180) }}</p>
-                                                    @endif
-                                                <div class="card-link">
-                                                    <a href="#" class="btn btn-primary btn-sm px-4"> Edit Details </a>
-                                                    <a href="#" class="btn btn-outline-secondary btn-sm px-4"> Practice Mode </a>
+                                {{-- Quizzes cards --}}
+                                <div class="row justify-content-center">
+                                    @foreach ($quizzes as $key => $quiz)
+                                        <div class="col-12 col-md-3 col-xl-4">
+                                            <div class="card border-0 rounded-lg shadow">
+                                                <div class="card-body">
+                                                    <h6 class="card-subtitle mb-2 text-muted">{{ $quiz->timer }} minutes</h6>
+                                                    <h5 class="card-title">{{ str_limit($quiz->title, 40) }}</h5>
+                                                    <p class="card-text">
+                                                        @if (is_null($quiz->description))
+                                                            <em> No Description </em>
+                                                        @else
+                                                            {{ str_limit($quiz->description, 180) }}</p>
+                                                        @endif
+                                                    <div class="card-link">
+                                                        <a href="{{ route('admin.quizzes.show', $quiz->id) }}" class="btn btn-primary btn-sm px-4"> Edit Details </a>
+                                                        <a href="#" class="btn btn-outline-secondary btn-sm px-4"> Practice Mode </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
+
                             </div>
-
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </section>

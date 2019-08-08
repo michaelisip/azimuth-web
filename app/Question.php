@@ -5,9 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Quiz extends Model
+class Question extends Model
 {
-
     use SoftDeletes;
 
     /**
@@ -16,14 +15,14 @@ class Quiz extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'description', 'points_per_question', 'timer'
+        'question', 'a', 'b', 'c', 'd', 'answer', 'answer_explanation'
     ];
 
     /**
-     * Eloquent Relationships
+     * Eloquent Relationship
      */
-    public function questions()
+    public function quiz()
     {
-        return $this->hasMany(Question::class);
+        return $this->belongsTo(Quiz::class);
     }
 }

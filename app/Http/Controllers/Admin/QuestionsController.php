@@ -4,21 +4,36 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddNewQuestion;
 use App\Quiz;
-use App\Http\Requests\AddNewQuiz;
-use App\Imports\QuizzesImport;
+use App\Question;
+use App\Imports\QuestionsImport;
 use Maatwebsite\Excel\Facades\Excel;
 
-class QuizzesController extends Controller
+class QuestionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($quiz)
     {
-        return view('admin.quizzes.index', ['quizzes' => Quiz::all()]);
+        if($quiz == 'all') {
+            return view('admin.questions.index');
+        }
+
+        return redirect()->route('admin.questions.show');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -27,11 +42,14 @@ class QuizzesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddNewQuiz $request)
+    public function store(AddNewQuestion $request, $quiz)
     {
-        Quiz::create($request->all());
+        $question = new Question($request->all());
 
-        return back()->with('success', 'Successfull added quiz.');
+        $existingQuiz = Quiz::findOrFail($quiz);
+        $existingQuiz->questions()->save($question);
+
+        return back()->with('success', 'Successfully added question.');
     }
 
     /**
@@ -39,15 +57,15 @@ class QuizzesController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function import()
+    public function import($quiz)
     {
         try {
-            Excel::import(new QuizzesImport, request()->file('file'));
+            Excel::import(new QuestionsImport($quiz), request()->file('file'));
         } catch(\Maatwebsite\Excel\Validators\ValidationException $e){
             return back()->with('import', $e->failures());
         }
 
-        return back()->with('success', 'Successfully imported quizzes.');
+        return back()->with('success', 'Successfully imported quesitons.');
     }
 
     /**
@@ -58,7 +76,7 @@ class QuizzesController extends Controller
      */
     public function show($id)
     {
-        return view('admin.quizzes.questions', ['quiz' => Quiz::findOrFail($id) ]);
+        return view('admin.quizzes.questions');
     }
 
     /**
@@ -90,10 +108,10 @@ class QuizzesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($quiz, $id)
     {
-        Quiz::destroy($id);
+        Question::destroy($id);
 
-        return redirect()->route('admin.quizzes.index')->with('success', 'Successfully deleted quiz.');
+        return back()->with('success', 'Successfully deleted question.');
     }
 }

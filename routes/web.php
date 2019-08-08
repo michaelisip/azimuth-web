@@ -57,13 +57,14 @@ Route::name('admin.')->group(function(){
                 Route::resources([
                     'users' => 'UsersController',
                     'quizzes' => 'QuizzesController',
+                    'quizzes/{quiz}/questions' => 'QuestionsController',
                 ]);
 
                 // imports
                 Route::post('users/import', 'UsersController@import')->name('users.import');
                 Route::post('quizzes/import', 'QuizzesController@import')->name('quizzes.import');
+                Route::post('quizzes/{quiz}/questions/import', 'QuestionsController@import')->name('questions.import');
 
-                Route::view('questions', 'admin.quizzes.questions')->name('questions');
             });
         });
     });
