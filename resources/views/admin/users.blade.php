@@ -10,8 +10,8 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="d-inline align-middle mr-3"> Students </h1>
-                        <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addUser"> Add Students </button>
-                        <button class="btn btn-outline-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#importUsers">Import Students </button>
+                        <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addUser"> Add Student </button>
+                        <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importUsers">Import Students </button>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">

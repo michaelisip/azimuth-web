@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\User;
-use App\Http\Requests\AddNewUser;
+use App\Quiz;
+use App\Http\Requests\AddNewQuiz;
+use App\Imports\QuizzesImport;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\UsersImport;
-use App\Http\Requests\UpdateUser;
 
-class UsersController extends Controller
+class QuizzesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +18,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return view('admin.users', ['users' => User::all()]);
+        return view('admin.quizzes.index', ['quizzes' => Quiz::all()]);
     }
 
     /**
@@ -28,29 +27,29 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddNewUser $request)
+    public function store(AddNewQuiz $request)
     {
-        User::create($request->all());
+        Quiz::create($request->all());
 
-        return back()->with('success', 'User created successfully.');
+        return back()->with('success', 'Successfull added quiz.');
     }
 
     /**
      * Import data from an excel file
      * 
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function import()
+    public function import(Request $request)
     {
         try {
-            Excel::import(new UsersImport, request()->file('file'));
+            Excel::import(new QuizzesImport, request()->file('file'));
         } catch(\Maatwebsite\Excel\Validators\ValidationException $e){
             return back()->with('import', $e->failures());
         }
 
         return back()->with('success', 'Successfully imported students.');
     }
-
     /**
      * Display the specified resource.
      *
@@ -80,13 +79,9 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUser $request, $id)
+    public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-
-        $user->update($request->all());
-
-        return back()->with('sucess', 'Successfully updated user.');
+        //
     }
 
     /**
@@ -97,7 +92,6 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        User::destroy($id);
-        return back()->with('sucess', 'Successfully deleted user.');
+        //
     }
 }

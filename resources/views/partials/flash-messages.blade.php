@@ -32,7 +32,10 @@
         <div class="alert alert-danger alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>	
             @foreach ($messages as $message)
-                <strong>{{ $message }}</strong>
+                Error at row {{ $message->row() }}:
+                @foreach ($message->errors() as $error)
+                    <strong>{{ $error }}</strong> <br>
+                @endforeach
             @endforeach
         </div>
     @endif

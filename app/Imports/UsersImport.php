@@ -19,13 +19,26 @@ class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQu
     */
     public function model(array $row)
     {
+        /**
+         * this is for possible excel column names for each table column
+         * but unfortunately, this doesn't work because of the rules function
+         */
+        // return new User([
+        //     'name' => $row['name'] ?? $row['student_name'],
+        //     'email' => $row['email'] ?? $row['email_address'],
+        //     'password' => Hash::make('password'),
+        //     'mobile' => $row['mobile'] ?? $row['number'] ?? $row['phone_number'] ?? $row['mobile_phone'] ?? $row['mobile_number'] ?? NULL,
+        //     'address' => $row['address'] ?? $row['student_address'] ?? NULL,
+        // ]);
+
         return new User([
-            'name' => $row['name'] ?? $row['student_name'],
-            'email' => $row['email'] ?? $row['email_address'],
+            'name' => $row['name'],
+            'email' => $row['email'],
             'password' => Hash::make('password'),
-            'mobile' => $row['mobile'] ?? $row['number'] ?? $row['phone_number'] ?? $row['mobile_phone'] ?? $row['mobile_number'] ?? NULL,
-            'address' => $row['address'] ?? $row['student_address'] ?? NULL,
+            'mobile' => $row['mobile'] ?: NULL,
+            'address' => $row['address'] ?: NULL,
         ]);
+
     }
 
     /**
@@ -46,6 +59,20 @@ class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQu
             'email' => 'required|string|email|max:255|unique:users',
             'mobile' => ['nullable', 'regex:/^(09|\+639|9)\d{9}$/'],
             'address' => 'nullable|max:255'
+        ];
+    }
+
+    
+    /**
+     * @return array
+     */
+    public function customValidationAttributes()
+    {
+        return [
+            'name' => 'Full Name',
+            'email' => 'Email Address',
+            'mobile' => 'Mobile Number',
+            'address' => 'Address'
         ];
     }
 }
