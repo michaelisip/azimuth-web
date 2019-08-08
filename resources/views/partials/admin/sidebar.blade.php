@@ -30,7 +30,7 @@
                 {{-- Students --}}
                 <li class="nav-header">STUDENTS</li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.users.index') }}" class="nav-link @if(Route::currentRouteName() == 'admin.users.index') active @endif"">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link @if(Route::currentRouteName() == 'admin.users.index') active @endif">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             All Students
@@ -42,7 +42,7 @@
                 {{-- Students --}}
                 <li class="nav-header">EXAMS</li>
                 <li class="nav-item">
-                    <a href="pages/calendar.html" class="nav-link">
+                    <a href="{{ route('admin.quizzes.index') }}" class="nav-link @if(Route::currentRouteName() == 'admin.quizzes.index') active @endif">
                         <i class="nav-icon fas fa-book"></i>
                         <p> All Quizzes </p>
                     </a>

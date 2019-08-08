@@ -49,16 +49,19 @@ Route::name('admin.')->group(function(){
             Route::post('login', 'LoginController@login')->name('login.submit');
             Route::post('logout', 'LoginController@logout')->name('logout');
 
-
             // Admin Functions
             Route::group(['middleware' => ['auth:admin']], function () {
 
                 Route::view('/', 'admin.index')->name('dashboard');
 
-                Route::resource('users', 'UsersController');
-                Route::post('users/import', 'UsersController@import')->name('users.import');
+                Route::resources([
+                    'users' => 'UsersController',
+                    'quizzes' => 'QuizzesController',
+                ]);
 
-                Route::view('quizzes', 'admin.quizzes.index')->name('quizzes');
+                // imports
+                Route::post('users/import', 'UsersController@import')->name('users.import');
+                Route::post('quizzes/import', 'QuizzesController@import')->name('quizzes.import');
 
                 Route::view('questions', 'admin.quizzes.questions')->name('questions');
             });
