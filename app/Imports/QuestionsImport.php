@@ -27,6 +27,15 @@ class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, Shou
     */
     public function model(array $row)
     {
+
+        /**
+         * Stop import on last row, 
+         * package has bug where it still tries to import the last row
+         */
+        if(is_null($row)){
+            return;
+        }
+
         $question = new Question([
             'question' => $row['question'],
             'a' => $row['a'],

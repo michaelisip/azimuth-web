@@ -16,9 +16,9 @@ class UsersSeeder extends Seeder
     {
         $password = 'password';
 
-        User::create([
+        $user = User::firstOrCreate([
+            'email' => 'user@info.com'],[
             'name' => 'User Azimuth',
-            'email' => 'user@info.com',
             'email_verified_at' => now(),
             'password' => Hash::make($password),
         ]);

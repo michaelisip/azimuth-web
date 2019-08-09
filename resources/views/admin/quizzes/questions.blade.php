@@ -10,10 +10,10 @@
                 <div class="card shadow-none border-0">
                     <div class="card-body">
                         <div class="row mb-2">
-                            <div class="col-sm-6">
+                            <div class="col-8 col-lg-10">
                                 <h1 class="d-inline align-middle mr-3"> Quiz - {{ $quiz->title }} </h1>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-4 col-lg-2">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                                     <li class="breadcrumb-item"><a href="{{ route('admin.quizzes.index') }}"></a> Quizzes </li>
@@ -45,26 +45,26 @@
                                 <hr>
                                 <form>
                                     <div class="form-group row">
-                                        <label for="title" class="col-sm-3 col-form-label">Title</label>
-                                        <div class="col-sm-9">
+                                        <label for="title" class="col-12 col-form-label">Title</label>
+                                        <div class="col-12">
                                         <input type="text" readonly class="form-control-plaintext" id="title" value="{{ $quiz->title }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="description" class="col-sm-3 col-form-label">Description</label>
-                                        <div class="col-sm-9">
-                                        <textarea readonly class="form-control-plaintext" id="description" rows="8">{{$quiz->description}}</textarea>
+                                        <label for="description" class="col-12 col-form-label">Description</label>
+                                        <div class="col-12">
+                                        <textarea readonly class="form-control-plaintext" id="description" rows="4">{{$quiz->description}}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="points_per_question" class="col-sm-3 col-form-label">Points Per Question</label>
-                                        <div class="col-sm-9">
+                                        <label for="points_per_question" class="col-12 col-form-label">Points Per Question</label>
+                                        <div class="col-12">
                                         <input type="text" readonly class="form-control-plaintext" id="points_per_question" value="{{ $quiz->points_per_question }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="timer" class="col-sm-3 col-form-label">Timer</label>
-                                        <div class="col-sm-9">
+                                        <label for="timer" class="col-12 col-form-label">Timer</label>
+                                        <div class="col-12">
                                         <input type="text" readonly class="form-control-plaintext" id="timer" value="{{ $quiz->timer }}">
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@
                                     <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importQuestions">Import Questions </button>
                                 </div>
                                 <hr>
-                                <table id="table" class="table table-bordered table-hover">
+                                <table id="table" class="table table-responsive table-striped table-hover">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -235,8 +235,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="answer">Answer</label>
-                                <select class="custom-select mr-sm-2" name="answer" id="answer">
-                                    <option selected disabled>Choose...</option>
+                                <select class="custom-select mr-sm-2" name="answer" id="answer" required>
+                                    <option value="" selected disabled hidden>Choose...</option>
                                     <option value="a">Choice A</option>
                                     <option value="b">Choice B</option>
                                     <option value="c">Choice C</option>
@@ -277,9 +277,10 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mb-3">
+                            <label for="file">File</label>
                             <div class="custom-file">
                                 <label class="custom-file-label" for="file">Choose file</label>
-                                <input type="file" class="custom-file-input" id="file" name="file">
+                                <input type="file" class="custom-file-input" id="file" name="file" required>
                             </div>
                         </div>
                         <p class="muted"> Please read the <a href="">import guides.</a> </p>
@@ -312,6 +313,98 @@
             </div>
         </div>
 
+        {{-- Edit --}}
+        <div class="modal fade" id="edit-{{ $quizQuestion->id }}" tabindex="-1" role="dialog" aria-labelledby="editQuestionLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editQuestionLabel"><strong> Edit Question </strong></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" action="{{ route('admin.questions.update', [$quiz->id, $quizQuestion->id]) }}">
+                        @method('PUT')
+                        @csrf
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="question">Question</label>
+                                <input type="text" class="form-control @error('question') is-invalid @enderror" id="question" name="question" value="{{ $quizQuestion->question }}" placeholder="Question" autocomplete="question" required autofocus>
+                                @error('question')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="a">Choice A</label>
+                                    <input type="text" class="form-control @error('a') is-invalid @enderror" id="a" name="a" value="{{ $quizQuestion->a }}" autocomplete="a" placeholder="Choice A" required>
+                                    @error('a')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="b">Choice B</label>
+                                    <input type="text" class="form-control @error('b') is-invalid @enderror" id="b" name="b" value="{{ $quizQuestion->b }}" autocomplete="b" placeholder="Choice B" required>
+                                    @error('b')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="c">Choice C</label>
+                                    <input type="text" class="form-control @error('c') is-invalid @enderror" id="c" name="c" value="{{ $quizQuestion->c }}" autocomplete="c" placeholder="Choice C" required>
+                                    @error('c')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="d">Choice D</label>
+                                    <input type="text" class="form-control @error('d') is-invalid @enderror" id="d" name="d" value="{{ $quizQuestion->d }}" autocomplete="d" placeholder="Choice D" required>
+                                    @error('d')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="answer">Answer</label>
+                                    <select class="custom-select mr-sm-2" name="answer" id="answer" required>
+                                        <option value="a" @if ($quizQuestion->answer == 'a') selected @endif>Choice A</option>
+                                        <option value="b" @if ($quizQuestion->answer == 'b') selected @endif>Choice B</option>
+                                        <option value="c" @if ($quizQuestion->answer == 'c') selected @endif>Choice C</option>
+                                        <option value="d" @if ($quizQuestion->answer == 'd') selected @endif>Choice D</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label for="answer_explanation">Answer Explanation</label>
+                                    <textarea class="form-control @error('answer_explanation') is-invalid @enderror" id="answer_explanation" name="answer_explanation" autocomplete="answer_explanation" placeholder="Answer Explanation" rows="5" style="resize: none;">{{ $question->answer_explanation }}</textarea>
+                                    @error('answer_explanation')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary px-5 py-1" id="addQuestionSubmit">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         {{-- Delete --}}
         <div class="modal fade" id="delete-{{ $quizQuestion->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteQuestionLabel" aria-hidden="true">

@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AddNewQuestion;
 use App\Quiz;
 use App\Question;
 use App\Imports\QuestionsImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Requests\AddUpdateQuestion;
 
 class QuestionsController extends Controller
 {
@@ -20,7 +20,9 @@ class QuestionsController extends Controller
     public function index($quiz)
     {
         if($quiz == 'all') {
-            return view('admin.questions.index');
+            return view('admin.questions.index' , [
+                'questions' => Question::all(),
+                'quizzes' => Quiz::select(['title', 'id'])->get()]);
         }
 
         return redirect()->route('admin.questions.show');
@@ -42,9 +44,17 @@ class QuestionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddNewQuestion $request, $quiz)
+    public function store(AddUpdateQuestion $request, $quiz)
     {
         $question = new Question($request->all());
+
+        /**
+         * TO DO: Refactor this from the questions.index blade
+         * I couldn't pass the quiz id parameter to route action so I just used the quiz_id from form select
+         */
+        if (strpos(url()->previous(), 'all') && isset($request->quiz_id)) {
+            $quiz = $request->quiz_id;
+        }
 
         $existingQuiz = Quiz::findOrFail($quiz);
         $existingQuiz->questions()->save($question);
@@ -57,8 +67,17 @@ class QuestionsController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function import($quiz)
+    public function import(Request $request, $quiz)
     {
+
+        /**
+         * TO DO: Refactor this from the questions.index blade
+         * I couldn't pass the quiz id parameter to route action so I just used the quiz_id from form select
+         */
+        if (strpos(url()->previous(), 'all') && isset($request->quiz_id)) {
+            $quiz = $request->quiz_id;
+        }
+
         try {
             Excel::import(new QuestionsImport($quiz), request()->file('file'));
         } catch(\Maatwebsite\Excel\Validators\ValidationException $e){
@@ -80,26 +99,16 @@ class QuestionsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AddUpdateQuestion $request, $id)
     {
-        //
+        Question::findOrFail($id)->update($request->all());
+        return back()->with('success', 'Successfully updated question.');
     }
 
     /**

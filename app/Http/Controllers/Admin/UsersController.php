@@ -86,7 +86,7 @@ class UsersController extends Controller
 
         $user->update($request->all());
 
-        return back()->with('sucess', 'Successfully updated user.');
+        return back()->with('success', 'Successfully updated user.');
     }
 
     /**
@@ -98,6 +98,6 @@ class UsersController extends Controller
     public function destroy($id)
     {
         User::destroy($id);
-        return back()->with('sucess', 'Successfully deleted user.');
+        return back()->with('success', 'Successfully deleted user.');
     }
 }

@@ -26,4 +26,18 @@ class Quiz extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    /**
+   * Override parent boot and Call deleting event
+   *
+   * @return void
+   */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($instance) {
+            $instance->questions->each->delete();
+        });
+    }
 }

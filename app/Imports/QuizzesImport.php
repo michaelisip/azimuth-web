@@ -29,6 +29,15 @@ class QuizzesImport implements ToModel, WithHeadingRow, WithChunkReading, Should
         //     'timer' => $row['timer'] ?? $row['quiz_timer'] ?? $row['total_timer'] ?? null,
         // ]);
 
+        /**
+         * Stop import on last row, 
+         * package has bug where it still tries to import the last row
+         */
+        if(is_null($row)){
+            return;
+        }
+
+
         return new Quiz([
             'title' => $row['title'],
             'description' => $row['description'] ?: NULL,

@@ -44,7 +44,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.quizzes.index') }}" class="nav-link 
                             @if(Route::currentRouteName() == 'admin.quizzes.index' 
-                                || Route::currentRouteName() == 'admin.questions.show') active @endif">
+                                || Route::currentRouteName() == 'admin.quizzes.show') active @endif">
                         <i class="nav-icon fas fa-book"></i>
                         <p> All Quizzes </p>
                     </a>

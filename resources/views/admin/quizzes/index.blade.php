@@ -9,12 +9,12 @@
                 <div class="card shadow-none border-0">
                     <div class="card-body">
                         <div class="row mb-2">
-                            <div class="col-sm-6">
+                            <div class="col-8 col-lg-10">
                                 <h1 class="d-inline align-middle mr-3"> Quizzes </h1>
                                 <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addQuiz"> Add Quiz </button>
                                 <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importQuizzes">Import Quizzes </button>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-4 col-lg-2">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                                     <li class="breadcrumb-item active"> Quizzes </li>
@@ -38,7 +38,7 @@
                                 {{-- Quizzes cards --}}
                                 <div class="row justify-content-center">
                                     @foreach ($quizzes as $key => $quiz)
-                                        <div class="col-12 col-md-3 col-xl-4">
+                                        <div class="col-12 col-lg-3 col-xl-4">
                                             <div class="card border-0 rounded-lg shadow">
                                                 <div class="card-body">
                                                     <h6 class="card-subtitle mb-2 text-muted">{{ $quiz->timer }} minutes</h6>
@@ -146,9 +146,10 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mb-3">
+                            <label for="file">File</label>
                             <div class="custom-file">
                                 <label class="custom-file-label" for="file">Choose file</label>
-                                <input type="file" class="custom-file-input" id="file" name="file">
+                                <input type="file" class="custom-file-input" id="file" name="file" required>
                             </div>
                         </div>
                         <p class="muted"> Please read the <a href="">import guides.</a> </p>

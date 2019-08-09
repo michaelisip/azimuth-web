@@ -58,18 +58,10 @@ class QuizzesController extends Controller
      */
     public function show($id)
     {
-        return view('admin.quizzes.questions', ['quiz' => Quiz::findOrFail($id) ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('admin.quizzes.questions', [
+            'quiz' => Quiz::findOrFail($id),
+            'quizzes' => Quiz::select(['title', 'id'])->get()
+            ]);
     }
 
     /**
@@ -81,7 +73,9 @@ class QuizzesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Quiz::findOrFail($id)->update($request->all());
+
+        return back()->with('success', 'Successfully updated quiz');
     }
 
     /**

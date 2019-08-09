@@ -10,12 +10,12 @@
                 <div class="card shadow-none border-0">
                     <div class="card-body">
                         <div class="row mb-2">
-                            <div class="col-sm-6">
+                            <div class="col-8 col-lg-10">
                                 <h1 class="d-inline align-middle mr-3"> <strong> Students </strong> </h1>
                                 <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addUser"> Add Student </button>
                                 <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importUsers">Import Students </button>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-4 col-lg-2">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                                     <li class="breadcrumb-item active"> Users </li>
@@ -35,12 +35,14 @@
     
                         <div class="card shadow-none border-0">
                             <div class="card-body">
-                                <table id="table" class="table table-bordered table-hover">
+                                <table id="table" class="table table-striped table-hover">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>Address</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -50,6 +52,8 @@
                                                 <td>{{ ++$key }}</td>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
+                                                <td>{{ $user->mobile ?: 'No Mobile Number Saved' }}</td>
+                                                <td>{{ $user->address ? str_limit($user->address, 200) : 'No Address Saved' }}</td>
                                                 <td>
                                                     <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-{{$user->id}}">
                                                         <i class="fas fa-eye"></i>
@@ -68,6 +72,8 @@
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>Address</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
@@ -99,7 +105,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" autocomplete="name" required autofocus>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" autocomplete="name" placeholder="Name" required autofocus>
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -179,9 +185,10 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mb-3">
+                            <label for="file">File</label>
                             <div class="custom-file">
                                 <label class="custom-file-label" for="file">Choose file</label>
-                                <input type="file" class="custom-file-input" id="file" name="file">
+                                <input type="file" class="custom-file-input" id="file" name="file" required>
                             </div>
                         </div>
                         <p class="muted"> Please read the <a href="">import guides.</a> </p>

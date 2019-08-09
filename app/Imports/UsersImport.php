@@ -31,6 +31,14 @@ class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQu
         //     'address' => $row['address'] ?? $row['student_address'] ?? NULL,
         // ]);
 
+        /**
+         * Stop import on last row, 
+         * package has bug where it still tries to import the last row
+         */
+        if(is_null($row)){
+            return;
+        }
+
         return new User([
             'name' => $row['name'],
             'email' => $row['email'],
