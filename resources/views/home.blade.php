@@ -31,24 +31,23 @@
                         <h1 class="font-weight-bolder"> Quizzes </h1>
                         <hr>
                         <div class="row justify-content-center">
-                            @for ($i = 0; $i < 5; $i++)
+                            @foreach ($quizzes as $quiz)
                                 <div class="col-12 col-md-6">
                                     <div class="card rounded bg-white border-0 shadow p-2">
                                         <div class="card-body">
                                             <div class="d-flex w-100 justify-content-between">
-                                                <h4 class="font-weight-bold"> Quiz Title </h4>
+                                                <h4 class="font-weight-bold"> {{ $quiz->title }} </h4>
                                                 <p>
-                                                    <span class="badge badge-primary badge-pill px-3 py-1">14</span>
-                                                    <span class="badge badge-danger badge-pill px-3 py-1">14</span>
+                                                    <span class="badge badge-secondary badge-pill px-3 py-1 ml-1">{{ $quiz->questions->count() }} Questions </span>
                                                 </p>
                                             </div>
-                                            <p class="card-text"> {{ str_limit('Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dignissimos amet a eligendi numquam, 
-                                                        culpa ducimus iste nostrum, obcaecati fuga consequatur tenetur eius, voluptas modi magni eveniet totam minima dolorem quia.', 100) }}</p>
+                                            <p class="card-text"> {{ $quiz->description ? str_limit($quiz->description, 100) : 'No Description' }}</p>
                                             <a href="#" class="btn btn-sm btn-primary px-4">Go somewhere &nbsp;<i class="fas fa-arrow-right"></i> </a>
+                                            <a href="{{ route('practice-mode', $quiz->id) }}" class="btn btn-sm btn-outline-secondary px-4">Practice Mode </a>
                                         </div>
                                     </div>
                                 </div>
-                            @endfor
+                            @endforeach
                         </div>
                     </div>
                 </div>
