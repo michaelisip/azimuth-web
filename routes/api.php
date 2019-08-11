@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
+
+Route::get('users/me', 'API\UserController@me')->name('me');
+Route::resource('users', 'API\UserController', ['only' => ['update']]);
+
+Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
