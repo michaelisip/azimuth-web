@@ -51,6 +51,9 @@ Route::group(['prefix' => ''], function () {
      */
     Route::get('/quiz/{quiz}/score', 'QuizController@score')->name('score');
 
+    // Profile
+    Route::get('profile', 'ProfileController@index')->name('profile');
+
 });
 
 
