@@ -38,6 +38,8 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            'cors',
+			'signature:X-Application-Name',
             'throttle:60,1',
             'bindings',
         ],
@@ -65,6 +67,12 @@ class Kernel extends HttpKernel
          * Packages
          */
         '2fa' => \PragmaRX\Google2FALaravel\Middleware::class,
+
+        /**
+         * API
+         */
+        'cors' => \Barryvdh\Cors\HandleCors::class,
+        'signature' => \App\Http\Middleware\SignatureMiddleware::class,
     ];
 
     /**
