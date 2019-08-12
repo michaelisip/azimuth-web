@@ -28,6 +28,8 @@
         "admin-lte": "^3.0.0-alpha.2",
         "datatables.net": "^1.10.19",
         "datatables.net-dt": "^1.10.19",
-        "icheck-bootstrap": "^3.0.1"
+        "icheck-bootstrap": "^3.0.1",
+        "jquery-countdown": "^2.2.0",
+        "sweetalert2": "^8.15.3"
     }
 }

@@ -51,7 +51,7 @@
                                                         @endif
                                                     <div class="card-link">
                                                         <a href="{{ route('admin.quizzes.show', $quiz->id) }}" class="btn btn-primary btn-sm px-4"> Edit Details </a>
-                                                        <a href="{{ route('practice-mode', $quiz->id) }}" class="btn btn-outline-secondary btn-sm px-4"> Practice Mode </a>
+                                                        <a href="" class="btn btn-outline-secondary btn-sm px-4"> Practice Mode </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -162,6 +162,6 @@
             </div>
         </div>
     </div>
-        
+
 
 @endsection

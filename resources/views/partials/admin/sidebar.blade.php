@@ -42,8 +42,8 @@
                 {{-- Students --}}
                 <li class="nav-header">EXAMS</li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.quizzes.index') }}" class="nav-link 
-                            @if(Route::currentRouteName() == 'admin.quizzes.index' 
+                    <a href="{{ route('admin.quizzes.index') }}" class="nav-link
+                            @if(Route::currentRouteName() == 'admin.quizzes.index'
                                 || Route::currentRouteName() == 'admin.quizzes.show') active @endif">
                         <i class="nav-icon fas fa-book"></i>
                         <p> All Quizzes </p>
@@ -59,13 +59,13 @@
                 {{-- Reports --}}
                 <li class="nav-header">REPORTS</li>
                 <li class="nav-item">
-                    <a href="pages/calendar.html" class="nav-link">
+                    <a href="{{ route('admin.reports.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-clipboard-list"></i>
                         <p> Student Reports </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/calendar.html" class="nav-link">
+                    <a href="{{ route('admin.reports.top-students') }}" class="nav-link">
                         <i class="nav-icon fas fa-award"></i>
                         <p> Top Students </p>
                     </a>

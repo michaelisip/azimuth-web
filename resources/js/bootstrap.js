@@ -14,7 +14,9 @@ try {
     require('jquery');
     require('admin-lte');
     require('bootstrap');
-    
+    require('jquery-countdown');
+    require('sweetalert2')
+
 } catch (e) {}
 
 /**

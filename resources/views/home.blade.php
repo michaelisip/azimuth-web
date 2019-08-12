@@ -42,8 +42,12 @@
                                                 </p>
                                             </div>
                                             <p class="card-text"> {{ $quiz->description ? str_limit($quiz->description, 100) : 'No Description' }}</p>
-                                            <a href="#" class="btn btn-sm btn-primary px-4">Go somewhere &nbsp;<i class="fas fa-arrow-right"></i> </a>
-                                            <a href="{{ route('practice-mode', $quiz->id) }}" class="btn btn-sm btn-outline-secondary px-4">Practice Mode </a>
+                                            @if (Auth::user()->quizAnswered($quiz->id))
+                                                <a href="{{ route('score', $quiz->id) }}" class="btn btn-sm btn-success px-4"> See Result &nbsp; <i class="fas fa-arrow-right"></i></a>
+                                            @else
+                                                <a href="{{ route('quiz', $quiz->id) }}" class="btn btn-sm btn-primary px-4">Take Quiz &nbsp; <i class="fas fa-arrow-right"></i></a>
+                                            @endif
+                                                <a href="{{ route('practice-mode', $quiz->id) }}" class="btn btn-sm btn-outline-secondary px-4">Practice Mode </a>
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +81,7 @@
                 </div>
             </div>
         </div>
-    
+
     </div>
 </div>
 @endsection

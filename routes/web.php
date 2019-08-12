@@ -34,15 +34,31 @@ Route::group(['prefix' => ''], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::get('/quiz/{quiz}/practice-mode', 'HomeController@practiceMode')->name('practice-mode');
-    Route::post('/quiz/practice-mode/question/check', 'HomeController@check')->name('check');
+    /**
+     * Practice Mode
+     */
+    Route::get('/quiz/{quiz}/practice-mode', 'PracticeController@index')->name('practice-mode');
+    Route::post('/quiz/practice-mode/question/check', 'PracticeController@check')->name('check');
+
+    /**
+     * Quiz
+     */
+    Route::get('/quiz/{quiz}', 'QuizController@index')->name('quiz');
+    Route::post('/quiz/question/check', 'QuizController@check')->name('answer');
+
+    /**
+     * Results
+     */
+    Route::get('/quiz/{quiz}/score', 'QuizController@score')->name('score');
 
 });
+
+
+// ==================================================================================
 
 /**
  * Admin Routes
  */
-
 Route::name('admin.')->group(function(){
     Route::group(['prefix' => 'admin'], function () {
         Route::namespace('Admin')->group(function () {
@@ -68,6 +84,11 @@ Route::name('admin.')->group(function(){
                 Route::post('quizzes/import', 'QuizzesController@import')->name('quizzes.import');
                 Route::post('quizzes/{quiz}/questions/import', 'QuestionsController@import')->name('questions.import');
 
+                // Reports
+                Route::name('reports.')->group(function(){
+                    Route::view('reports', 'admin.reports.students')->name('index');
+                    Route::view('reports/top-students', 'admin.reports.top-students')->name('top-students');
+                });
             });
         });
     });
