@@ -8,16 +8,22 @@
 @import '~bootstrap/scss/bootstrap';
 
 // Font Awesome
-@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "~@fortawesome/fontawesome-free/scss/solid.scss";
-@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
+// Ionicons
+@import "~ionicons-npm/css/ionicons.min.css";
+
+// Tempusdominus Bootstrap 4
+@import "~tempusdominus-bootstrap-4/src/sass/_tempusdominus-bootstrap-4.scss";
+
+// Icheck Bootstap
+@import "~icheck-bootstrap/icheck-bootstrap.min.css";
+
+// JQVMap
+@import "~jqvmap/dist/jqvmap.min.css";
 
 // Admin LTE
-@import "~admin-lte/plugins/iCheck/flat/blue.css";
-@import "~admin-lte/plugins/morris/morris.css";
-@import "~admin-lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css";
-@import "~admin-lte/plugins/daterangepicker/daterangepicker-bs3.css";
-@import "~admin-lte/plugins/datatables/dataTables.bootstrap4.css";
 @import "~admin-lte/dist/css/adminlte.min.css";
-// @import "~admin-lte/plugins/fontawesome-free/css/all.min.css";
 
+// Datatables
+@import "~datatables.net-bs4/css/dataTables.bootstrap4.min.css";

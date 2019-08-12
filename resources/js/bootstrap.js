@@ -10,10 +10,13 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
-    require('datatables.net');
-    require('jquery');
-    require('admin-lte');
+    require('jquery-ui');
     require('bootstrap');
+    require('datatables.net-bs4');
+    require('chart.js');
+    require('jqvmap');
+    require('tempusdominus-bootstrap-4');
+    require('admin-lte');
     require('jquery-countdown');
     require('sweetalert2')
 
