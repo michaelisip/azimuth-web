@@ -33,7 +33,10 @@ Route::group(['prefix' => ''], function () {
     });
 
     Route::get('/home', 'HomeController@index')->name('home');
-    
+
+    Route::get('/quiz/{quiz}/practice-mode', 'HomeController@practiceMode')->name('practice-mode');
+    Route::post('/quiz/practice-mode/question/check', 'HomeController@check')->name('check');
+
 });
 
 /**
