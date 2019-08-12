@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', '2fa']);
+        $this->middleware('auth');
     }
 
     /**
@@ -28,22 +28,4 @@ class HomeController extends Controller
         return view('home', ['quizzes' => Quiz::with('questions')->get()]);
     }
 
-    public function practiceMode($quiz)
-    {
-        return view('user.practice_mode', ['quiz' => Quiz::findOrFail($quiz)]);
-    }
-
-    public function check(Request $request)
-    {
-
-        $correct = Question::where([
-            'quiz_id' => $request->quiz_id,
-            'id' => $request->question_id])->value('answer');
-
-        if ($correct == $request->student_answer) {
-            return response()->json(['result' => 'correct']);
-        }
-
-        return response()->json(['result' => 'wrong']);
-    }
 }

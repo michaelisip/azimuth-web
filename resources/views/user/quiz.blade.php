@@ -23,19 +23,19 @@
                                         <input type="hidden" name="question_id" value="{{ $question->id }}">
                                         <div class="choices">
                                             <div class="custom-control custom-radio my-3">
-                                                <input type="radio" value="a" id="a-{{$key}}" name="student_answer" class="custom-control-input">
+                                                <input type="radio" value="a" id="a-{{$key}}" name="student_answer" class="custom-control-input" required>
                                                 <label class="custom-control-label font-weight-bold" for="a-{{$key}}">{{ $question->a }}</label>
                                             </div>
                                             <div class="custom-control custom-radio my-3">
-                                                <input type="radio" value="b" id="b-{{$key+1}}" name="student_answer" class="custom-control-input">
+                                                <input type="radio" value="b" id="b-{{$key+1}}" name="student_answer" class="custom-control-input" required>
                                                 <label class="custom-control-label font-weight-bold" for="b-{{$key+1}}">{{ $question->b }}</label>
                                             </div>
                                             <div class="custom-control custom-radio my-3">
-                                                <input type="radio" value="c" id="c-{{$key+2}}" name="student_answer" class="custom-control-input">
+                                                <input type="radio" value="c" id="c-{{$key+2}}" name="student_answer" class="custom-control-input" required>
                                                 <label class="custom-control-label font-weight-bold" for="c-{{$key+2}}">{{ $question->c }}</label>
                                             </div>
                                             <div class="custom-control custom-radio my-3">
-                                                <input type="radio" value="d" id="d-{{$key+3}}" name="student_answer" class="custom-control-input">
+                                                <input type="radio" value="d" id="d-{{$key+3}}" name="student_answer" class="custom-control-input" required>
                                                 <label class="custom-control-label font-weight-bold" for="d-{{$key+3}}">{{ $question->d }}</label>
                                             </div>
                                         </div>
@@ -46,14 +46,20 @@
                                         </div>
                                     </form>
                                 @endforeach
-
-                                <div class="finished text-center my-5 d-none">
-                                    <h1><strong> Practice Finished </strong></h1>
-                                    <p>Are you ready to take the quiz?</p>
-                                    <a href="{{ route('quiz', $quiz->id) }}" class="btn btn-primary mx-auto"> Take Quiz </a>
-                                    <a href="{{ route('home') }}" class="btn btn-outline-secondary mx-auto"> Go Home </a>
-                                </div>
                             </div>
+                            <div class="times-up text-center my-5 d-none">
+                                <h1 class="font-weight-bold mb-3"> Time is up! </h1>
+                                <p>That's okay! Study harder next time.</p>
+                                <a href="{{ route('score', $quiz->id) }}" class="btn btn-primary px-4"> See Result &nbsp; <i class="fas fa-arrow-right"></i> </a>
+                                <a href="{{ route('home') }}" class="btn btn-outline-secondary px-4"> Go Home </a>
+                            </div>
+                            <div class="finished text-center my-5 d-none">
+                                <h1 class="font-weight-bold mb-3"> Finished! </h1>
+                                <p>Wow! You really must have been studying hard.</p>
+                                <a href="{{ route('score', $quiz->id) }}" class="btn btn-primary px-4"> See Result &nbsp; <i class="fas fa-arrow-right"></i> </a>
+                                <a href="{{ route('home') }}" class="btn btn-outline-secondary px-4"> Go Home </a>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -67,7 +73,9 @@
                             <h2 class="font-weight-bolder"> {{ $quiz->title }} </h2>
                             <p> {{ $quiz->description ?: 'No Description'}} </p>
                             <hr>
-                            <h3 class="text-center"><span class="badge badge-primary px-5 py-2">Practice Mode</span></h3>
+                            <div class="countdown text-center my-5">
+                                <h1 class="font-weight-bolder" id="clock"></h1>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,11 +88,23 @@
 
 @section('scripts')
     <script src="{{ asset('js/app.js') }}"></script>
+
     <script>
+
+        // function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
+
+        // window.onbeforeunload = function(e) {
+        //     e.preventDefault()
+        // }
+
         $(document).ready(function(){
+
+            // $(document).on("keydown", disableF5);
+
             $("#questions").children().first().addClass("active")
             $("#questions").children().first().removeClass("d-none")
 
+            startTimer()
 
             $.ajaxSetup({
                 headers: {
@@ -101,7 +121,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '/quiz/practice-mode/question/check',
+                    url: '/quiz/question/check',
                     data: {
                         quiz_id: quiz_id,
                         question_id: question_id,
@@ -109,22 +129,46 @@
                     },
                     success: function(data){
                         console.log(data.result)
-                        if (data.result == 'wrong') {
-                            wrongAnswer()
-                        } else {
-                            nextQuestion()
-                        }
                     }
                 })
+
+                nextQuestion()
+
             })
         })
 
-        function wrongAnswer() {
-            $("input[name=student_answer]:checked").parent().addClass("shake-vertical")
+        function startTimer() {
 
-            setTimeout(function(){
-                $("input[name=student_answer]:checked").parent().removeClass("shake-vertical")
-            }, 500)
+            // 10000 = 10 seconds
+
+            var time = ({{ $quiz->timer }} * 1000) * 60
+            var format = '%H Hours %M Mins %S Secs';
+
+            $('#clock').countdown(new Date().valueOf() + time)
+
+                .on('update.countdown', function(event) {
+
+                    if (checkIfStudentIsFinished()) {
+                        $("#clock").countdown("stop")
+                    }
+
+                    if(event.offset.totalHours == 0)
+                        format = '%M Mins %S Secs';
+
+                    if(event.offset.totalMinutes == 0)
+                        format = '%S Seconds';
+
+                    $(this).html(event.strftime(format));
+                })
+
+                .on('finish.countdown', function(event) {
+
+                    $(".countdown").addClass("d-none")
+                    $(".active").addClass("d-none")
+                    $(".times-up").removeClass("d-none")
+                    .parent().addClass('disabled');
+
+            });
         }
 
         function nextQuestion() {
@@ -142,6 +186,15 @@
                 $(".finished").removeClass("d-none")
             }
 
+        }
+
+        function checkIfStudentIsFinished()
+        {
+            if ($(".finished").is(":visible")) {
+                return true
+            }
+
+            return false
         }
 
     </script>
