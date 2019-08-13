@@ -42,7 +42,7 @@
                                                 </p>
                                             </div>
                                             <p class="card-text"> {{ $quiz->description ? str_limit($quiz->description, 100) : 'No Description' }}</p>
-                                            @if (Auth::user()->quizAnswered($quiz->id))
+                                            @if (Auth::user()->hasStudentAnsweredQuiz($quiz->id))
                                                 <a href="{{ route('score', $quiz->id) }}" class="btn btn-sm btn-success px-4"> See Result &nbsp; <i class="fas fa-arrow-right"></i></a>
                                             @else
                                                 <a href="{{ route('quiz', $quiz->id) }}" class="btn btn-sm btn-primary px-4">Take Quiz &nbsp; <i class="fas fa-arrow-right"></i></a>

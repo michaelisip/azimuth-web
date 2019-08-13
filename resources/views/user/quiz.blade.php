@@ -87,7 +87,9 @@
 
 
 @section('scripts')
-    <script src="{{ asset('js/app.js') }}"></script>
+
+    {{-- countdown timer installed via npm doesnt work for some reason --}}
+    <script src="https://cdn.rawgit.com/hilios/jQuery.countdown/2.2.0/dist/jquery.countdown.min.js" type="application/javascript"></script>
 
     <script>
 

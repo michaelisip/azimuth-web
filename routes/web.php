@@ -89,8 +89,10 @@ Route::name('admin.')->group(function(){
 
                 // Reports
                 Route::name('reports.')->group(function(){
-                    Route::view('reports', 'admin.reports.students')->name('index');
-                    Route::view('reports/top-students', 'admin.reports.top-students')->name('top-students');
+                    Route::get('reports', 'ReportController@viewReports')->name('index');
+                    Route::get('reports/top-students', 'ReportController@viewTopStudents')->name('top-students');
+                    Route::get('reports/quiz/{quiz}', 'ReportController@viewQuizScores')->name('quiz');
+                    Route::get('reports/student/{user}/scores', 'ReportController@viewStudentScores')->name('student-scores');
                 });
             });
         });

@@ -18,7 +18,7 @@
                             <div class="col-4 col-lg-2">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                                    <li class="breadcrumb-item active"> Users </li>
+                                    <li class="breadcrumb-item active"> Students </li>
                                 </ol>
                             </div>
                         </div>
@@ -32,7 +32,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-    
+
                         <div class="card shadow-none border-0">
                             <div class="card-body">
                                 <table id="table" class="table table-striped table-hover">
@@ -67,6 +67,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
@@ -80,7 +81,7 @@
                                 </table>
                             </div>
                         </div>
-    
+
                     </div>
                 </div>
             </div>
@@ -89,7 +90,7 @@
     </div>
 
     {{-- Modals --}}
-    
+
     {{-- Add --}}
     <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="addUserLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -304,7 +305,7 @@
                 </div>
             </div>
         </div>
-    
+
     @endforeach
 
 @endsection

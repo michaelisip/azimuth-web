@@ -7,7 +7,7 @@
 
 
             {{-- Result --}}
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-3">
                 <a href="{{ route('home') }}" class="btn btn-block btn-outline-primary mb-4"> Go Home </a>
                 <div class="card rounded-lg shadow-none border-0 p-3 position-relative">
                     <div class="card-body">
@@ -22,7 +22,7 @@
             </div>
 
             {{-- Questions --}}
-            <div class="col-12 col-lg-8">
+            <div class="col-12 col-lg-9">
                 <div class="card rounded-lg shadow-none border-0 p-3 position-relative">
                     <div class="card-body">
                         <h1><strong>Questions</strong></h1>

@@ -66,6 +66,7 @@ class User extends Authenticatable
 
     /**
      * Eloquent Relationships
+     *
      */
     public function scores()
     {
@@ -77,20 +78,58 @@ class User extends Authenticatable
         return $this->hasMany(Answer::class);
     }
 
-    public function quizAnswered($id) : bool
+    /**
+     * Function Helpers
+     *
+     * TODO: Refactor
+     */
+
+    public function hasStudentAnsweredQuiz($id) : bool
     {
-        if(Auth::user()->scores()->where('quiz_id', $id)->first()) {
+        if($this->scores()->where('quiz_id', $id)->first()) {
             return true;
         }
-
         return false;
+    }
+
+    public function latestQuiz()
+    {
+        return $this->scores()->latest()->first();
+    }
+
+    public function highestQuizScore()
+    {
+        return $this->scores()->orderBy('score', 'DESC')->first();
+    }
+
+    public function lowestQuizScore()
+    {
+        return $this->scores()->orderBy('score', 'ASC')->first();
     }
 
     public function QuizScore($id) : int
     {
-        return Score::where([
+        $score = Score::where([
             'user_id' => Auth::user()->id,
             'quiz_id' => $id
             ])->value('score');
+
+        return $score ?: 0;
+    }
+
+    /**
+    * Override parent boot and Call deleting event
+    * Delete child student scores and answers when student is to be deleted
+    *
+    * @return void
+    */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($instance) {
+            $instance->scores->each->delete();
+            $instance->answers->each->delete();
+        });
     }
 }

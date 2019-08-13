@@ -59,13 +59,17 @@
                 {{-- Reports --}}
                 <li class="nav-header">REPORTS</li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.reports.index') }}" class="nav-link">
+                    <a href="{{ route('admin.reports.index') }}" class="nav-link
+                            @if(Route::currentRouteName() == 'admin.reports.index'
+                                || Route::currentRouteName() == 'admin.reports.student-scores') active @endif">
                         <i class="nav-icon fas fa-clipboard-list"></i>
                         <p> Student Reports </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.reports.top-students') }}" class="nav-link">
+                    <a href="{{ route('admin.reports.top-students') }}" class="nav-link
+                            @if(Route::currentRouteName() == 'admin.reports.top-students'
+                                || Route::currentRouteName() == 'admin.reports.quiz') active @endif">
                         <i class="nav-icon fas fa-award"></i>
                         <p> Top Students </p>
                     </a>

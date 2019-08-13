@@ -29,10 +29,12 @@ class Question extends Model
 
     public function studentAnswer($id)
     {
-        return Answer::where([
+        $studentAnswer = Answer::where([
             'user_id' => Auth::user()->id,
             'quiz_id' => $id,
             'question_id' => $this->id
         ])->value('student_answer');
+
+        return $studentAnswer ?: 'No Answer';
     }
 }
