@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-8 col-lg-10">
-                                <h1 class="d-inline align-middle mr-3"> <strong> Students </strong> </h1>
+                                <h1 class="d-inline align-middle mr-3"> <strong> Students Reports </strong> </h1>
                             </div>
                             <div class="col-4 col-lg-2">
                                 <ol class="breadcrumb float-sm-right">
@@ -53,8 +53,8 @@
 
                                                 {{-- Refactory these lines --}}
                                                 <td>{{ $user->scores->count() > 0 ? $user->scores->count() : 'None'}}</td>
-                                                <td>{{ isset($user->latestQuiz()->created_at) ? $user->latestQuiz()->created_at->diffForHumans() : "Hasn't Answered Any Quiz" }}</td>
-                                                <td>{{ $user->highestQuizScore()->score ?? "Hasn't Answered Any Quiz" }}</td>
+                                                <td>{{ isset($user->latestQuiz()->created_at) ? $user->latestQuiz()->created_at->diffForHumans() : "Hasn't Taken Any Quiz" }}</td>
+                                                <td>{{ $user->highestQuizScore()->score ?? "Hasn't Taken Any Quiz" }}</td>
 
                                                 <td>
                                                     @if(!$user->scores->isEmpty())

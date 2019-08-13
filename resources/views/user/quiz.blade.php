@@ -42,8 +42,9 @@
 
                                         <button type="submit" class="btn btn-primary px-5"> Submit </button>
                                         <div class="progress mt-5">
-                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ ($key/$quiz->questions->count())*100 }}%"></div>
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ ($key/$quiz->questions->count())*100 }}%"></div>
                                         </div>
+                                        <p class="text-right text-danger font-italic mt-4 mb-0 p-0">* Your score is computed asynchronously. Refreshing the page will mark your progress as your score.</p>
                                     </form>
                                 @endforeach
                             </div>
@@ -93,15 +94,15 @@
 
     <script>
 
-        // function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
+        function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
 
-        // window.onbeforeunload = function(e) {
-        //     e.preventDefault()
-        // }
+        window.onbeforeunload = function(e) {
+            e.preventDefault()
+        }
 
         $(document).ready(function(){
 
-            // $(document).on("keydown", disableF5);
+            $(document).on("keydown", disableF5);
 
             $("#questions").children().first().addClass("active")
             $("#questions").children().first().removeClass("d-none")

@@ -32,7 +32,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-    
+
                         <div class="card shadow-none border-0">
                             <div class="card-body">
                                 <table id="table" class="table table-responsive table-striped table-hover">
@@ -91,7 +91,7 @@
                                 </table>
                             </div>
                         </div>
-    
+
                     </div>
                 </div>
             </div>
@@ -369,18 +369,7 @@
                 </div>
             </div>
         </div>
-        
+
     @endforeach
 
-@endsection
-
-@section('scripts')
-    <script>
-
-        $("#addQuestionForm").on("submit", function(e){
-            e.preventDefault()
-            alert("yrd");
-        })
-
-    </script>
 @endsection

@@ -39,8 +39,8 @@
                                             <div class="col-12 col-lg-3">
                                                 <div class="card shadow border-0">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">Quiz</h5>
-                                                        <p class="card-text">{{ $quiz->title }}</p>
+                                                        <h5 class="card-title font-weight-bold">{{ $quiz->title }}</h5>
+                                                        <p class="card-text">{{ $quiz->description }}</p>
                                                         <span class="text-muted">{{ $quiz->questions->count() }} Questions - {{ $quiz->questions->count() * $quiz->points_per_question }} Total Points</span>
                                                     </div>
                                                     <ul class="list-group list-group-flush px-3">
@@ -61,7 +61,11 @@
                                                         @endforeach
                                                     </ul>
                                                     <div class="card-body">
-                                                        <a href="{{ route('admin.reports.quiz', $quiz->id) }}" class="card-link btn btn-outline-primary">See all students scores</a>
+                                                        @if ($quiz->scores->count() > 0)
+                                                            <a href="{{ route('admin.reports.quiz', $quiz->id) }}" class="card-link btn btn-outline-primary">See all students scores</a>
+                                                        @else
+                                                            <h6 class="mt-n3"><span class="badge badge-danger p-3"> No Student Has Answered Yet </span></h6>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

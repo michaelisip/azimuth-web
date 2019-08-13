@@ -32,9 +32,10 @@
         "datatables.net-dt": "^1.10.19",
         "icheck-bootstrap": "^3.0.1",
         "ionicons-npm": "^2.0.1",
+        "jquery-countdown": "^2.2.0",
+        "jquery-ui": "^1.12.1",
         "jqvmap": "^1.5.1",
         "sweetalert2": "^8.15.3",
-        "tempusdominus-bootstrap-4": "^5.1.2",
-        "jquery-countdown": "^2.2.0"
+        "tempusdominus-bootstrap-4": "^5.1.2"
     }
 }
