@@ -19,7 +19,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'google2fa_secret'
+        'name', 'avatar', 'email', 'password', 'google2fa_secret'
     ];
 
     /**
@@ -37,11 +37,11 @@ class Admin extends Authenticatable
      * @param array $details
      * @return array
      */
-    public function createNewAdmin(array $details) : self 
+    public function createNewAdmin(array $details) : self
     {
         $user = new self($details);
         $user->save();
-        
+
         return $user;
     }
 }

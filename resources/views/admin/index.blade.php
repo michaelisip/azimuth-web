@@ -23,7 +23,7 @@
                     <div class="col-lg-4 col-6">
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>150</h3>
+                                <h3>{{ $studentsCount }}</h3>
                                 <p>Total Students</p>
                             </div>
                             <div class="icon">
@@ -37,8 +37,7 @@
                     <div class="col-lg-4 col-6">
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>53<sup style="font-size: 20px">%</sup></h3>
-
+                                <h3>{{ $quizzesCount }}</h3>
                                 <p>Total Quizzes</p>
                             </div>
                             <div class="icon">
@@ -53,8 +52,7 @@
                         <!-- small box -->
                         <div class="small-box bg-secondary">
                             <div class="inner">
-                                <h3>44</h3>
-
+                                <h3>{{ $questionsCount }}</h3>
                                 <p>Total Questions</p>
                             </div>
                             <div class="icon">

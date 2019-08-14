@@ -74,7 +74,7 @@ Route::name('admin.')->group(function(){
             // Admin Functions
             Route::group(['middleware' => ['auth:admin']], function () {
 
-                Route::view('/', 'admin.index')->name('dashboard');
+                Route::get('/', 'DashboardController')->name('dashboard');
 
                 Route::resources([
                     'users' => 'UsersController',
@@ -94,6 +94,9 @@ Route::name('admin.')->group(function(){
                     Route::get('reports/quiz/{quiz}', 'ReportController@viewQuizScores')->name('quiz');
                     Route::get('reports/student/{user}/scores', 'ReportController@viewStudentScores')->name('student-scores');
                 });
+
+                // Settings
+                Route::get('settings', 'SettingController@index')->name('settings');
             });
         });
     });
