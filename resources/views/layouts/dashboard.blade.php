@@ -30,7 +30,7 @@
 
         <!-- Main Sidebar Container -->
         @include('partials.admin.sidebar')
-        
+
         <!-- Content Wrapper. Contains page content -->
         @yield('content')
 
@@ -46,9 +46,12 @@
     <!-- ./wrapper -->
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}" defer></script>
     @yield('scripts')
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
 
 </body>
 </html>

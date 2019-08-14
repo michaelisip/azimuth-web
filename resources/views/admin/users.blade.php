@@ -18,7 +18,7 @@
                             <div class="col-4 col-lg-2">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                                    <li class="breadcrumb-item active"> Users </li>
+                                    <li class="breadcrumb-item active"> Students </li>
                                 </ol>
                             </div>
                         </div>
@@ -32,7 +32,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-    
+
                         <div class="card shadow-none border-0">
                             <div class="card-body">
                                 <table id="table" class="table table-striped table-hover">
@@ -67,6 +67,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
@@ -80,7 +81,7 @@
                                 </table>
                             </div>
                         </div>
-    
+
                     </div>
                 </div>
             </div>
@@ -89,7 +90,7 @@
     </div>
 
     {{-- Modals --}}
-    
+
     {{-- Add --}}
     <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="addUserLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -236,8 +237,8 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ $user->name }}" autocomplete="name" required autofocus>
+                                <label for="name-{{ $key }}">Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name-{{ $key }}" name="name" value="{{ $user->name }}" autocomplete="name" required autofocus>
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -246,8 +247,8 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ $user->email }}" autocomplete="email" required>
+                                    <label for="email-{{ $key }}">Email</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email-{{ $key }}" name="email" value="{{ $user->email }}" autocomplete="email" required>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -255,8 +256,8 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="mobile">Mobile</label>
-                                    <input type="number" class="form-control @error('mobile') is-invalid @enderror" id="mobile" name="mobile" value="{{ $user->mobile ?: '' }}" autocomplete="mobile">
+                                    <label for="mobile-{{ $key }}">Mobile</label>
+                                    <input type="number" class="form-control @error('mobile') is-invalid @enderror" id="mobile-{{ $key }}" name="mobile" value="{{ $user->mobile ?: '' }}" autocomplete="mobile">
                                     @error('mobile')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -265,8 +266,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="address">Address</label>
-                                <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ $user->address ?: '' }}">
+                                <label for="address-{{ $key }}">Address</label>
+                                <input type="text" class="form-control @error('address') is-invalid @enderror" id="address-{{ $key }}" name="address" value="{{ $user->address ?: '' }}">
                                 @error('address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -304,7 +305,7 @@
                 </div>
             </div>
         </div>
-    
+
     @endforeach
 
 @endsection

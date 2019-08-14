@@ -16,9 +16,9 @@ try {
     require('chart.js');
     require('jqvmap');
     require('tempusdominus-bootstrap-4');
-    require('admin-lte');
-    require('jquery-countdown');
     require('sweetalert2')
+    require('jquery-countdown');
+    require('admin-lte');
 
 } catch (e) {}
 

@@ -30,4 +30,13 @@ class Score extends Model
     {
         return $this->belongsTo(Quiz::class);
     }
+
+    /**
+     * Function Helper
+     */
+
+    public function highestScore()
+    {
+        return $this->user->orderBy('score', 'DESC')->get();
+    }
 }

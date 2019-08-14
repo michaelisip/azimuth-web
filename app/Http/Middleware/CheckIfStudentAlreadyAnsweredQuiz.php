@@ -18,7 +18,7 @@ class CheckIfStudentAlreadyAnsweredQuiz
     {
         $quiz_id = $request->route('quiz');
 
-        if (Auth::user()->quizAnswered($quiz_id)) {
+        if (Auth::user()->hasStudentAnsweredQuiz($quiz_id)) {
             abort(403, 'You already answered this quiz.');
         }
 

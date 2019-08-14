@@ -27,8 +27,14 @@ class Quiz extends Model
         return $this->hasMany(Question::class);
     }
 
+    public function scores()
+    {
+        return $this->hasMany(Score::class);
+    }
+
     /**
    * Override parent boot and Call deleting event
+   * Delete child questions and scores when quiz is to be deleted
    *
    * @return void
    */
@@ -38,6 +44,17 @@ class Quiz extends Model
 
         static::deleting(function ($instance) {
             $instance->questions->each->delete();
+            $instance->scores->each->delete();
         });
+    }
+
+    public function highestScores()
+    {
+        return $this->scores()->orderBy('score', 'DESC')->get();
+    }
+
+    public function lowestScores()
+    {
+        return $this->scores()->orderBy('score', 'ASC')->get();
     }
 }

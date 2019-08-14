@@ -28,7 +28,21 @@ class QuizController extends Controller
      */
     public function index($quiz)
     {
+        $this->setAsStudentAnswered($quiz);
+
         return view('user.quiz', ['quiz' => Quiz::findOrFail($quiz)]);
+    }
+
+    /**
+     * Initialize student's score when viewing the quiz questions
+     *
+     * @return void
+     */
+    public function setAsStudentAnswered($quiz)
+    {
+        Auth::user()->scores()->firstOrCreate(['quiz_id' => $quiz]);
+
+        return;
     }
 
     /**

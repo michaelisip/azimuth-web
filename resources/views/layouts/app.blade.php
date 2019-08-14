@@ -10,9 +10,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
@@ -57,7 +54,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" href="{{ route('profile') }}"
                                                       style="color: #000 !important;">
                                          {{ __('Profile') }}
                                      </a>
@@ -86,6 +83,7 @@
     </div>
 
     {{-- Scripts --}}
+    <script src="{{ asset('js/app.js') }}"></script>
     @yield('scripts')
 
 </body>
