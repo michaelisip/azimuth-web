@@ -52,7 +52,11 @@ Route::group(['prefix' => ''], function () {
     Route::get('/quiz/{quiz}/score', 'QuizController@score')->name('score');
 
     // Profile
-    Route::get('profile', 'ProfileController@index')->name('profile');
+    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
+        Route::get('', 'ProfileController@index')->name('index');
+        Route::put('{user}/edit-details', 'ProfileController@update')->name('update');
+        Route::put('{user}/change-password', 'ProfileController@changePassword')->name('change-password');
+    });
 
 });
 

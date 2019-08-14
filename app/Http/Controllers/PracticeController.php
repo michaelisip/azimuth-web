@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 class PracticeController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * View the quiz on practice mode
      *
      * @return view
