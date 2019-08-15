@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-8 col-lg-10">
-                                <h1 class="d-inline align-middle mr-3"> Quiz - {{ $quiz->title }} </h1>
+                                <h1 class="d-inline align-middle mr-3"><strong>Quiz</strong>  - {{ $quiz->title }} </h1>
                             </div>
                             <div class="col-4 col-lg-2">
                                 <ol class="breadcrumb float-sm-right">
@@ -149,7 +149,7 @@
     <div class="modal fade" id="deleteQuiz" tabindex="-1" role="dialog" aria-labelledby="deleteQuizLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-danger">
                     <h5 class="modal-title" id="deleteQuizLabel"><strong> Are you sure you want to delete this question? </strong></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -295,7 +295,7 @@
     </div>
 
     @foreach ($quiz->questions as $key => $quizQuestion)
-    
+
         {{-- View --}}
         <div class="modal fade" id="view-{{ $quizQuestion->id }}" tabindex="-1" role="dialog" aria-labelledby="viewQuestionLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -410,7 +410,7 @@
         <div class="modal fade" id="delete-{{ $quizQuestion->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteQuestionLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-danger">
                         <h5 class="modal-title" id="deleteQuestionLabel"><strong> Are you sure you want to delete this question? </strong></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>

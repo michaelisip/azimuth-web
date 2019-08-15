@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-8 col-lg-10">
-                                <h1 class="d-inline align-middle mr-3"> Quizzes </h1>
+                                <h1 class="d-inline align-middle mr-3"><strong> Quizzes </strong></h1>
                                 <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addQuiz"> Add Quiz </button>
                                 <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importQuizzes">Import Quizzes </button>
                             </div>
@@ -113,8 +113,8 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="timer">Total Time</label>
-                                <input type="number" class="form-control @error('timer') is-invalid @enderror" id="timer" name="timer" value="{{ old('timer') }}" autocomplete="timer" placeholder="Total Time" min="1" required>
+                                <label for="timer">Total Time in Minutes</label>
+                                <input type="number" class="form-control @error('timer') is-invalid @enderror" id="timer" name="timer" value="{{ old('timer') }}" autocomplete="timer" placeholder="Total Time in Minutes" min="1" required>
                                 @error('timer')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

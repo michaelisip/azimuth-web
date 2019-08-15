@@ -29,7 +29,7 @@ class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, Shou
     {
 
         /**
-         * Stop import on last row, 
+         * Stop import on last row,
          * package has bug where it still tries to import the last row
          */
         if(is_null($row)){
@@ -43,7 +43,7 @@ class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, Shou
             'c' => $row['c'],
             'd' => $row['d'],
             'answer' => $row['answer'],
-            'answer_explanation' => $row['answer_explanation'] ?: NULL,
+            'answer_explanation' => $row['answer_explanation'] ?? NULL,
         ]);
 
         $quiz = Quiz::findOrFail($this->quiz_id);

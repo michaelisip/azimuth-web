@@ -32,7 +32,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQu
         // ]);
 
         /**
-         * Stop import on last row, 
+         * Stop import on last row,
          * package has bug where it still tries to import the last row
          */
         if(is_null($row)){
@@ -43,8 +43,8 @@ class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQu
             'name' => $row['name'],
             'email' => $row['email'],
             'password' => Hash::make('password'),
-            'mobile' => $row['mobile'] ?: NULL,
-            'address' => $row['address'] ?: NULL,
+            'mobile' => $row['mobile'] ?? NULL,
+            'address' => $row['address'] ?? NULL,
         ]);
 
     }
@@ -70,7 +70,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQu
         ];
     }
 
-    
+
     /**
      * @return array
      */

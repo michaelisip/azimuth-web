@@ -30,7 +30,7 @@ class QuizzesImport implements ToModel, WithHeadingRow, WithChunkReading, Should
         // ]);
 
         /**
-         * Stop import on last row, 
+         * Stop import on last row,
          * package has bug where it still tries to import the last row
          */
         if(is_null($row)){
@@ -40,7 +40,7 @@ class QuizzesImport implements ToModel, WithHeadingRow, WithChunkReading, Should
 
         return new Quiz([
             'title' => $row['title'],
-            'description' => $row['description'] ?: NULL,
+            'description' => $row['description'] ?? NULL,
             'points_per_question' => $row['points_per_question'],
             'timer' => $row['timer'],
         ]);
