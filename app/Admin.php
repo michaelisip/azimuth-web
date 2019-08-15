@@ -33,6 +33,14 @@ class Admin extends Authenticatable
     ];
 
     /**
+     * Eloquent Relationship
+     */
+    public function application()
+    {
+        return $this->hasOne(Application::class);
+    }
+
+    /**
      * Create admin.
      *
      * @param array $details
@@ -55,4 +63,20 @@ class Admin extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($password);
     }
+
+    /**
+    * Override parent boot and Call deleting event
+    * Delete child student scores and answers when student is to be deleted
+    *
+    * @return void
+    */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($instance) {
+            $instance->application->delete();
+        });
+    }
+
 }

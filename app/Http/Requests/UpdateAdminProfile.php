@@ -25,7 +25,7 @@ class UpdateAdminProfile extends FormRequest
     public function rules()
     {
         return [
-            'avatar' => 'required|image|mimes:png,jpg,jpeg,gif,svg|max:2048',
+            'avatar' => 'image|mimes:png,jpg,jpeg,gif,svg|max:2048',
             'name' => 'required|string|max:255',
             'email' => 'required|email|' .  Rule::unique('users')->ignore($this->user),
         ];

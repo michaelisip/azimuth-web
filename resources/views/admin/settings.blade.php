@@ -39,7 +39,7 @@
                                     <h3>{{ $user->name }}</h3>
                                     <p class="text-muted">{{ $user->email }}</p>
                                 </div>
-                                <button class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#editProfile"> Edit Profile </button>
+                                <button class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#updateProfile"> Edit Profile </button>
                                 <button class="btn btn-block btn-danger" data-toggle="modal" data-target="#changePassword"> Change Password  </button>
                             </div>
                         </div>
@@ -50,10 +50,10 @@
                         <div class="card shadow-none border-0">
                             <div class="card-body">
                                 <p>App Name</p>
-                                <h1>Azimuth</h1>
+                                <h1>{{ $user->application->name }}</h1>
                                 <p>Logo</p>
-                                <img src="{{ asset('storage/avatars/default.jpg') }}" alt="Admin Image" class="rounded w-25 mb-3">
-                                <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#changePassword"> Edit Settings </button>
+                                <img src="{{ asset('storage/logos/' . $user->application->logo) }}" alt="Admin Image" class="rounded w-25 mb-3">
+                                <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#updateSettings"> Edit Settings </button>
                             </div>
                         </div>
                     </div>
@@ -65,12 +65,12 @@
 
     {{-- Modals --}}
 
-    {{-- Edit Details --}}
-    <div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="editProfileLabel" aria-hidden="true">
+    {{-- Update Details --}}
+    <div class="modal fade" id="updateProfile" tabindex="-1" role="dialog" aria-labelledby="updateProfileLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editProfileLabel">Edit Profile</h5>
+                    <h5 class="modal-title" id="updateProfileLabel">Update Profile</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -117,7 +117,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Edit Profile</button>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
                     </div>
                 </form>
             </div>
@@ -157,6 +157,55 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary">Change Password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- Update Application --}}
+    <div class="modal fade" id="updateSettings" tabindex="-1" role="dialog" aria-labelledby="updateSettingsLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateSettingsLabel">Update Settings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{{ route('admin.settings.update', $user->application->id) }}" enctype="multipart/form-data">
+                    @method('PUT')
+                    @csrf
+                    <div class="modal-body">
+                        <div class="text-center mb-2">
+                            <img src="{{ asset('storage/logos/' . $user->application->logo) }}" alt="Logo" class="img-circle w-50">
+                        </div>
+                        <div class="form-group">
+                            <label for="logo">Logo</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input @error('logo') is-invalid @enderror" id="logo" name="logo">
+                                <label class="custom-file-label" for="logo">Choose image</label>
+                                @error('logo')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Name" value="{{ $user->application->name }}" required autofocus autocomplete="name">
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Settings</button>
                     </div>
                 </form>
             </div>

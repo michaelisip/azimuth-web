@@ -101,9 +101,10 @@ Route::name('admin.')->group(function(){
 
                 // Settings
                 Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
-                    Route::get('', 'SettingController@index')->name('index');
-                    Route::put('/profile/{user}/update', 'SettingController@updateProfile')->name('update-profile');
-                    Route::put('/profile/{user}/change-password', 'SettingController@changePassword')->name('change-password');
+                    Route::get('', 'ApplicationController@index')->name('index');
+                    Route::put('/update/{application}', 'ApplicationController@updateApplication')->name('update');
+                    Route::put('/profile/{user}/update', 'ApplicationController@updateProfile')->name('update-profile');
+                    Route::put('/profile/{user}/change-password', 'ApplicationController@changePassword')->name('change-password');
                 });
             });
         });
