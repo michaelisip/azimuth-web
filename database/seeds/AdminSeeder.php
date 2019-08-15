@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
         Admin::create([
             'name' => 'Admin Azimuth',
             'email' => 'admin@info.com',
-            'password' => Hash::make('password')
+            'password' => 'password'
         ]);
     }
 }

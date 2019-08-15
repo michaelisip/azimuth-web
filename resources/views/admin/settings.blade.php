@@ -39,7 +39,7 @@
                                     <h3>{{ $user->name }}</h3>
                                     <p class="text-muted">{{ $user->email }}</p>
                                 </div>
-                                <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#editProfile"> Edit Profile </button>
+                                <button class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#editProfile"> Edit Profile </button>
                                 <button class="btn btn-block btn-danger" data-toggle="modal" data-target="#changePassword"> Change Password  </button>
                             </div>
                         </div>
@@ -52,11 +52,11 @@
                                 <p>App Name</p>
                                 <h1>Azimuth</h1>
                                 <p>Logo</p>
-                                <img src="{{ asset('storage/avatars/' . $user->avatar) }}" alt="Admin Image" class="rounded w-25 mb-3">
+                                <img src="{{ asset('storage/avatars/default.jpg') }}" alt="Admin Image" class="rounded w-25 mb-3">
+                                <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#changePassword"> Edit Settings </button>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -75,7 +75,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form>
+                <form method="POST" action="{{ route('admin.settings.update-profile', $user->id) }}" enctype="multipart/form-data">
+                    @method('PUT')
+                    @csrf
                     <div class="modal-body">
                         <div class="text-center mb-2">
                             <img src="{{ asset('storage/avatars/' . $user->avatar) }}" alt="Admin Avatar" class="img-circle w-50">
@@ -83,8 +85,14 @@
                         <div class="form-group">
                             <label for="avatar">Avatar</label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="avatar" name="avatar">
+                                <input type="file" class="custom-file-input @error('avatar') is-invalid @enderror" id="avatar" name="avatar">
                                 <label class="custom-file-label" for="avatar">Choose image</label>
+                                @error('avatar')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
                             </div>
                         </div>
                         <div class="form-group">
@@ -109,7 +117,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Edit Credentials</button>
+                        <button type="submit" class="btn btn-primary">Edit Profile</button>
                     </div>
                 </form>
             </div>
@@ -127,7 +135,9 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form>
+                <form method="POST" action="{{ route('admin.settings.change-password', $user->id) }}">
+                    @method('PUT')
+                    @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="password">{{ __('Password') }}</label>

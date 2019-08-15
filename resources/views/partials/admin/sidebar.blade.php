@@ -72,8 +72,9 @@
                         <p> Top Students </p>
                     </a>
                 </li>
-                <li class="nav-item mt-3">
-                    <a href="{{ route('admin.settings') }}" class="nav-link">
+                <li class="nav-header">SETTINGS</li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.settings.index') }}" class="nav-link @if(Route::currentRouteName() == 'admin.settings') active @endif">
                         <i class="nav-icon fas fa-cog"></i>
                         <p> Settings </p>
                     </a>
