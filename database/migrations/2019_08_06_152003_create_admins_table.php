@@ -24,9 +24,6 @@ class CreateAdminsTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-
-        // Seed Admin Account
-        Artisan::call('db:seed --class=AdminSeeder');
     }
 
     /**

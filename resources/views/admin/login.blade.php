@@ -20,7 +20,7 @@
     <div class="login-box">
 
         <div class="login-logo">
-            <a href="../../index2.html"><b>{{ config('app.name') }}</b></a>
+            {{-- <a href="../../index2.html"><b>{{ config('app.name') }}</b></a> --}}
         </div>
 
         <div class="card">

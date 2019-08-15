@@ -13,10 +13,15 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        Admin::create([
+        $admin = Admin::firstOrCreate([
             'name' => 'Admin Azimuth',
             'email' => 'admin@info.com',
             'password' => 'password'
         ]);
+
+
+        if (!($admin->application)) {
+            $admin->application()->create();
+        }
     }
 }

@@ -57,7 +57,7 @@ class ProfileController extends Controller
             $avatar->storeAs('public/avatars', $filename);
 
             // delete existing user image
-            if (isset($user->avatar)) {
+            if (isset($user->avatar) && $user->avatar != 'default.jpg') {
                 Storage::delete("/public/avatars/" . $user->avatar);
             }
 
@@ -70,7 +70,7 @@ class ProfileController extends Controller
         $user->email = $request->email;
         $user->mobile = $request->mobile;
         $user->address = $request->address;
-        $user->avatar = $request->avatar;
+        $user->avatar = $request->avatar ?: $user->avatar;
         $user->save();
 
         return back()->with('success', 'Successfully updated information!');

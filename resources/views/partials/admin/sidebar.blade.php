@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('admin.dashboard') }}" class="brand-link text-center">
-        <h1 class="brand-text font-weight-bold">{{ config('app.name') }}</h1>
+        <h1 class="brand-text font-weight-bold">{{ Auth::user()->application->name }}</h1>
     </a>
 
     <!-- Sidebar -->
