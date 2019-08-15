@@ -78,7 +78,7 @@ Route::name('admin.')->group(function(){
             // Admin Functions
             Route::group(['middleware' => ['auth:admin']], function () {
 
-                Route::view('/', 'admin.index')->name('dashboard');
+                Route::get('/', 'DashboardController')->name('dashboard');
 
                 Route::resources([
                     'users' => 'UsersController',
@@ -97,6 +97,13 @@ Route::name('admin.')->group(function(){
                     Route::get('reports/top-students', 'ReportController@viewTopStudents')->name('top-students');
                     Route::get('reports/quiz/{quiz}', 'ReportController@viewQuizScores')->name('quiz');
                     Route::get('reports/student/{user}/scores', 'ReportController@viewStudentScores')->name('student-scores');
+                });
+
+                // Settings
+                Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
+                    Route::get('', 'SettingController@index')->name('index');
+                    Route::put('/profile/{user}/update', 'SettingController@updateProfile')->name('update-profile');
+                    Route::put('/profile/{user}/change-password', 'SettingController@changePassword')->name('change-password');
                 });
             });
         });

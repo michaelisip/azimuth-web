@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class Admin extends Authenticatable
 {
@@ -19,7 +20,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'google2fa_secret'
+        'name', 'avatar', 'email', 'password', 'google2fa_secret'
     ];
 
     /**
@@ -37,11 +38,21 @@ class Admin extends Authenticatable
      * @param array $details
      * @return array
      */
-    public function createNewAdmin(array $details) : self 
+    public function createNewAdmin(array $details) : self
     {
         $user = new self($details);
         $user->save();
-        
+
         return $user;
+    }
+
+    /**
+     * Encrypt user password on create
+     *
+     * @param string $password
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::make($password);
     }
 }

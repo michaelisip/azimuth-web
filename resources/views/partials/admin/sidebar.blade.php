@@ -1,16 +1,14 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="Logo" class="brand-image img-circle elevation-3"
-            style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+    <a href="{{ route('admin.dashboard') }}" class="brand-link text-center">
+        <h1 class="brand-text font-weight-bold">{{ config('app.name') }}</h1>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <img src="{{ asset('storage/avatars/' . Auth::user()->avatar) }}" class="img-circle elevation-2" alt="Admin Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{ Auth::user()->name }}</a>
@@ -74,8 +72,9 @@
                         <p> Top Students </p>
                     </a>
                 </li>
-                <li class="nav-item mt-3">
-                    <a href="/admin" class="nav-link">
+                <li class="nav-header">SETTINGS</li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.settings.index') }}" class="nav-link @if(Route::currentRouteName() == 'admin.settings') active @endif">
                         <i class="nav-icon fas fa-cog"></i>
                         <p> Settings </p>
                     </a>
