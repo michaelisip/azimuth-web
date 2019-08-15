@@ -19,6 +19,9 @@
 
 </head>
 <body>
+
+    @include('partials.flash-messages')
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
             <div class="container">
@@ -54,7 +57,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('profile') }}"
+                                    <a class="dropdown-item" href="{{ route('profile.index') }}"
                                                       style="color: #000 !important;">
                                          {{ __('Profile') }}
                                      </a>

@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -19,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'mobile', 'address', 'password', 'google2fa_secret'
+        'name', 'avatar', 'email', 'mobile', 'address', 'password', 'google2fa_secret'
     ];
 
     /**
@@ -62,6 +63,16 @@ class User extends Authenticatable
         if (!is_null($value)) return decrypt($value);
 
         return null;
+    }
+
+    /**
+     * Encrypt user password on create
+     *
+     * @param string $password
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::make($password);
     }
 
     /**

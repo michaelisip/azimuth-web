@@ -14,13 +14,11 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        $password = 'password';
-
         $user = User::firstOrCreate([
             'email' => 'user@info.com'],[
             'name' => 'User Azimuth',
             'email_verified_at' => now(),
-            'password' => Hash::make($password),
+            'password' => 'password',
         ]);
 
         factory(App\User::class, 100)->create();

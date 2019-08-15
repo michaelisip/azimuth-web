@@ -19,6 +19,7 @@ class QuizController extends Controller
     public function __construct()
     {
         $this->middleware('quiz')->only('index');
+        $this->middleware('auth');
     }
 
     /**
