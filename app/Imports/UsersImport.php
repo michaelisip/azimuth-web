@@ -42,7 +42,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQu
         return new User([
             'name' => $row['name'],
             'email' => $row['email'],
-            'password' => Hash::make('password'),
+            'password' => 'password',
             'mobile' => $row['mobile'] ?? NULL,
             'address' => $row['address'] ?? NULL,
         ]);

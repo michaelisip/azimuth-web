@@ -152,7 +152,7 @@
                                 <input type="file" class="custom-file-input" id="file" name="file" required>
                             </div>
                         </div>
-                        <p class="muted"> Please read the <a href="">import guides.</a> </p>
+                        <p class="muted"> Please read the <a href="https://docs.google.com/document/d/17KJto5C3zyu8wYy_qepSweH41KXBC3PxfUvc8N-j-Vc/edit?usp=sharing" target="__blank">import guides.</a> </p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
