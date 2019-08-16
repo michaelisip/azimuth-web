@@ -75,8 +75,8 @@ class RegisterAdminAccount extends Command
 
         }
 
-        $details['password'] = Hash::make($details['password']);
-        $details['confirm_password'] = Hash::make($details['confirm_password']);
+        $details['password'] = $details['password'];
+        $details['confirm_password'] = $details['confirm_password'];
 
         return $details;
     }
@@ -130,7 +130,7 @@ class RegisterAdminAccount extends Command
      * @param string $password
      * @return bool
      */
-    
+
     private function isRequiredLength(string $password) : bool
     {
         return strlen($password) > 6;

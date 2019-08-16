@@ -50,9 +50,9 @@
                         <div class="card shadow-none border-0">
                             <div class="card-body">
                                 <p>App Name</p>
-                                <h1>{{ $user->application->name }}</h1>
+                                <h1>{{ \App\Application::first()->name }}</h1>
                                 <p>Logo</p>
-                                <img src="{{ asset('storage/logos/' . $user->application->logo) }}" alt="Admin Image" class="rounded w-25 mb-3">
+                                <img src="{{ asset('storage/logos/' . \App\Application::first()->logo) }}" alt="Admin Image" class="rounded w-25 mb-3">
                                 <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#updateSettings"> Edit Settings </button>
                             </div>
                         </div>
@@ -124,7 +124,6 @@
         </div>
     </div>
 
-
     {{-- Change Password --}}
     <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="changePasswordLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -173,12 +172,12 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{ route('admin.settings.update', $user->application->id) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.settings.update', \App\Application::first()->id) }}" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <div class="modal-body">
                         <div class="text-center mb-2">
-                            <img src="{{ asset('storage/logos/' . $user->application->logo) }}" alt="Logo" class="img-circle w-50">
+                            <img src="{{ asset('storage/logos/' . \App\Application::first()->logo) }}" alt="Logo" class="img-circle w-50">
                         </div>
                         <div class="form-group">
                             <label for="logo">Logo</label>
@@ -195,7 +194,7 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Name" value="{{ $user->application->name }}" required autofocus autocomplete="name">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Name" value="{{ \App\Application::first()->name }}" required autofocus autocomplete="name">
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

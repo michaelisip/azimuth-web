@@ -33,14 +33,6 @@ class Admin extends Authenticatable
     ];
 
     /**
-     * Eloquent Relationship
-     */
-    public function application()
-    {
-        return $this->hasOne(Application::class);
-    }
-
-    /**
      * Create admin.
      *
      * @param array $details
@@ -50,6 +42,10 @@ class Admin extends Authenticatable
     {
         $user = new self($details);
         $user->save();
+
+        if (Application::count() < 1) {
+            Application::create();
+        }
 
         return $user;
     }

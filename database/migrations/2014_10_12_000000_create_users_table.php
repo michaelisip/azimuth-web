@@ -28,9 +28,6 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-
-        // Run seeder
-        Artisan::call('db:seed --class=UsersSeeder');
     }
 
     /**

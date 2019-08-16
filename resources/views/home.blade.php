@@ -31,7 +31,7 @@
                         <h1 class="font-weight-bolder"> Quizzes </h1>
                         <hr>
                         <div class="row justify-content-center">
-                            @foreach ($quizzes as $quiz)
+                            @forelse ($quizzes as $quiz)
                                 <div class="col-12 col-md-6">
                                     <div class="card rounded bg-white border-0 shadow p-2">
                                         <div class="card-body">
@@ -51,7 +51,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            @empty
+                                <em class="p-5"> No quizzes available yet. </em>
+                            @endforelse
                         </div>
                     </div>
                 </div>

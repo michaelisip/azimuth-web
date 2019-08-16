@@ -31,10 +31,6 @@ class CreateQuestionsTable extends Migration
                     ->on('quizzes')
                     ->onDelete('cascade');
         });
-
-        factory(App\Quiz::class, 5)->create()->each(function($quiz){
-            $quiz->questions()->saveMany(factory(App\Question::class, 10)->make());
-        });
     }
 
     /**

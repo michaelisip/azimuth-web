@@ -6,8 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Application extends Model
 {
-    public function admin()
+
+    public function createAppliation()
     {
-        return $this->belongsTo(Admin::class);
+        if($this->all() < 1) {
+            $this->insert();
+        }
     }
 }

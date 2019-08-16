@@ -15,19 +15,10 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('admin_id');
             $table->string('name')->default('Azimuth');
             $table->string('logo')->default('default.jpg');
             $table->timestamps();
-
-            $table->foreign('admin_id')
-                    ->references('id')
-                    ->on('admins')
-                    ->onDelete('cascade');
         });
-
-        // Seed Admin Account
-        Artisan::call('db:seed --class=AdminSeeder');
     }
 
     /**
