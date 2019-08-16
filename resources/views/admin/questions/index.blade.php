@@ -118,9 +118,11 @@
                             <label for="quiz_id">Quiz</label>
                             <select class="custom-select mr-sm-2" name="quiz_id" id="quiz_id" required>
                                 <option value="" selected disabled hidden>Choose...</option>
-                                @foreach ($quizzes as $quiz)
+                                @forelse ($quizzes as $quiz)
                                     <option value="{{ $quiz->id }}">{{ $quiz->title }}</option>
-                                @endforeach
+                                @empty
+                                    <option disabled> No quizzes added yet. </option>
+                                @endforelse
                             </select>
                         </div>
                         <div class="form-group">
@@ -204,6 +206,7 @@
     </div>
 
     {{-- Import --}}
+
     <div class="modal fade" id="importQuestions" tabindex="-1" role="dialog" aria-labelledby="importQuestionsLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -213,163 +216,176 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{ route('admin.questions.import', $quiz->id) }}" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="quiz_id">Quiz</label>
-                            <select class="custom-select mr-sm-2" name="quiz_id" id="quiz_id" required>
-                                <option value="" selected disabled hidden>Choose...</option>
-                                @foreach ($quizzes as $selectQuiz)
-                                    <option value="{{ $selectQuiz->id }}">{{ $selectQuiz->title }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="file">File</label>
-                            <div class="custom-file">
-                                <label class="custom-file-label" for="file">Choose file</label>
-                                <input type="file" class="custom-file-input" id="file" name="file" required>
-                            </div>
-                        </div>
-                        <p class="muted"> Please read the <a href="https://docs.google.com/document/d/17KJto5C3zyu8wYy_qepSweH41KXBC3PxfUvc8N-j-Vc/edit?usp=sharing" target="__blank">import guides.</a> </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary px-5 py-1">Import</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-
-    @foreach ($questions as $question)
-
-        {{-- Edit --}}
-        <div class="modal fade" id="edit-{{ $question->id }}" tabindex="-1" role="dialog" aria-labelledby="editQuestionLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editQuestionLabel"><strong> Edit Question </strong></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="POST" action="{{ route('admin.questions.update', [$question->quiz->id, $question->id]) }}">
-                        @method('PUT')
+                @if (isset($quiz))
+                    <form method="POST" action="{{ route('admin.questions.import', $quiz->id) }}" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="quiz_id">Quiz</label>
                                 <select class="custom-select mr-sm-2" name="quiz_id" id="quiz_id" required>
                                     <option value="" selected disabled hidden>Choose...</option>
-                                    @foreach ($quizzes as $quiz)
-                                        <option value="{{ $quiz->id }}" @if($question->quiz->id === $quiz->id) selected @endif>{{ $quiz->title }}</option>
-                                    @endforeach
+                                    @forelse ($quizzes as $selectQuiz)
+                                        <option value="{{ $selectQuiz->id }}">{{ $selectQuiz->title }}</option>
+                                    @empty
+                                        <option disabled> No quizzes added yet.  </option>
+                                    @endforelse
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="question">Question</label>
-                                <input type="text" class="form-control @error('question') is-invalid @enderror" id="question" name="question" value="{{ $question->question }}" placeholder="Question" autocomplete="question" required autofocus>
-                                @error('question')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="a">Choice A</label>
-                                    <input type="text" class="form-control @error('a') is-invalid @enderror" id="a" name="a" value="{{ $question->a }}" autocomplete="a" placeholder="Choice A" required>
-                                    @error('a')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="b">Choice B</label>
-                                    <input type="text" class="form-control @error('b') is-invalid @enderror" id="b" name="b" value="{{ $question->b }}" autocomplete="b" placeholder="Choice B" required>
-                                    @error('b')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                            <div class="form-group mb-3">
+                                <label for="file">File</label>
+                                <div class="custom-file">
+                                    <label class="custom-file-label" for="file">Choose file</label>
+                                    <input type="file" class="custom-file-input" id="file" name="file" required>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="c">Choice C</label>
-                                    <input type="text" class="form-control @error('c') is-invalid @enderror" id="c" name="c" value="{{ $question->c }}" autocomplete="c" placeholder="Choice C" required>
-                                    @error('c')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="d">Choice D</label>
-                                    <input type="text" class="form-control @error('d') is-invalid @enderror" id="d" name="d" value="{{ $question->d }}" autocomplete="d" placeholder="Choice D" required>
-                                    @error('d')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for="answer">Answer</label>
-                                    <select class="custom-select mr-sm-2" name="answer" id="answer" required>
-                                        <option value="a" @if ($question->answer == 'a') selected @endif>Choice A</option>
-                                        <option value="b" @if ($question->answer == 'b') selected @endif>Choice B</option>
-                                        <option value="c" @if ($question->answer == 'c') selected @endif>Choice C</option>
-                                        <option value="d" @if ($question->answer == 'd') selected @endif>Choice D</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-8">
-                                    <label for="answer_explanation">Answer Explanation</label>
-                                    <textarea class="form-control @error('answer_explanation') is-invalid @enderror" id="answer_explanation" name="answer_explanation" autocomplete="answer_explanation" placeholder="Answer Explanation" rows="5" style="resize: none;">{{ $question->answer_explanation }}</textarea>
-                                    @error('answer_explanation')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
+                            <p class="muted"> Please read the <a href="https://docs.google.com/document/d/17KJto5C3zyu8wYy_qepSweH41KXBC3PxfUvc8N-j-Vc/edit?usp=sharing" target="__blank">import guides.</a> </p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary px-5 py-1" id="addQuestionSubmit">Save</button>
+                            <button type="submit" class="btn btn-primary px-5 py-1">Import</button>
                         </div>
                     </form>
-                </div>
+                @else
+                    <div class="card-body">
+                        <em> No quizzes added to import questions to. </em>
+                    </div>
+                @endif
             </div>
         </div>
+    </div>
 
-        {{-- Delete --}}
-        <div class="modal fade" id="delete-{{ $question->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteQuestionLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-danger">
-                        <h5 class="modal-title" id="deleteQuestionLabel"><strong> Are you sure you want to delete this question? </strong></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-footer">
-                        <form action="{{ route('admin.questions.destroy', [$question->quiz->id, $question->id]) }}" method="POST" id="delete-{{ $question->id }}">
-                            @method('DELETE')
+    @if (isset($questions))
+
+        @foreach ($questions as $question)
+
+            {{-- Edit --}}
+            <div class="modal fade" id="edit-{{ $question->id }}" tabindex="-1" role="dialog" aria-labelledby="editQuestionLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editQuestionLabel"><strong> Edit Question </strong></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="POST" action="{{ route('admin.questions.update', [$question->quiz->id, $question->id]) }}">
+                            @method('PUT')
                             @csrf
-                            <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-danger px-5 py-1">Delete</button>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="quiz_id">Quiz</label>
+                                    <select class="custom-select mr-sm-2" name="quiz_id" id="quiz_id" required>
+                                        <option value="" selected disabled hidden>Choose...</option>
+                                        @forelse ($quizzes as $quiz)
+                                            <option value="{{ $quiz->id }}" @if($question->quiz->id === $quiz->id) selected @endif>{{ $quiz->title }}</option>
+                                        @empty
+                                            <option disabled> No quizzes added yet. </option>
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="question">Question</label>
+                                    <input type="text" class="form-control @error('question') is-invalid @enderror" id="question" name="question" value="{{ $question->question }}" placeholder="Question" autocomplete="question" required autofocus>
+                                    @error('question')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="a">Choice A</label>
+                                        <input type="text" class="form-control @error('a') is-invalid @enderror" id="a" name="a" value="{{ $question->a }}" autocomplete="a" placeholder="Choice A" required>
+                                        @error('a')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="b">Choice B</label>
+                                        <input type="text" class="form-control @error('b') is-invalid @enderror" id="b" name="b" value="{{ $question->b }}" autocomplete="b" placeholder="Choice B" required>
+                                        @error('b')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="c">Choice C</label>
+                                        <input type="text" class="form-control @error('c') is-invalid @enderror" id="c" name="c" value="{{ $question->c }}" autocomplete="c" placeholder="Choice C" required>
+                                        @error('c')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="d">Choice D</label>
+                                        <input type="text" class="form-control @error('d') is-invalid @enderror" id="d" name="d" value="{{ $question->d }}" autocomplete="d" placeholder="Choice D" required>
+                                        @error('d')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="answer">Answer</label>
+                                        <select class="custom-select mr-sm-2" name="answer" id="answer" required>
+                                            <option value="a" @if ($question->answer == 'a') selected @endif>Choice A</option>
+                                            <option value="b" @if ($question->answer == 'b') selected @endif>Choice B</option>
+                                            <option value="c" @if ($question->answer == 'c') selected @endif>Choice C</option>
+                                            <option value="d" @if ($question->answer == 'd') selected @endif>Choice D</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-8">
+                                        <label for="answer_explanation">Answer Explanation</label>
+                                        <textarea class="form-control @error('answer_explanation') is-invalid @enderror" id="answer_explanation" name="answer_explanation" autocomplete="answer_explanation" placeholder="Answer Explanation" rows="5" style="resize: none;">{{ $question->answer_explanation }}</textarea>
+                                        @error('answer_explanation')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary px-5 py-1" id="addQuestionSubmit">Save</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
 
-    @endforeach
+            {{-- Delete --}}
+            <div class="modal fade" id="delete-{{ $question->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteQuestionLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger">
+                            <h5 class="modal-title" id="deleteQuestionLabel"><strong> Are you sure you want to delete this question? </strong></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer">
+                            <form action="{{ route('admin.questions.destroy', [$question->quiz->id, $question->id]) }}" method="POST" id="delete-{{ $question->id }}">
+                                @method('DELETE')
+                                @csrf
+                                <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger px-5 py-1">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        @endforeach
+
+    @endif
 
 @endsection

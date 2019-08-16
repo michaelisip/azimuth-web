@@ -37,7 +37,7 @@
 
                                 {{-- Quizzes cards --}}
                                 <div class="row justify-content-center">
-                                    @foreach ($quizzes as $key => $quiz)
+                                    @forelse ($quizzes as $key => $quiz)
                                         <div class="col-12 col-lg-3 col-xl-4">
                                             <div class="card border-0 rounded-lg shadow">
                                                 <div class="card-body">
@@ -56,7 +56,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach
+                                    @empty
+                                        <em> No quizzes addded yet. </em>
+                                    @endforelse
                                 </div>
 
                             </div>
