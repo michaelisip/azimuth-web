@@ -167,6 +167,7 @@ return [
          */
         PragmaRX\Google2FALaravel\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -233,6 +234,7 @@ return [
          */
         'Google2FA' => PragmaRX\Google2FALaravel\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'DataTables' => yajra\DataTables\Facades\DataTables::class,
 
     ],
 

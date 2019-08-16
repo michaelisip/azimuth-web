@@ -21,6 +21,6 @@ class UsersSeeder extends Seeder
             'password' => 'password',
         ]);
 
-        factory(App\User::class, 100)->create();
+        factory(App\User::class, 10000)->create();
     }
 }
