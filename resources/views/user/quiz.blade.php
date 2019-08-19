@@ -5,8 +5,18 @@
 
         <div class="row shadow-none border-0">
 
+            <div class="col-12">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="countdown text-center mt-4 d-block d-md-none">
+                    <h1 class="font-weight-bolder clock" id="clock"></h1>
+                </div>
+
+            </div>
+
             {{-- Quizzes --}}
-            <div class="col-12 col-lg-7">
+            <div class="col-12 col-lg-8">
                 <div id="quizzes" class="mt-4">
                     <div class="card rounded-lg shadow-none border-0 p-3 position-relative">
                         <div class="card-body">
@@ -41,10 +51,9 @@
                                         </div>
 
                                         <button type="submit" class="btn btn-primary px-5"> Submit </button>
-                                        <div class="progress mt-5">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ ($key/$quiz->questions->count())*100 }}%"></div>
-                                        </div>
-                                        <p class="text-right text-danger font-italic mt-4 mb-0 p-0">* Your score is computed asynchronously. Refreshing the page will mark your progress as your score.</p>
+                                        <p class="text-right text-danger font-italic mt-4 mb-0 p-0">
+                                            * Please do not refresh. Otherwise your current score will be marked as your final score.
+                                        </p>
                                     </form>
                                 @endforeach
                             </div>
@@ -67,7 +76,7 @@
             </div>
 
             {{-- Timer --}}
-            <div class="col-12 col-lg-5">
+            <div class="col-12 col-lg-4 d-none d-md-block">
                 <div id="reports" class="mt-4">
                     <div class="card rounded-lg shadow-none border-0 p-3">
                         <div class="card-body">
@@ -75,7 +84,7 @@
                             <p> {{ $quiz->description ?: 'No Description'}} </p>
                             <hr>
                             <div class="countdown text-center my-5">
-                                <h1 class="font-weight-bolder" id="clock"></h1>
+                                <h1 class="font-weight-bolder clock" id="clock"></h1>
                             </div>
                         </div>
                     </div>
@@ -147,12 +156,12 @@
             var time = ({{ $quiz->timer }} * 1000) * 60
             var format = '%H Hours %M Mins %S Secs';
 
-            $('#clock').countdown(new Date().valueOf() + time)
+            $('.clock').countdown(new Date().valueOf() + time)
 
                 .on('update.countdown', function(event) {
 
                     if (checkIfStudentIsFinished()) {
-                        $("#clock").countdown("stop")
+                        $(".clock").countdown("stop")
                     }
 
                     if(event.offset.totalHours == 0)
@@ -180,10 +189,18 @@
             activeQuestion.removeClass("active")
             activeQuestion.addClass("d-none")
 
+            // update progress bar
+            var questions = $("#questions").children(".myForm").length
+            var activeIndex = activeQuestion.next().index() == -1 ? questions : activeQuestion.next().index()
+            $(".progress-bar").css("width", activeIndex/questions * 100 + "%")
+
             if(activeQuestion.next().length > 0){
+
+                // show next question
                 activeQuestion.next().removeClass("d-none")
                 activeQuestion.next().addClass("active")
 
+                // reset form
                 $(".myForm").trigger("reset")
             } else {
                 $(".finished").removeClass("d-none")

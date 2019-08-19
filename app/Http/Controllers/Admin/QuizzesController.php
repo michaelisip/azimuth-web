@@ -18,7 +18,7 @@ class QuizzesController extends Controller
      */
     public function index()
     {
-        return view('admin.quizzes.index', ['quizzes' => Quiz::all()]);
+        return view('admin.quizzes.index', ['quizzes' => Quiz::paginate(6)]);
     }
 
     /**
@@ -36,7 +36,7 @@ class QuizzesController extends Controller
 
     /**
      * Import data from an excel file
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function import()

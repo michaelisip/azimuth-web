@@ -20,11 +20,16 @@
     <div class="login-box">
 
         <div class="login-logo">
-            {{-- <a href="../../index2.html"><b>{{ config('app.name') }}</b></a> --}}
+            {{-- <a href="../../index2.html"><b>{{ config('app.name', 'Azimuth') }}</b></a> --}}
         </div>
 
         <div class="card">
             <div class="card-body login-card-body">
+
+                <div class="text-center">
+                    <img src="{{ asset('storage/logos/' . \App\Application::first()->logo) }}" alt="Logo" class="w-100 p-2">
+                </div>
+
                 <p class="login-box-msg">Sign in to start your session</p>
 
                 <form method="POST" action="{{ route('admin.login.submit') }}">
