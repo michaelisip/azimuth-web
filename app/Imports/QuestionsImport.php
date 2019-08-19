@@ -66,11 +66,11 @@ class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, Shou
     public function rules(): array
     {
         return [
-            'question' => 'required|max:255',
-            'a' => 'required|max:255',
-            'b' => 'required|max:255',
-            'c' => 'required|max:255',
-            'd' => 'required|max:255',
+            'question' => 'required',
+            'a' => 'required',
+            'b' => 'required',
+            'c' => 'required',
+            'd' => 'required',
             'answer' => ['required', Rule::in(['a', 'b', 'c', 'd'])],
         ];
     }

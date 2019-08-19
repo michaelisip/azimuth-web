@@ -25,11 +25,11 @@ class UpdateUser extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->user)],
             'mobile' => ['nullable', 'regex:/^(09|\+639|9)\d{9}$/'],
-            'address' => 'nullable|max:255'
+            'address' => 'nullable'
         ];
     }
 }

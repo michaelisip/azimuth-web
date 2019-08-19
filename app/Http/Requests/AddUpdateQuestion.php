@@ -25,7 +25,7 @@ class AddUpdateQuestion extends FormRequest
     public function rules()
     {
         return [
-            'question' => 'required|max:255',
+            'question' => 'required',
             'a' => 'required|max:255',
             'b' => 'required|max:255',
             'c' => 'required|max:255',

@@ -60,7 +60,7 @@ class QuizzesImport implements ToModel, WithHeadingRow, WithChunkReading, Should
     public function rules(): array
     {
         return [
-            'title' => 'required|max:255',
+            'title' => 'required',
             'points_per_question' => 'required|numeric|min:1',
             'timer' => 'required|numeric|min:1'
         ];

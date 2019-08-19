@@ -63,10 +63,10 @@ class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQu
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users',
             'mobile' => ['nullable', 'regex:/^(09|\+639|9)\d{9}$/'],
-            'address' => 'nullable|max:255'
+            'address' => 'nullable'
         ];
     }
 

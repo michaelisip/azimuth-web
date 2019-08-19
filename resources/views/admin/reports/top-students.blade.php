@@ -33,7 +33,7 @@
                         <div class="card shadow-none border-0">
                             <div class="card-body">
 
-                                @foreach ($quizzes->chunk(4) as $chunk)
+                                @forelse ($quizzes->chunk(4) as $chunk)
                                     <div class="row justify-content-center">
                                         @foreach ($chunk as $quiz)
                                             <div class="col-12 col-lg-3">
@@ -71,7 +71,9 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                @endforeach
+                                @empty
+                                    <em>No quizzes added yet.</em>
+                                @endforelse
 
                             </div>
                         </div>
