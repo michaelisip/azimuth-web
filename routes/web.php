@@ -91,6 +91,13 @@ Route::name('admin.')->group(function(){
                 Route::post('quizzes/import', 'QuizzesController@import')->name('quizzes.import');
                 Route::post('quizzes/{quiz}/questions/import', 'QuestionsController@import')->name('questions.import');
 
+                // exports
+                Route::group(['prefix' => 'export', 'as' => 'export.'], function () {
+                    Route::get('users', 'UsersController@export')->name('users');
+                    Route::get('quizzes', 'QuizzesController@export')->name('quizzes');
+                    Route::get('questions/{quiz}', 'QuestionsController@export')->name('questions');
+                });
+
                 // Reports
                 Route::name('reports.')->group(function(){
                     Route::get('reports', 'ReportController@viewReports')->name('index');

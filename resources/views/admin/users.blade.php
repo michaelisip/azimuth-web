@@ -13,7 +13,10 @@
                             <div class="col-8 col-lg-10">
                                 <h1 class="d-inline align-middle mr-3"> <strong> Students </strong> </h1>
                                 <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addUser"> Add Student </button>
-                                <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importUsers">Import Students </button>
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button class="btn btn-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importUsers">Import Students </button>
+                                    <a href="{{ route('admin.export.users') }}" class="btn btn-outline-secondary btn-sm align-middle px-4"> Export Students </a>
+                                </div>
                             </div>
                             <div class="col-4 col-lg-2">
                                 <ol class="breadcrumb float-sm-right">

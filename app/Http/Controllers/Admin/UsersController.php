@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -49,6 +50,16 @@ class UsersController extends Controller
         }
 
         return back()->with('success', 'Successfully imported students.');
+    }
+
+    /**
+     * Export data from database
+     *
+     * @return back
+     */
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
     }
 
     /**

@@ -81,7 +81,10 @@
                                 <div>
                                     <h3 class="d-inline align-middle mr-3"> <strong> Questions </strong> </h3>
                                     <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addQuestion"> Add Questions </button>
-                                    <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importQuestions">Import Questions </button>
+                                    <div class="btn-group" role="group" aria-label="...">
+                                        <button class="btn btn-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importQuestions">Import Questions </button>
+                                        <a href="{{ route('admin.export.questions', $quiz->id) }}" class="btn btn-outline-secondary btn-sm align-middle px-4"> Export Questions </a>
+                                    </div>
                                 </div>
                                 <hr>
                                 <table id="table" class="table table-responsive table-striped table-hover">

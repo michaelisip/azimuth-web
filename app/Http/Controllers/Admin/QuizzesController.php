@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\QuestionsExport;
+use App\Exports\QuizzesExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Quiz;
@@ -48,6 +50,16 @@ class QuizzesController extends Controller
         }
 
         return back()->with('success', 'Successfully imported quizzes.');
+    }
+
+    /**
+     * Export data from database
+     *
+     * @return back
+     */
+    public function export()
+    {
+        return Excel::download(new QuizzesExport, 'quizzes.xlsx');
     }
 
     /**
