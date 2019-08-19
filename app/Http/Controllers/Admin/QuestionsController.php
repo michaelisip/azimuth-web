@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\QuestionsExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Quiz;
@@ -85,6 +86,18 @@ class QuestionsController extends Controller
         }
 
         return back()->with('success', 'Successfully imported quesitons.');
+    }
+
+    /**
+     * Import data from an excel file
+     *
+     * @return back
+     */
+    public function export($quiz)
+    {
+        $quizName = Quiz::findOrFail($quiz)->value('title');
+
+        return Excel::download(new QuestionsExport($quiz), $quizName . ' - questions.xlsx');
     }
 
     /**

@@ -12,7 +12,10 @@
                             <div class="col-8 col-lg-10">
                                 <h1 class="d-inline align-middle mr-3"><strong> Quizzes </strong></h1>
                                 <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addQuiz"> Add Quiz </button>
-                                <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importQuizzes">Import Quizzes </button>
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button class="btn btn-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importQuizzes">Import Quizzes </button>
+                                    <a href="{{ route('admin.export.quizzes') }}" class="btn btn-outline-secondary btn-sm align-middle px-4"> Export Quizzes </a>
+                                </div>
                             </div>
                             <div class="col-4 col-lg-2">
                                 <ol class="breadcrumb float-sm-right">
