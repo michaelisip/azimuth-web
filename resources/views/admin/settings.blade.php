@@ -35,7 +35,7 @@
                         <div class="card shadow-none border-0">
                             <div class="card-body">
                                 <div class="user-info text-center my-5">
-                                    <img src="{{ asset('storage/avatars/' . $user->avatar) }}" alt="Admin Image" class="img-circle w-50 mb-3">
+                                    <img src="{{ asset(isset($user->avatar) ? 'storage/avatars/' . $user->avatar : 'defaults/avatar.jpg') }}" alt="Admin Image" class="img-circle w-50 mb-3">
                                     <h3>{{ $user->name }}</h3>
                                     <p class="text-muted">{{ $user->email }}</p>
                                 </div>
@@ -52,7 +52,7 @@
                                 <p>App Name</p>
                                 <h1>{{ \App\Application::first()->name }}</h1>
                                 <p>Logo</p>
-                                <img src="{{ asset('storage/logos/' . \App\Application::first()->logo) }}" alt="Admin Image" class="rounded w-25 mb-3">
+                                <img src="{{ asset(isset(\App\Application::first()->logo) ? 'storage/logos/' . \App\Application::first()->logo : 'defaults/logo.png') }}" alt="Admin Image" class="rounded w-25 mb-3">
                                 <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#updateSettings"> Edit Settings </button>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="text-center mb-2">
-                            <img src="{{ asset('storage/avatars/' . $user->avatar) }}" alt="Admin Avatar" class="img-circle w-50">
+                            <img src="{{ asset(isset($user->avatar) ? 'storage/avatars/' . $user->avatar : 'defaults/avatar.jpg') }}" alt="Admin Avatar" class="img-circle w-50">
                         </div>
                         <div class="form-group">
                             <label for="avatar">Avatar</label>
@@ -177,7 +177,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="text-center mb-2">
-                            <img src="{{ asset('storage/logos/' . \App\Application::first()->logo) }}" alt="Logo" class="img-circle w-50">
+                            <img src="{{ asset(isset(\App\Application::first()->logo) ? 'storage/logos/' . \App\Application::first()->logo : 'defaults/logo.png') }}" alt="Logo" class="img-circle w-50">
                         </div>
                         <div class="form-group">
                             <label for="logo">Logo</label>
