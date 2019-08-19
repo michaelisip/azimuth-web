@@ -1,8 +1,29 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800&display=swap');
 
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Font Awesome
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
+// Ionicons
+@import "~ionicons-npm/css/ionicons.min.css";
+
+// Tempusdominus Bootstrap 4
+@import "~tempusdominus-bootstrap-4/src/sass/_tempusdominus-bootstrap-4.scss";
+
+// Icheck Bootstap
+@import "~icheck-bootstrap/icheck-bootstrap.min.css";
+
+// JQVMap
+@import "~jqvmap/dist/jqvmap.min.css";
+
+// Admin LTE
+@import "~admin-lte/dist/css/adminlte.min.css";
+
+// Datatables
+@import "~datatables.net-bs4/css/dataTables.bootstrap4.min.css";

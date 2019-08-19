@@ -10,7 +10,16 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
+    require('jquery-ui');
     require('bootstrap');
+    require('datatables.net-bs4');
+    require('chart.js');
+    require('jqvmap');
+    require('tempusdominus-bootstrap-4');
+    require('sweetalert2')
+    require('jquery-countdown');
+    require('admin-lte');
+
 } catch (e) {}
 
 /**

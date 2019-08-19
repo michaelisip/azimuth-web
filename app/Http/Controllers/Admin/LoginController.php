@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\PreventUserFromAdminAccess;
 
 class LoginController extends Controller
 {    
@@ -36,6 +37,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        $this->middleware(PreventUserFromAdminAccess::class);
         $this->middleware('guest:admin')->except('logout');
     }
 
@@ -65,6 +67,6 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::guard('admin')->logout();
-        return redirect('/admin');
+        return redirect()->route('admin.dashboard');
     }
 }

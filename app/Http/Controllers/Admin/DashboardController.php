@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Question;
+use App\Quiz;
+use App\User;
 
 class DashboardController extends Controller
 {
@@ -22,8 +25,13 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function __invoke()
     {
-        return view('admin.dashboard');
+        return view('admin.index', [
+            'studentsCount' => User::count(),
+            'quizzesCount' => Quiz::count(),
+            'questionsCount' => Question::count()
+        ]);
     }
+
 }
