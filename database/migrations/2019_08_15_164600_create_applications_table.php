@@ -16,7 +16,7 @@ class CreateApplicationsTable extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->default('Azimuth');
-            $table->string('logo')->default('azimuth.png');
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

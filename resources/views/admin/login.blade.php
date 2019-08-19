@@ -27,7 +27,7 @@
             <div class="card-body login-card-body">
 
                 <div class="text-center">
-                    <img src="{{ asset('storage/logos/' . \App\Application::first()->logo) }}" alt="Logo" class="w-100 p-2">
+                    <img src="{{ asset(isset(\App\Application::first()->logo) ? 'storage/logos/' . \App\Application::first()->logo : 'defaults/logo.png') }}" alt="Logo" class="w-100 p-2">
                 </div>
 
                 <p class="login-box-msg">Sign in to start your session</p>

@@ -9,7 +9,7 @@
                 <div class="card shadow-none border-0">
                     <div class="card-body py-5">
                         <div class="user-info text-center mb-5">
-                            <img src="{{ asset('storage/avatars/' . $user->avatar) }}" alt="Student Image" class="w-50 img-circle shadow mb-4">
+                            <img src="{{ asset(isset($user->avatar) ? 'storage/avatars/' . $user->avatar : 'defaults/avatar.jpg') }}" alt="Student Image" class="w-50 img-circle shadow mb-4">
                             <h3>{{ $user->name }}</h3>
                             <p class="text-muted">{{ $user->email }}</p>
                         </div>
@@ -127,7 +127,7 @@
                     <div class="modal-body">
                         <div class="form-row p-sm-4">
                             <div class="form-group col-12 col-lg-4 text-center p-lg-4">
-                                <img src="{{ asset('storage/avatars/' . $user->avatar) }}" alt="Student Image" class="w-100 img-circle shadow">
+                                <img src="{{ asset(isset($user->avatar) ? 'storage/avatars/' . $user->avatar : 'defaults/avatar.jpg') }}" alt="Student Image" class="w-100 img-circle shadow">
                                 <div class="custom-file mt-3">
                                     <input type="file" class="custom-file-input" id="avatar" name="avatar">
                                     <label class="custom-file-label text-left" for="avatar">Choose image</label>
