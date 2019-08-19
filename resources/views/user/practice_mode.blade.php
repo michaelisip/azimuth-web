@@ -6,6 +6,14 @@
         <div class="row shadow-none border-0">
 
             {{-- Quizzes --}}
+
+            <div class="col-12">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                </div>
+            </div>
+
             <div class="col-12 col-lg-7">
                 <div id="quizzes" class="mt-4">
                     <div class="card rounded-lg shadow-none border-0 p-3 position-relative">
@@ -41,9 +49,6 @@
                                         </div>
 
                                         <button type="submit" class="btn btn-primary px-5"> Submit </button>
-                                        <div class="progress mt-5">
-                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ ($key/$quiz->questions->count())*100 }}%"></div>
-                                        </div>
                                     </form>
                                 @endforeach
 
@@ -75,16 +80,20 @@
 
         </div>
     </div>
+
+    {{-- Audios --}}
+    <audio id="correct" src="{{ asset('effects/correct.wav') }}"></audio>
+    <audio id="incorrect" src="{{ asset('effects/incorrect.wav') }}"></audio>
+
 @endsection
 
-
 @section('scripts')
-    <script src="{{ asset('js/app.js') }}"></script>
     <script>
+
         $(document).ready(function(){
+
             $("#questions").children().first().addClass("active")
             $("#questions").children().first().removeClass("d-none")
-
 
             $.ajaxSetup({
                 headers: {
@@ -120,6 +129,9 @@
         })
 
         function wrongAnswer() {
+
+            document.getElementById("incorrect").play()
+
             $("input[name=student_answer]:checked").parent().addClass("shake-vertical")
 
             setTimeout(function(){
@@ -129,14 +141,23 @@
 
         function nextQuestion() {
 
+            document.getElementById("correct").play()
+
             var activeQuestion = $(".active")
             activeQuestion.removeClass("active")
             activeQuestion.addClass("d-none")
 
             if(activeQuestion.next().length > 0){
+                // show next question
                 activeQuestion.next().removeClass("d-none")
                 activeQuestion.next().addClass("active")
 
+                // update progress bar
+                var questions = $("#questions").children(".myForm").length
+                var activeIndex = activeQuestion.next().index()
+                $(".progress-bar").css("width", activeIndex/questions * 100 + "%")
+
+                // reset form
                 $(".myForm").trigger("reset")
             } else {
                 $(".finished").removeClass("d-none")

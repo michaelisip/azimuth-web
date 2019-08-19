@@ -47,12 +47,12 @@
                         <p> All Quizzes </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ route('admin.questions.index', 'all') }}" class="nav-link @if(Route::currentRouteName() == 'admin.questions.index') active @endif">
                         <i class="nav-icon fas fa-question-circle"></i>
                         <p> All Questions </p>
                     </a>
-                </li>
+                </li> --}}
 
                 {{-- Reports --}}
                 <li class="nav-header">REPORTS</li>

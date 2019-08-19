@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-8 col-lg-10">
-                                <h1 class="d-inline align-middle mr-3"><strong>Quiz</strong>  - {{ $quiz->title }} </h1>
+                                <h1 class="d-inline align-middle mr-3"><strong>{{ $quiz->title }}</strong></h1>
                             </div>
                             <div class="col-4 col-lg-2">
                                 <ol class="breadcrumb float-sm-right">
