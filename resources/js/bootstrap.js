@@ -15,7 +15,8 @@ try {
     require('datatables.net-bs4');
     require('chart.js');
     require('jqvmap');
-    require('tempusdominus-bootstrap-4');
+    // messes up the sidebar collapse
+    // require('tempusdominus-bootstrap-4');
     require('sweetalert2')
     require('jquery-countdown');
     require('admin-lte');

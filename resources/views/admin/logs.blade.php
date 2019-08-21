@@ -11,13 +11,12 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-8 col-lg-10">
-                                <h1 class="d-inline align-middle mr-3"> <strong> Students Reports </strong> </h1>
+                                <h1 class="d-inline align-middle mr-3"> <strong> Activity Logs </strong> </h1>
                             </div>
                             <div class="col-4 col-lg-2 d-none d-sm-block">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                                    <li class="breadcrumb-item"> Reports </li>
-                                    <li class="breadcrumb-item active"> Students </li>
+                                    <li class="breadcrumb-item active"> Acivity Logs </li>
                                 </ol>
                             </div>
                         </div>
@@ -39,39 +38,25 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Quizzes Answered</th>
-                                            <th>Last Quiz Taken</th>
-                                            <th>Highest Quiz Score</th>
+                                            <th>Action</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $key => $user)
+                                        @foreach ($logs as $key => $log)
                                             <tr>
                                                 <td>{{ ++$key }}</td>
-                                                <td>{{ $user->name }}</td>
-
-                                                {{-- Refactory these lines --}}
-                                                <td>{{ $user->scores->count() > 0 ? $user->scores->count() : 'None'}}</td>
-                                                <td>{{ isset($user->latestQuiz()->created_at) ? $user->latestQuiz()->created_at->diffForHumans() : "Hasn't Taken Any Quiz" }}</td>
-                                                <td>{{ $user->highestQuizScore()->score ?? "Hasn't Taken Any Quiz" }}</td>
-
-                                                <td>
-                                                    @if(!$user->scores->isEmpty())
-                                                        <a href="{{ route('admin.reports.student-scores', $user->id) }}" class="btn btn-sm btn-primary">
-                                                            <i class="fas fa-eye"></i> &nbsp; View Reports
-                                                        </a>
-                                                    @endif
-                                                </td>
+                                                <td>{{ $log->name }}</td>
+                                                <td>{{ ucfirst($log->action) }}</td>
+                                                <td>{{ $log->created_at->diffForHumans() }}</td>
                                             </tr>
                                         @endforeach
+                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Quizzes Answered</th>
-                                            <th>Last Quiz Taken</th>
-                                            <th>Highest Quiz Score</th>
+                                            <th>Action</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ActivityLog;
 use App\Exports\QuestionsExport;
 use App\Exports\QuizzesExport;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Quiz;
 use App\Http\Requests\AddNewQuiz;
 use App\Imports\QuizzesImport;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class QuizzesController extends Controller
@@ -33,6 +35,8 @@ class QuizzesController extends Controller
     {
         Quiz::create($request->all());
 
+        ActivityLog::log(Auth::guard('admin')->user(), "added a new quiz '{$request->title}'");
+
         return back()->with('success', 'Successfull added quiz.');
     }
 
@@ -49,6 +53,8 @@ class QuizzesController extends Controller
             return back()->with('import', $e->failures());
         }
 
+        ActivityLog::log(Auth::guard('admin')->user(), 'imported new quizzes');
+
         return back()->with('success', 'Successfully imported quizzes.');
     }
 
@@ -59,6 +65,8 @@ class QuizzesController extends Controller
      */
     public function export()
     {
+        ActivityLog::log(Auth::guard('admin')->user(), 'exported quizzes');
+
         return Excel::download(new QuizzesExport, 'quizzes.xlsx');
     }
 
@@ -68,10 +76,10 @@ class QuizzesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Quiz $quiz)
     {
         return view('admin.quizzes.questions', [
-            'quiz' => Quiz::findOrFail($id),
+            'quiz' => $quiz,
             'quizzes' => Quiz::select(['title', 'id'])->get()
             ]);
     }
@@ -83,9 +91,11 @@ class QuizzesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Quiz $quiz)
     {
-        Quiz::findOrFail($id)->update($request->all());
+        $quiz->update($request->all());
+
+        ActivityLog::log(Auth::guard('admin')->user(), "updated '{$quiz->title}'");
 
         return back()->with('success', 'Successfully updated quiz');
     }
@@ -96,9 +106,11 @@ class QuizzesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Quiz $quiz)
     {
-        Quiz::destroy($id);
+        $quiz->delete();
+
+        ActivityLog::log(Auth::guard('admin')->user(), "deleted '{$quiz->title}'");
 
         return redirect()->route('admin.quizzes.index')->with('success', 'Successfully deleted quiz.');
     }

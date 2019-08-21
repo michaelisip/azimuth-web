@@ -13,7 +13,7 @@
                             <div class="col-8 col-lg-10">
                                 <h1 class="d-inline align-middle mr-3"> <strong> Settings </strong> </h1>
                             </div>
-                            <div class="col-4 col-lg-2">
+                            <div class="col-4 col-lg-2 d-none d-sm-block">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                                     <li class="breadcrumb-item active"> Settings </li>
