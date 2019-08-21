@@ -28,7 +28,7 @@ class ReportController extends Controller
     {
         return view('admin.reports.student-scores', [
             'user' => User::findOrFail($user),
-            'quizzes' => Quiz::all()]);
+            'quizzes' => Quiz::paginate(10)]);
     }
 
 }

@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-8 col-lg-10">
-                                <h1 class="d-inline align-middle mr-3"> Quiz Scores </h1>
+                                <h1 class="d-inline align-middle mr-3"> <strong> Quiz Scores </strong> </h1>
                             </div>
                             <div class="col-4 col-lg-2 d-none d-sm-block">
                                 <ol class="breadcrumb float-sm-right">
@@ -98,7 +98,7 @@
                                                     <td>{{ ++$key }}</td>
                                                     <td>{{ $score->user->name }}</td>
                                                     <td>{{ $score->score }}</td>
-                                                    <td>{{ $score->score }}</td>
+                                                    <td>{{ $score->score * $quiz->points_per_question}}</td>
                                                     <td>{{ $score->created_at->diffForHumans() }}</td>
                                                 </tr>
                                             @endforeach

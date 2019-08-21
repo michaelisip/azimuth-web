@@ -68,7 +68,7 @@
                     <a href="{{ route('admin.reports.top-students') }}" class="nav-link
                             @if(Route::currentRouteName() == 'admin.reports.top-students'
                                 || Route::currentRouteName() == 'admin.reports.quiz') active @endif">
-                        <i class="nav-icon fas fa-award"></i>
+                        <i class="nav-icon fas fa-trophy"></i>
                         <p> Top Students </p>
                     </a>
                 </li>

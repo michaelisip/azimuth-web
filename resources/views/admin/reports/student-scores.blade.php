@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-8 col-lg-10">
-                                <h1 class="d-inline align-middle mr-3"> {{ $user->name }}'s Scores </h1>
+                                <h1 class="d-inline align-middle mr-3"> <strong> {{ $user->name }}'s Scores </strong></h1>
                             </div>
                             <div class="col-4 col-lg-2 d-none d-sm-block">
                                 <ol class="breadcrumb float-sm-right">
@@ -49,6 +49,10 @@
                                             {{ $quiz->title }}
                                         </a>
                                     @endforeach
+
+                                </div>
+                                <div class="d-flex justify-content-center w-100 mt-4">
+                                    {{ $quizzes->links() }}
                                 </div>
                             </div>
                         </div>
@@ -66,7 +70,7 @@
                                                     <h3 class="d-inline align-middle mr-3">
                                                         <strong> Students' Quiz Overview
                                                             @if ($user->hasStudentAnsweredQuiz($quiz->id))
-                                                                - {{ $user->QuizScore($quiz->id) }} points
+                                                                - {{ $user->QuizScore($quiz->id) * $quiz->points_per_question }} points
                                                             @endif
                                                         </strong>
                                                     </h3>
