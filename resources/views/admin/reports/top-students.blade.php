@@ -9,10 +9,10 @@
                 <div class="card shadow-none border-0">
                     <div class="card-body">
                         <div class="row mb-2">
-                            <div class="col-8 col-lg-8">
+                            <div class="col-12 col-sm-6 col-lg-8">
                                 <h1 class="d-inline align-middle mr-3"> <strong> Top Students </strong> </h1>
                             </div>
-                            <div class="col-4 col-lg-4 d-none d-sm-block">
+                            <div class="col col-sm-6 col-lg-4 d-none d-sm-block">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                                     <li class="breadcrumb-item"> Reports </li>
@@ -75,6 +75,9 @@
                                     <em>No quizzes added yet.</em>
                                 @endforelse
 
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                {{ $quizzes->links() }}
                             </div>
                         </div>
                     </div>

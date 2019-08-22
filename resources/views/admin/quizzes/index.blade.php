@@ -64,7 +64,7 @@
                                     @endforelse
                                 </div>
 
-                                <div class="float-right">
+                                <div class="d-flex justify-content-center mt-3">
                                     {{ $quizzes->links() }}
                                 </div>
                             </div>

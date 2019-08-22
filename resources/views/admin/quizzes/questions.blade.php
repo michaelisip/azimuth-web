@@ -10,10 +10,10 @@
                 <div class="card shadow-none border-0">
                     <div class="card-body">
                         <div class="row mb-2">
-                            <div class="col-8 col-lg-10">
+                            <div class="col-12 col-sm-8 col-lg-9">
                                 <h1 class="d-inline align-middle mr-3"><strong>{{ $quiz->title }}</strong></h1>
                             </div>
-                            <div class="col-4 col-lg-2 d-none d-sm-block">
+                            <div class="col col-sm-4 col-lg-3 d-none d-sm-block">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                                     <li class="breadcrumb-item"><a href="{{ route('admin.quizzes.index') }}"></a> Quizzes </li>
@@ -32,7 +32,7 @@
                 <div class="row">
 
                     {{-- Information --}}
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-xl-4">
                         <div class="card shadow-none border-0 p-2">
                             <div class="card-body">
                                 <div class="d-flex w-100 justify-content-between">
@@ -75,7 +75,7 @@
 
 
                     {{-- Questions --}}
-                    <div class="col-12 col-md-8">
+                    <div class="col-12 col-xl-8">
                         <div class="card shadow-none border-0 p-2">
                             <div class="card-body">
                                 <div>

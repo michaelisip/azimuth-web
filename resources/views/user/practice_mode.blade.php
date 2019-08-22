@@ -82,8 +82,8 @@
     </div>
 
     {{-- Audios --}}
-    <audio id="correct" src="{{ asset('effects/correct.wav') }}"></audio>
-    <audio id="incorrect" src="{{ asset('effects/incorrect.wav') }}"></audio>
+    <audio id="correct" src="{{ asset('effects/correct.ogg') }}"></audio>
+    <audio id="incorrect" src="{{ asset('effects/incorrect.ogg') }}"></audio>
 
 @endsection
 

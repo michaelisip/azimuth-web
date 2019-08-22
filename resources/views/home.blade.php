@@ -37,6 +37,9 @@
                                 <em class="p-5"> No quizzes available yet. </em>
                             @endforelse
                         </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            {{ $quizzes->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -47,7 +50,7 @@
             <div id="reports" class="mt-4">
                 <div class="card rounded-0 shadow border border-bottom-0 border-left-0 border-right-0 border-primary p-3" style="border-width: 10px !important">
                     <div class="card-body">
-                        <img src="{{ asset('storage/logos/' . \App\Application::first()->logo) }}" class="img-fluid w-100" alt="Responsive image">
+                        <img src="{{ asset(isset(\App\Application::first()->logo) ? 'storage/logos/' . \App\Application::first()->logo : 'defaults/logo.png') }}" class="img-fluid w-100" alt="Responsive image">
                     </div>
                 </div>
             </div>

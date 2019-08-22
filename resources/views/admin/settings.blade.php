@@ -52,7 +52,7 @@
                                 <p>App Name</p>
                                 <h1>{{ \App\Application::first()->name }}</h1>
                                 <p>Logo</p>
-                                <img src="{{ asset(isset(\App\Application::first()->logo) ? 'storage/logos/' . \App\Application::first()->logo : 'defaults/logo.png') }}" alt="Admin Image" class="rounded w-25 mb-3">
+                                <img src="{{ asset(isset(\App\Application::first()->logo) ? 'storage/logos/' . \App\Application::first()->logo : 'defaults/logo.png') }}" alt="Admin Image" class="rounded w-50 mb-3">
                                 <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#updateSettings"> Edit Settings </button>
                             </div>
                         </div>

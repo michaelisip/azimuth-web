@@ -38,7 +38,7 @@
                 </li>
 
                 {{-- Students --}}
-                <li class="nav-header">EXAMS</li>
+                <li class="nav-header">QUIZZES</li>
                 <li class="nav-item">
                     <a href="{{ route('admin.quizzes.index') }}" class="nav-link
                             @if(Route::currentRouteName() == 'admin.quizzes.index'

@@ -138,9 +138,6 @@
                         quiz_id: quiz_id,
                         question_id: question_id,
                         student_answer: student_answer
-                    },
-                    success: function(data){
-                        console.log(data.result)
                     }
                 })
 

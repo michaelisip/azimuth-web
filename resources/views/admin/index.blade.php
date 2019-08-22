@@ -58,7 +58,7 @@
                             <div class="icon">
                                 <i class="ion ion-help"></i>
                             </div>
-                            <a href="{{ route('admin.questions.index', 'all') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('admin.quizzes.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>

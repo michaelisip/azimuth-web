@@ -16,7 +16,7 @@ class ReportController extends Controller
 
     public function viewTopStudents()
     {
-        return view('admin.reports.top-students', ['quizzes' => Quiz::all()]);
+        return view('admin.reports.top-students', ['quizzes' => Quiz::paginate(8)]);
     }
 
     public function viewQuizScores($quiz)
