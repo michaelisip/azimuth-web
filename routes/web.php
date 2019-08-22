@@ -113,6 +113,8 @@ Route::name('admin.')->group(function(){
                     Route::put('/profile/{user}/update', 'ApplicationController@updateProfile')->name('update-profile');
                     Route::put('/profile/{user}/change-password', 'ApplicationController@changePassword')->name('change-password');
                 });
+
+                Route::get('activity-logs', 'ActivityLogController')->name('logs');
             });
         });
     });

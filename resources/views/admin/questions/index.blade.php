@@ -15,7 +15,7 @@
                                 <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addQuestion"> Add Question </button>
                                 <button class="btn btn-outline-secondary btn-sm align-middle px-4" data-toggle="modal" data-target="#importQuestions">Import Questions </button>
                             </div>
-                            <div class="col-4 col-lg-2">
+                            <div class="col-4 col-lg-2 d-none d-sm-block">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                                     <li class="breadcrumb-item active"> Questions </li>
@@ -34,8 +34,8 @@
                     <div class="col-12">
 
                         <div class="card shadow-none border-0">
-                            <div class="card-body">
-                                <table id="table" class="table table-responsive table-striped table-hover">
+                            <div class="card-body table-responsive">
+                                <table id="table" class="table table-striped table-hover">
                                     <thead>
                                         <tr>
                                             <th>#</th>
