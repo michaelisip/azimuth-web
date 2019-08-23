@@ -44,7 +44,7 @@
                                         <div class="col-12 col-lg-3 col-xl-4">
                                             <div class="card border-0 rounded-lg shadow">
                                                 <div class="card-body">
-                                                    <h6 class="card-subtitle mb-2 text-muted">{{ $quiz->timer }} minutes</h6>
+                                                    <h6 class="card-subtitle mb-2 text-muted">{{ $quiz->timer }} minutes | {{ $quiz->questions->count() }} questions | {{ $quiz->points_per_question }} points each </h6>
                                                     <h5 class="card-title">{{ str_limit($quiz->title, 40) }}</h5>
                                                     <p class="card-text">
                                                         @if (is_null($quiz->description))

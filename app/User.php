@@ -128,6 +128,11 @@ class User extends Authenticatable
         return $score ?: 0;
     }
 
+    public function scopeQuizScores($query, $id)
+    {
+        return $this->scores()->where('quiz_id', $id)->latest();
+    }
+
     /**
     * Override parent boot and Call deleting event
     * Delete child student scores and answers when student is to be deleted

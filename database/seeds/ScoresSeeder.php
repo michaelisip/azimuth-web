@@ -24,30 +24,30 @@ class ScoresSeeder extends Seeder
 
         foreach(Quiz::all() as $quiz) {
 
-            foreach (User::inRandomOrder()->take(20)->get() as $user) {
+            foreach (User::inRandomOrder()->take(10)->get() as $user) {
 
-                $userCorrect = 0;
+                $userScore = Score::create([
+                    'user_id' => $user->id,
+                    'quiz_id' => $quiz->id,
+                ]);
 
                 foreach ($quiz->questions as $question) {
 
-                    $useAnswer = Answer::create([
+
+                    $userAnswer = Answer::create([
                         'user_id' => $user->id,
                         'quiz_id' => $quiz->id,
                         'question_id' => $question->id,
-                        'student_answer' => $choices[array_rand($choices)]
+                        'student_answer' => $choices[array_rand($choices)],
+                        'score_id' => $userScore->id
                     ]);
 
-                    if ($useAnswer->student_answer == $question->answer) {
-                        ++$userCorrect;
+                    if ($userAnswer->student_answer == $question->answer) {
+                        $userScore->increment('score');
                     }
 
                 }
 
-                Score::create([
-                    'user_id' => $user->id,
-                    'quiz_id' => $quiz->id,
-                    'score' => $userCorrect
-                ]);
             }
 
         }
