@@ -68,6 +68,12 @@
                                         <input type="text" readonly class="form-control-plaintext" id="timer" value="{{ $quiz->timer }}">
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label for="questions" class="col-12 col-form-label">Total Questions</label>
+                                        <div class="col-12">
+                                        <input type="number" readonly class="form-control-plaintext" id="questions" value="{{ $quiz->questions->count() }}" disabled>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -88,7 +94,7 @@
                                                 <th>#</th>
                                                 <th>Student</th>
                                                 <th>Correct Answers</th>
-                                                <th>Score</th>
+                                                <th>Total Points</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -107,7 +113,7 @@
                                                 <th>#</th>
                                                 <th>Student</th>
                                                 <th>Correct Answers</th>
-                                                <th>Score</th>
+                                                <th>Total Points</th>
                                                 <th></th>
                                             </tr>
                                         </tfoot>

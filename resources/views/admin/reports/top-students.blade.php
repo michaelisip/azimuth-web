@@ -44,10 +44,10 @@
                                                         <span class="text-muted">{{ $quiz->questions->count() }} Questions - {{ $quiz->questions->count() * $quiz->points_per_question }} Total Points</span>
                                                     </div>
                                                     <ul class="list-group list-group-flush px-3">
-                                                        @foreach ($quiz->highestScores()->take(3) as $topScore)
+                                                        @foreach ($quiz->highestScores() as $topScore)
                                                             <li class="list-group-item d-flex w-100 justify-content-between align-items-center">
                                                                 <div>
-                                                                    <span class="card-title">{{ $topScore->score }}</span> &nbsp;
+                                                                    <span class="card-title">{{ $topScore->score * $quiz->points_per_question }}</span> &nbsp;
                                                                     <span>
                                                                         {{ $topScore->user->name }}
                                                                     </span>

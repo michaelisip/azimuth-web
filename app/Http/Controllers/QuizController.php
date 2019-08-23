@@ -18,7 +18,8 @@ class QuizController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('quiz')->only('index');
+        // Commented since student can now retake a quiz
+        // $this->middleware('quiz')->only('index');
         $this->middleware('auth');
     }
 
@@ -29,7 +30,7 @@ class QuizController extends Controller
      */
     public function index($quiz)
     {
-        $this->setAsStudentAnswered($quiz);
+        $this->initializeStudentScore($quiz);
 
         return view('user.quiz', ['quiz' => Quiz::findOrFail($quiz)]);
     }
@@ -39,9 +40,9 @@ class QuizController extends Controller
      *
      * @return void
      */
-    public function setAsStudentAnswered($quiz)
+    public function initializeStudentScore($quiz)
     {
-        Auth::user()->scores()->firstOrCreate(['quiz_id' => $quiz]);
+        Auth::user()->scores()->create(['quiz_id' => $quiz]);
 
         return;
     }
@@ -58,17 +59,17 @@ class QuizController extends Controller
             'quiz_id' => $request->quiz_id,
             'id' => $request->question_id])->value('answer');
 
-        // Fetch currect user
+        // Fetch currect user and current quiz attempt
         $user = Auth::user();
+        $userScore = $user->scores()->where('quiz_id', $request->quiz_id)->latest()->first();
 
         // save user answer
         $user->answers()->create([
             'quiz_id' => $request->quiz_id,
             'question_id' => $request->question_id,
             'student_answer' => $request->student_answer,
+            'score_id' => $userScore->id
         ]);
-
-        $userScore = $user->scores()->firstOrCreate(['quiz_id' => $request->quiz_id]);
 
         // Increment user score if correct
         if ($correct == $request->student_answer) {

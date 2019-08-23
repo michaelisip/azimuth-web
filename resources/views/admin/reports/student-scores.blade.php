@@ -65,14 +65,10 @@
                                 <div class="tab-content" id="v-pills-tabContent">
                                     @foreach ($quizzes as $quiz)
                                         <div class="tab-pane fade @if($loop->first) show active @else @endif" id="v-pills-{{ $quiz->id }}" role="tabpanel" aria-labelledby="v-pills-{{ $quiz->id }}-tab">
-                                            <div class="quiz-info mb-4">
+                                            <div class="quiz-info">
                                                 <div>
                                                     <h3 class="d-inline align-middle mr-3">
-                                                        <strong> Students' Quiz Overview
-                                                            @if ($user->hasStudentAnsweredQuiz($quiz->id))
-                                                                - {{ $user->QuizScore($quiz->id) * $quiz->points_per_question }} points
-                                                            @endif
-                                                        </strong>
+                                                        <strong> Students' Quiz Overview </strong>
                                                     </h3>
                                                 </div>
                                                 <hr>
@@ -85,64 +81,82 @@
                                                     {{ $quiz->points_per_question }} Points Per Question.
                                                 </p>
                                             </div>
+                                            <hr>
 
                                             @if ($user->hasStudentAnsweredQuiz($quiz->id))
-                                                <div class="table-responsive">
-                                                    <table id="table" class="table table-striped table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>Question</th>
-                                                                <th>Choice A</th>
-                                                                <th>Choice B</th>
-                                                                <th>Choice C</th>
-                                                                <th>Choice D</th>
-                                                                <th>Answer</th>
-                                                                <th>Student Answer</th>
-                                                                <th>Explanation</th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($quiz->questions as $key => $question)
-                                                                <tr>
-                                                                    <td>{{ ++$key }}</td>
-                                                                    <td class="w-25">{{ $question->question }}</td>
-                                                                    <td>{{ str_limit($question->a, 8) }}</td>
-                                                                    <td>{{ str_limit($question->b, 8) }}</td>
-                                                                    <td>{{ str_limit($question->c, 8) }}</td>
-                                                                    <td>{{ str_limit($question->d, 8) }}</td>
-                                                                    <td>{{ $question->answer }}</td>
-                                                                    <td>{{ $question->studentAnswer($quiz->id) }}</td>
-                                                                    <td>{{ $question->answer_explanation ? str_limit($question->answer_explanation, 50) : 'No Explanation' }}</td>
-                                                                    <td style="min-width: 110px;">
-                                                                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-{{$question->id}}">
-                                                                            <i class="fas fa-eye"></i>
-                                                                        </button>
-                                                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-{{$question->id}}">
-                                                                            <i class="fas fa-edit"></i>
-                                                                        </button>
-                                                                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-{{$question->id}}">
-                                                                            <i class="fas fa-trash"></i>
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        <tfoot>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>Question</th>
-                                                                <th>Choice A</th>
-                                                                <th>Choice B</th>
-                                                                <th>Choice C</th>
-                                                                <th>Choice D</th>
-                                                                <th>Answer</th>
-                                                                <th>Student Answer</th>
-                                                                <th>Explanation</th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </tfoot>
-                                                    </table>
+                                                <div class="tries my-3">
+                                                    <ul class="nav nav-pills mb-3 d-flex" id="pills-tab" role="tablist">
+                                                        @foreach ($user->quizScores($quiz->id)->get() as $key => $score)
+                                                            <li class="nav-item">
+                                                                <a class="nav-link @if($loop->first) active @endif" id="pills-{{ $key }}-tab" data-toggle="pill" href="#pills-{{ $key }}" role="tab" aria-controls="pills-{{ $key }}" aria-selected="@if($loop->first) true @else false @endif">{{ $score->created_at->diffForHumans() }}</a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+
+                                                <div class="tab-content" id="pills-tabContent">
+                                                    @foreach ($user->quizScores($quiz->id)->get() as $key => $score)
+                                                        <div class="tab-pane fade @if($loop->first) show active @endif" id="pills-{{ $key }}" role="tabpanel" aria-labelledby="pills-{{ $key }}-tab">
+                                                            <div class="results mb-5">
+                                                                <h5><strong> Result: </strong> {{ $score->score }} total score | {{ $score->score * $quiz->points_per_question }} total points</h5>
+                                                            </div>
+                                                            <table id="table" class="table table-striped table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Question</th>
+                                                                        <th>Choice A</th>
+                                                                        <th>Choice B</th>
+                                                                        <th>Choice C</th>
+                                                                        <th>Choice D</th>
+                                                                        <th>Answer</th>
+                                                                        <th>Correct Answer</th>
+                                                                        <th>Answer Explanation</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($quiz->questions as $key => $question)
+                                                                        <tr>
+                                                                            <td>{{ ++$key }}</td>
+                                                                            <td>{{ $question->question }}</td>
+                                                                            <td>{{ $question->a }}</td>
+                                                                            <td>{{ $question->b }}</td>
+                                                                            <td>{{ $question->c }}</td>
+                                                                            <td>{{ $score->id }}</td>
+                                                                            <td>{{ $question->studentAnswer($user->id, $quiz->id, $score->id) }}</td>
+                                                                            <td>{{ $question->answer }}</td>
+                                                                            <td>{{ $question->answer_explanation ?? 'No Explanation' }}</td>
+                                                                            <td style="min-width: 110px;">
+                                                                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-{{$question->id}}">
+                                                                                    <i class="fas fa-eye"></i>
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-{{$question->id}}">
+                                                                                    <i class="fas fa-edit"></i>
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-{{$question->id}}">
+                                                                                    <i class="fas fa-trash"></i>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                <tfoot>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Question</th>
+                                                                        <th>Choice A</th>
+                                                                        <th>Choice B</th>
+                                                                        <th>Choice C</th>
+                                                                        <th>Choice D</th>
+                                                                        <th>Answer</th>
+                                                                        <th>Correct Answer</th>
+                                                                        <th>Answer Explanation</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                             @else
                                                 <h5><span class="badge badge-danger p-3"> Student Has Not Answered This Quiz yet </span class="badge badge-danger p-3"></h5>

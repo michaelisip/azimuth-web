@@ -27,12 +27,13 @@ class Question extends Model
         return $this->belongsTo(Quiz::class);
     }
 
-    public function studentAnswer($id)
+    public function studentAnswer($studentId, $quizId, $scoreId)
     {
         $studentAnswer = Answer::where([
-            'user_id' => Auth::user()->id,
-            'quiz_id' => $id,
-            'question_id' => $this->id
+            'user_id' => $studentId,
+            'quiz_id' => $quizId,
+            'question_id' => $this->id,
+            'score_id' => $scoreId
         ])->value('student_answer');
 
         return $studentAnswer ?: 'No Answer';

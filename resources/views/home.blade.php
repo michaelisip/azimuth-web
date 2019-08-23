@@ -24,12 +24,11 @@
                                                 </p>
                                             </div>
                                             <p class="card-text"> {{ $quiz->description ?? 'No Description' }}</p>
+                                            <a data-href="{{ route('quiz', $quiz->id) }}" class="btn btn-sm btn-primary text-white takeQuiz px-4 my-1" data-toggle="modal" data-target="#confirmationModal">Take Quiz &nbsp; <i class="fas fa-arrow-right"></i></a>
+                                            <a href="{{ route('practice-mode', $quiz->id) }}" class="btn btn-sm btn-secondary px-4 my-1">Practice Mode </a>
                                             @if (Auth::user()->hasStudentAnsweredQuiz($quiz->id))
-                                                <a href="{{ route('score', $quiz->id) }}" class="btn btn-sm btn-success px-4 my-1"> See Result &nbsp; <i class="fas fa-arrow-right"></i></a>
-                                            @else
-                                                <a href="{{ route('quiz', $quiz->id) }}" class="btn btn-sm btn-primary px-4 my-1">Take Quiz &nbsp; <i class="fas fa-arrow-right"></i></a>
+                                                <a href="{{ route('score', $quiz->id) }}" class="btn btn-sm btn-outline-secondary px-4 my-1"> See Results &nbsp; <i class="fas fa-clipboard-list"></i></a>
                                             @endif
-                                                <a href="{{ route('practice-mode', $quiz->id) }}" class="btn btn-sm btn-outline-secondary px-4 my-1">Practice Mode </a>
                                         </div>
                                     </div>
                                 </div>
@@ -58,4 +57,37 @@
 
     </div>
 </div>
+
+{{-- Confirmation Modals --}}
+
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header bg-danger">
+            <h5 class="modal-title" id="confirmationModalTitle">Are you sure you want to take this quiz?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <em> Once you the timer has started, you <strong>MUST</strong> not reload the page otherwise your current score will be marked as you final score. </em>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+            <a class="btn btn-primary px-5" id="target">Confirm</a>
+        </div>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@section('scripts')
+    <script>
+        $(".takeQuiz").on("click", function(e){
+            var url = $(this).attr('data-href')
+            $("#target").attr("href", url)
+        })
+
+    </script>
 @endsection

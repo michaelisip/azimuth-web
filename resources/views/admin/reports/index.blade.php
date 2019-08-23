@@ -39,9 +39,9 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Quizzes Answered</th>
+                                            <th>Quizzes Taken</th>
                                             <th>Last Quiz Taken</th>
-                                            <th>Highest Quiz Score</th>
+                                            <th>Highest Quiz Correct Answers</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -69,9 +69,9 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Quizzes Answered</th>
+                                            <th>Quizzes Taken</th>
                                             <th>Last Quiz Taken</th>
-                                            <th>Highest Quiz Score</th>
+                                            <th>Highest Quiz Correct Answers</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
