@@ -10,6 +10,7 @@ use App\Http\Requests\AddNewUser;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Http\Requests\UpdateUser;
+use DataTables;
 
 class UsersController extends Controller
 {
@@ -18,9 +19,32 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.users', ['users' => User::all()]);
+        $users = User::latest()->get();
+
+        if ($request->ajax()) {
+            return DataTables::of($users)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+                        $btn =
+                            '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-' . $row->id . '">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-' . $row->id . '">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-' . $row->id . '">
+                                <i class="fas fa-trash"></i>
+                            </button>';
+
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('admin.users', ['users' => $users]);
     }
 
     /**

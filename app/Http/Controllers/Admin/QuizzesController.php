@@ -12,6 +12,7 @@ use App\Http\Requests\AddNewQuiz;
 use App\Imports\QuizzesImport;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use DataTables;
 
 class QuizzesController extends Controller
 {
@@ -76,8 +77,28 @@ class QuizzesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Quiz $quiz)
+    public function show(Request $request, Quiz $quiz)
     {
+        if ($request->ajax()) {
+            return DataTables::of($quiz->questions)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+                        $btn =
+                            '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-' . $row->id . '">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-' . $row->id . '">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-' . $row->id . '">
+                                <i class="fas fa-trash"></i>
+                            </button>';
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                ->make(true);
+        }
+
         return view('admin.quizzes.questions', [
             'quiz' => $quiz,
             'quizzes' => Quiz::select(['title', 'id'])->get()

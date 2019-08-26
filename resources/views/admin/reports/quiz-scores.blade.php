@@ -88,7 +88,7 @@
                                 </div>
                                 <hr>
                                 <div class="table-responsive">
-                                    <table id="table" class="table table-striped table-hover">
+                                    <table id="table" class="table table-striped table-hover quizScores">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -98,16 +98,6 @@
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            @foreach ($quiz->scores as $key => $score)
-                                                <tr>
-                                                    <td>{{ ++$key }}</td>
-                                                    <td>{{ $score->user->name }}</td>
-                                                    <td>{{ $score->score }}</td>
-                                                    <td>{{ $score->score * $quiz->points_per_question}}</td>
-                                                    <td>{{ $score->created_at->diffForHumans() }}</td>
-                                                </tr>
-                                            @endforeach
                                         <tfoot>
                                             <tr>
                                                 <th>#</th>
@@ -152,4 +142,24 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.quizScores').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('admin.reports.quiz', $quiz->id) }}',
+                columns: [
+                    {data: 'DT_RowIndex'},
+                    {data: 'student_name'},
+                    {data: 'correct_answers'},
+                    {data: 'total_points'},
+                    {data: 'taken_when'},
+                ]
+            })
+        })
+    </script>
 @endsection

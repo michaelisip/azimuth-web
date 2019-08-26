@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 
+
 @section('content')
 
     <div class="content-wrapper">
@@ -38,47 +39,25 @@
 
                         <div class="card shadow-none border-0">
                             <div class="card-body table-responsive">
-                                <table id="table" class="table table-striped table-hover">
+                                <table class="table table-striped table-hover usersTable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Mobile</th>
+                                            <th>Email Address</th>
+                                            <th>Mobile Number</th>
                                             <th>Address</th>
-                                            <th></th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach ($users as $key => $user)
-                                            <tr>
-                                                <td>{{ ++$key }}</td>
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->mobile ?: 'No Mobile Number Saved' }}</td>
-                                                <td>{{ $user->address ? str_limit($user->address, 200) : 'No Address Saved' }}</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-{{$user->id}}">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-{{$user->id}}">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-{{$user->id}}">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Mobile</th>
+                                            <th>Email Address</th>
+                                            <th>Mobile Number</th>
                                             <th>Address</th>
-                                            <th></th>
+                                            <th>Action</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -314,13 +293,24 @@
 @endsection
 
 @section('scripts')
-    @if ($errors->any())
-        <script>
-            function showModal(params) {
-                document.getElementById("#addUser").classList.add("show")
-            }
 
-            document.addEventListener("readystatechange", showModal)
-        </script>
-    @endif
+    <script>
+
+        $(document).ready(function() {
+            $('.usersTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('admin.users.index') }}',
+                columns: [
+                    {data: 'DT_RowIndex'},
+                    {data: 'name'},
+                    {data: 'email'},
+                    {data: 'mobile', "defaultContent": "<i>Not set</i>"},
+                    {data: 'address', "defaultContent": "<i>Not set</i>"},
+                    {data: 'action'},
+                ]
+            })
+        })
+
+    </script>
 @endsection

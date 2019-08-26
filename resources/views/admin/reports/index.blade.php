@@ -34,45 +34,25 @@
 
                         <div class="card shadow-none border-0">
                             <div class="card-body table-responsive">
-                                <table id="table" class="table table-striped table-hover">
+                                <table id="table" class="table table-striped table-hover studentReportsTable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Quizzes Taken</th>
                                             <th>Last Quiz Taken</th>
-                                            <th>Highest Quiz Correct Answers</th>
-                                            <th></th>
+                                            <th>Highest Quiz Score</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach ($users as $key => $user)
-                                            <tr>
-                                                <td>{{ ++$key }}</td>
-                                                <td>{{ $user->name }}</td>
-
-                                                {{-- Refactory these lines --}}
-                                                <td>{{ $user->scores->count() > 0 ? $user->scores->count() : 'None'}}</td>
-                                                <td>{{ isset($user->latestQuiz()->created_at) ? $user->latestQuiz()->created_at->diffForHumans() : "Hasn't Taken Any Quiz" }}</td>
-                                                <td>{{ $user->highestQuizScore()->score ?? "Hasn't Taken Any Quiz" }}</td>
-
-                                                <td>
-                                                    @if(!$user->scores->isEmpty())
-                                                        <a href="{{ route('admin.reports.student-scores', $user->id) }}" class="btn btn-sm btn-primary">
-                                                            <i class="fas fa-eye"></i> &nbsp; View Reports
-                                                        </a>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Quizzes Taken</th>
                                             <th>Last Quiz Taken</th>
-                                            <th>Highest Quiz Correct Answers</th>
-                                            <th></th>
+                                            <th>Highest Quiz Score</th>
+                                            <th>Action</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -86,4 +66,24 @@
 
     </div>
 
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.studentReportsTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('admin.reports.index') }}',
+                columns: [
+                    {data: 'DT_RowIndex'},
+                    {data: 'name'},
+                    {data: 'quizzes_taken'},
+                    {data: 'last_quiz_taken'},
+                    {data: 'highest_quiz_score'},
+                    {data: 'action'},
+                ]
+            })
+        })
+    </script>
 @endsection
