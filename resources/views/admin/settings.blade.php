@@ -13,7 +13,7 @@
                             <div class="col-8 col-lg-10">
                                 <h1 class="d-inline align-middle mr-3"> <strong> Settings </strong> </h1>
                             </div>
-                            <div class="col-4 col-lg-2">
+                            <div class="col-4 col-lg-2 d-none d-sm-block">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                                     <li class="breadcrumb-item active"> Settings </li>
@@ -52,7 +52,7 @@
                                 <p>App Name</p>
                                 <h1>{{ \App\Application::first()->name }}</h1>
                                 <p>Logo</p>
-                                <img src="{{ asset(isset(\App\Application::first()->logo) ? 'storage/logos/' . \App\Application::first()->logo : 'defaults/logo.png') }}" alt="Admin Image" class="rounded w-25 mb-3">
+                                <img src="{{ asset(isset(\App\Application::first()->logo) ? 'storage/logos/' . \App\Application::first()->logo : 'defaults/logo.png') }}" alt="Admin Image" class="rounded w-50 mb-3">
                                 <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#updateSettings"> Edit Settings </button>
                             </div>
                         </div>

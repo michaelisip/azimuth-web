@@ -11,8 +11,8 @@ class QuizQuestionsSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Quiz::class, 5)->create()->each(function($quiz){
-            $quiz->questions()->saveMany(factory(App\Question::class, 10)->make());
+        factory(App\Quiz::class, rand(5, 10))->create()->each(function($quiz){
+            $quiz->questions()->saveMany(factory(App\Question::class, rand(10, 100))->make());
         });
     }
 }

@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 
+
 @section('content')
 
     <div class="content-wrapper">
@@ -10,7 +11,7 @@
                 <div class="card shadow-none border-0">
                     <div class="card-body">
                         <div class="row mb-2">
-                            <div class="col-8 col-lg-10">
+                            <div class="col-12 col-sm-8 col-lg-10">
                                 <h1 class="d-inline align-middle mr-3"> <strong> Students </strong> </h1>
                                 <button class="btn btn-primary btn-sm align-middle px-4" data-toggle="modal" data-target="#addUser"> Add Student </button>
                                 <div class="btn-group" role="group" aria-label="...">
@@ -18,7 +19,7 @@
                                     <a href="{{ route('admin.export.users') }}" class="btn btn-outline-secondary btn-sm align-middle px-4"> Export Students </a>
                                 </div>
                             </div>
-                            <div class="col-4 col-lg-2">
+                            <div class="col col-sm-4 col-lg-2 d-none d-sm-block">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                                     <li class="breadcrumb-item active"> Students </li>
@@ -37,48 +38,26 @@
                     <div class="col-12">
 
                         <div class="card shadow-none border-0">
-                            <div class="card-body">
-                                <table id="table" class="table table-striped table-hover">
+                            <div class="card-body table-responsive">
+                                <table class="table table-striped table-hover usersTable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Mobile</th>
+                                            <th>Email Address</th>
+                                            <th>Mobile Number</th>
                                             <th>Address</th>
-                                            <th></th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach ($users as $key => $user)
-                                            <tr>
-                                                <td>{{ ++$key }}</td>
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->mobile ?: 'No Mobile Number Saved' }}</td>
-                                                <td>{{ $user->address ? str_limit($user->address, 200) : 'No Address Saved' }}</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-{{$user->id}}">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-{{$user->id}}">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-{{$user->id}}">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Mobile</th>
+                                            <th>Email Address</th>
+                                            <th>Mobile Number</th>
                                             <th>Address</th>
-                                            <th></th>
+                                            <th>Action</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -195,7 +174,7 @@
                                 <input type="file" class="custom-file-input" id="file" name="file" required>
                             </div>
                         </div>
-                        <p class="muted"> Please read the <a href="https://docs.google.com/document/d/17KJto5C3zyu8wYy_qepSweH41KXBC3PxfUvc8N-j-Vc/edit?usp=sharing" target="__blank">import guides.</a> </p>
+                        <p class="muted"> Please read the <a href="{{ asset('docs/Azimuth - Import Guides.pdf') }}" target="__blank">import guides.</a> </p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
@@ -207,23 +186,6 @@
     </div>
 
     @foreach ($users as $key => $user)
-
-        {{-- View --}}
-        <div class="modal fade" id="view-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="viewUserLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="viewUserLabel"><strong> View Student </strong></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                </div>
-            </div>
-        </div>
 
         {{-- Edit --}}
         <div class="modal fade" id="edit-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="editUserLabel" aria-hidden="true">
@@ -314,13 +276,24 @@
 @endsection
 
 @section('scripts')
-    @if ($errors->any())
-        <script>
-            function showModal(params) {
-                document.getElementById("#addUser").classList.add("show")
-            }
 
-            document.addEventListener("readystatechange", showModal)
-        </script>
-    @endif
+    <script>
+
+        $(document).ready(function() {
+            $('.usersTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('admin.users.index') }}',
+                columns: [
+                    {data: 'DT_RowIndex'},
+                    {data: 'name'},
+                    {data: 'email'},
+                    {data: 'mobile', "defaultContent": "<i>Not set</i>"},
+                    {data: 'address', "defaultContent": "<i>Not set</i>"},
+                    {data: 'action'},
+                ]
+            })
+        })
+
+    </script>
 @endsection

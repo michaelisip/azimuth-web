@@ -50,7 +50,7 @@ class Quiz extends Model
 
     public function highestScores()
     {
-        return $this->scores()->orderBy('score', 'DESC')->get();
+        return $this->scores()->orderBy('score', 'DESC')->take(3)->get();
     }
 
     public function lowestScores()

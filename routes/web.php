@@ -17,14 +17,14 @@ use App\Http\Middleware\PreventUserFromAdminAccess;
 /**
  *  User Routes
  */
+Auth::routes();
 
-Route::group(['prefix' => ''], function () {
+Route::group(['prefix' => '', 'middleware' => ['2fa']], function () {
 
     // Route::view('', 'welcome');
     Route::redirect('', 'home');
 
     // Authentication
-    Auth::routes();
     Route::get('/complete-registration', 'Auth\RegisterController@completeRegistration');
     Route::group(['middleware' => ['2fa']], function () {
         Route::post('2fa', function () {
@@ -113,6 +113,8 @@ Route::name('admin.')->group(function(){
                     Route::put('/profile/{user}/update', 'ApplicationController@updateProfile')->name('update-profile');
                     Route::put('/profile/{user}/change-password', 'ApplicationController@changePassword')->name('change-password');
                 });
+
+                Route::get('activity-logs', 'ActivityLogController')->name('logs');
             });
         });
     });

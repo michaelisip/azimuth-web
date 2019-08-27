@@ -10,10 +10,10 @@
                 <div class="card shadow-none border-0">
                     <div class="card-body">
                         <div class="row mb-2">
-                            <div class="col-8 col-lg-10">
+                            <div class="col-12 col-sm-8 col-lg-9">
                                 <h1 class="d-inline align-middle mr-3"><strong>{{ $quiz->title }}</strong></h1>
                             </div>
-                            <div class="col-4 col-lg-2">
+                            <div class="col col-sm-4 col-lg-3 d-none d-sm-block">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                                     <li class="breadcrumb-item"><a href="{{ route('admin.quizzes.index') }}"></a> Quizzes </li>
@@ -32,42 +32,52 @@
                 <div class="row">
 
                     {{-- Information --}}
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-xl-4">
                         <div class="card shadow-none border-0 p-2">
                             <div class="card-body">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h3 class="m-0"><strong> Information </strong></h3>
                                     <div class="button-group">
-                                        <button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm d-none" id="cancelEditQuiz"><i class="fas fa-ban"></i></button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm" id="editQuiz"><i class="fas fa-edit"></i></button>
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteQuiz"><i class="fas fa-trash"></i></button>
                                     </div>
                                 </div>
                                 <hr>
-                                <form>
+                                <form method="POST" accept="{{ route('admin.quizzes.update', $quiz->id) }}">
+                                    @method('PUT')
+                                    @csrf
                                     <div class="form-group row">
                                         <label for="title" class="col-12 col-form-label">Title</label>
                                         <div class="col-12">
-                                        <input type="text" readonly class="form-control-plaintext" id="title" value="{{ $quiz->title }}">
+                                        <input type="text" readonly class="form-control-plaintext" name="title" id="title" value="{{ $quiz->title }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="description" class="col-12 col-form-label">Description</label>
                                         <div class="col-12">
-                                        <textarea readonly class="form-control-plaintext" id="description" rows="4">{{$quiz->description}}</textarea>
+                                        <textarea readonly class="form-control-plaintext" name="description" id="description" rows="4">{{$quiz->description}}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="points_per_question" class="col-12 col-form-label">Points Per Question</label>
                                         <div class="col-12">
-                                        <input type="text" readonly class="form-control-plaintext" id="points_per_question" value="{{ $quiz->points_per_question }}">
+                                        <input type="text" readonly class="form-control-plaintext" name="points_per_question" id="points_per_question" value="{{ $quiz->points_per_question }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="timer" class="col-12 col-form-label">Timer</label>
                                         <div class="col-12">
-                                        <input type="text" readonly class="form-control-plaintext" id="timer" value="{{ $quiz->timer }}">
+                                        <input type="text" readonly class="form-control-plaintext" name="timer" id="timer" value="{{ $quiz->timer }}">
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label for="questions" class="col-12 col-form-label">Total Questions</label>
+                                        <div class="col-12">
+                                            <input type="text" readonly class="form-control-plaintext" id="questions" value="{{ $quiz->questions->count() }}" disabled>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-sm float-right px-5 d-none" id="submitEditQuiz">Update</button>
                                 </form>
                             </div>
                         </div>
@@ -75,7 +85,7 @@
 
 
                     {{-- Questions --}}
-                    <div class="col-12 col-md-8">
+                    <div class="col-12 col-xl-8">
                         <div class="card shadow-none border-0 p-2">
                             <div class="card-body">
                                 <div>
@@ -87,58 +97,36 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <table id="table" class="table table-responsive table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Question</th>
-                                            <th>Choice A</th>
-                                            <th>Choice B</th>
-                                            <th>Choice C</th>
-                                            <th>Choice D</th>
-                                            <th>Answer</th>
-                                            <th>Explanation</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($quiz->questions as $key => $question)
+                                <div class="table-responsive">
+                                    <table id="table" class="table table-striped table-hover quizQuestionsTable">
+                                        <thead>
                                             <tr>
-                                                <td>{{ ++$key }}</td>
-                                                <td class="w-25">{{ $question->question }}</td>
-                                                <td>{{ str_limit($question->a, 8) }}</td>
-                                                <td>{{ str_limit($question->b, 8) }}</td>
-                                                <td>{{ str_limit($question->c, 8) }}</td>
-                                                <td>{{ str_limit($question->d, 8) }}</td>
-                                                <td>{{ $question->answer }}</td>
-                                                <td>{{ $question->answer_explanation ? str_limit($question->answer_explanation, 50) : 'No Explanation' }}</td>
-                                                <td style="min-width: 110px;">
-                                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-{{$question->id}}">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-{{$question->id}}">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-{{$question->id}}">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
+                                                <th>#</th>
+                                                <th>Question</th>
+                                                <th>Choice A</th>
+                                                <th>Choice B</th>
+                                                <th>Choice C</th>
+                                                <th>Choice D</th>
+                                                <th>Answer</th>
+                                                <th>Explanation</th>
+                                                <th>Action</th>
                                             </tr>
-                                        @endforeach
-                                    <tfoot>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Question</th>
-                                            <th>Choice A</th>
-                                            <th>Choice B</th>
-                                            <th>Choice C</th>
-                                            <th>Choice D</th>
-                                            <th>Answer</th>
-                                            <th>Explanation</th>
-                                            <th></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Question</th>
+                                                <th>Choice A</th>
+                                                <th>Choice B</th>
+                                                <th>Choice C</th>
+                                                <th>Choice D</th>
+                                                <th>Answer</th>
+                                                <th>Explanation</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -286,7 +274,7 @@
                                 <input type="file" class="custom-file-input" id="file" name="file" required>
                             </div>
                         </div>
-                        <p class="muted"> Please read the <a href="">import guides.</a> </p>
+                        <p class="muted"> Please read the <a href="{{ asset('docs/Azimuth - Import Guides.pdf') }}" target="__blank">import guides.</a> </p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
@@ -298,23 +286,6 @@
     </div>
 
     @foreach ($quiz->questions as $key => $quizQuestion)
-
-        {{-- View --}}
-        <div class="modal fade" id="view-{{ $quizQuestion->id }}" tabindex="-1" role="dialog" aria-labelledby="viewQuestionLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="viewQuestionLabel"><strong> {{ $quizQuestion->question }} </strong></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                </div>
-            </div>
-        </div>
 
         {{-- Edit --}}
         <div class="modal fade" id="edit-{{ $quizQuestion->id }}" tabindex="-1" role="dialog" aria-labelledby="editQuestionLabel" aria-hidden="true">
@@ -391,7 +362,7 @@
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="answer_explanation">Answer Explanation</label>
-                                    <textarea class="form-control @error('answer_explanation') is-invalid @enderror" id="answer_explanation" name="answer_explanation" autocomplete="answer_explanation" placeholder="Answer Explanation" rows="5" style="resize: none;">{{ $question->answer_explanation }}</textarea>
+                                    <textarea class="form-control @error('answer_explanation') is-invalid @enderror" id="answer_explanation" name="answer_explanation" autocomplete="answer_explanation" placeholder="Answer Explanation" rows="5" style="resize: none;">{{ $quizQuestion->answer_explanation }}</textarea>
                                     @error('answer_explanation')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -432,4 +403,47 @@
         </div>
 
     @endforeach
+
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.quizQuestionsTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('admin.quizzes.show', $quiz->id) }}',
+                columns: [
+                    {data: 'DT_RowIndex'},
+                    {data: 'question'},
+                    {data: 'a'},
+                    {data: 'b'},
+                    {data: 'c'},
+                    {data: 'd'},
+                    {data: 'answer'},
+                    {data: 'answer_explanation', defaultContent: "<i>Not set</i>"},
+                    {data: 'action'},
+                ]
+            })
+
+            $("#editQuiz").on("click", function(){
+                $("#cancelEditQuiz").removeClass("d-none")
+                $("#submitEditQuiz").removeClass("d-none")
+                $("#title").removeAttr("readonly")
+                $("#title").focus()
+                $("#description").removeAttr("readonly")
+                $("#points_per_question").removeAttr("readonly")
+                $("#timer").removeAttr("readonly")
+            })
+
+            $("#cancelEditQuiz").on("click", function(){
+                $("#cancelEditQuiz").addClass("d-none")
+                $("#submitEditQuiz").addClass("d-none")
+                $("#title").prop("readonly", true)
+                $("#description").prop("readonly", true)
+                $("#points_per_question").prop("readonly", true)
+                $("#timer").prop("readonly", true)
+            })
+        })
+    </script>
 @endsection

@@ -10,10 +10,10 @@
                 <div class="card shadow-none border-0">
                     <div class="card-body">
                         <div class="row mb-2">
-                            <div class="col-8 col-lg-10">
-                                <h1 class="d-inline align-middle mr-3"> Quiz Scores </h1>
+                            <div class="col-12 col-sm-8">
+                                <h1 class="d-inline align-middle mr-3"> <strong> Quiz Scores </strong> </h1>
                             </div>
-                            <div class="col-4 col-lg-2">
+                            <div class="col col-sm-4 d-none d-sm-block">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                                     <li class="breadcrumb-item"><a href="{{ route('admin.quizzes.index') }}"></a> Reports </li>
@@ -32,7 +32,7 @@
                 <div class="row">
 
                     {{-- Information --}}
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-xl-4">
                         <div class="card shadow-none border-0 p-2">
                             <div class="card-body">
                                 <div class="d-flex w-100 justify-content-between">
@@ -68,49 +68,47 @@
                                         <input type="text" readonly class="form-control-plaintext" id="timer" value="{{ $quiz->timer }}">
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label for="questions" class="col-12 col-form-label">Total Questions</label>
+                                        <div class="col-12">
+                                        <input type="number" readonly class="form-control-plaintext" id="questions" value="{{ $quiz->questions->count() }}" disabled>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
                     </div>
 
                     {{-- Questions --}}
-                    <div class="col-12 col-md-8">
+                    <div class="col-12 col-xl-8">
                         <div class="card shadow-none border-0 p-2">
                             <div class="card-body">
                                 <div>
                                     <h3 class="d-inline align-middle mr-3"> <strong> Students' Scores </strong> </h3>
                                 </div>
                                 <hr>
-                                <table id="table" class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Student</th>
-                                            <th>Correct Answers</th>
-                                            <th>Score</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($quiz->scores as $key => $score)
+                                <div class="table-responsive">
+                                    <table id="table" class="table table-striped table-hover quizScores">
+                                        <thead>
                                             <tr>
-                                                <td>{{ ++$key }}</td>
-                                                <td>{{ $score->user->name }}</td>
-                                                <td>{{ $score->score }}</td>
-                                                <td>{{ $score->score }}</td>
-                                                <td>{{ $score->created_at->diffForHumans() }}</td>
+                                                <th>#</th>
+                                                <th>Student</th>
+                                                <th>Correct Answers</th>
+                                                <th>Total Points</th>
+                                                <th></th>
                                             </tr>
-                                        @endforeach
-                                    <tfoot>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Student</th>
-                                            <th>Correct Answers</th>
-                                            <th>Score</th>
-                                            <th></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Student</th>
+                                                <th>Correct Answers</th>
+                                                <th>Total Points</th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -144,4 +142,24 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.quizScores').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('admin.reports.quiz', $quiz->id) }}',
+                columns: [
+                    {data: 'DT_RowIndex'},
+                    {data: 'student_name'},
+                    {data: 'correct_answers'},
+                    {data: 'total_points'},
+                    {data: 'taken_when'},
+                ]
+            })
+        })
+    </script>
 @endsection

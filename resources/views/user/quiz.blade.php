@@ -111,7 +111,8 @@
 
         $(document).ready(function(){
 
-            $(document).on("keydown", disableF5);
+            // disable refresh and right click
+            pageConfiguration()
 
             $("#questions").children().first().addClass("active")
             $("#questions").children().first().removeClass("d-none")
@@ -138,9 +139,6 @@
                         quiz_id: quiz_id,
                         question_id: question_id,
                         student_answer: student_answer
-                    },
-                    success: function(data){
-                        console.log(data.result)
                     }
                 })
 
@@ -215,6 +213,16 @@
             }
 
             return false
+        }
+
+        function pageConfiguration() {
+
+            // disable right click
+            document.addEventListener('contextmenu', event => event.preventDefault());
+
+            // disable refresh
+            $(document).on("keydown", disableF5);
+
         }
 
     </script>

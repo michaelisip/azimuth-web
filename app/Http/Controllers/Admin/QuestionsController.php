@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ActivityLog;
 use App\Exports\QuestionsExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ use App\Question;
 use App\Imports\QuestionsImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\AddUpdateQuestion;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionsController extends Controller
 {
@@ -60,6 +62,8 @@ class QuestionsController extends Controller
         $existingQuiz = Quiz::findOrFail($quiz);
         $existingQuiz->questions()->save($question);
 
+        ActivityLog::log(Auth::guard('admin')->user(), "added some questions to '{$existingQuiz->title}'");
+
         return back()->with('success', 'Successfully added question.');
     }
 
@@ -85,6 +89,8 @@ class QuestionsController extends Controller
             return back()->with('import', $e->failures());
         }
 
+        ActivityLog::log(Auth::guard('admin')->user(), "imported questions");
+
         return back()->with('success', 'Successfully imported quesitons.');
     }
 
@@ -93,11 +99,13 @@ class QuestionsController extends Controller
      *
      * @return back
      */
-    public function export($quiz)
+    public function export(Quiz $quiz)
     {
-        $quizName = Quiz::findOrFail($quiz)->value('title');
+        $quizName = $quiz->value('title');
 
-        return Excel::download(new QuestionsExport($quiz), $quizName . ' - questions.xlsx');
+        ActivityLog::log(Auth::guard('admin')->user(), "exported questions of '{$quizName}'");
+
+        return Excel::download(new QuestionsExport($quiz->id), $quizName . ' - questions.xlsx');
     }
 
     /**
@@ -120,7 +128,12 @@ class QuestionsController extends Controller
      */
     public function update(AddUpdateQuestion $request, $id)
     {
-        Question::findOrFail($id)->update($request->all());
+        $question = Question::findOrFail($id);
+
+        $question->update($request->all());
+
+        ActivityLog::log(Auth::guard('admin')->user(), "updated '{$question->question}'");
+
         return back()->with('success', 'Successfully updated question.');
     }
 
@@ -130,9 +143,11 @@ class QuestionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($quiz, $id)
+    public function destroy($quiz, Question $question)
     {
-        Question::destroy($id);
+        $question->delete();
+
+        ActivityLog::log(Auth::guard('admin')->user(), "deleted '{$question->question}'");
 
         return back()->with('success', 'Successfully deleted question.');
     }

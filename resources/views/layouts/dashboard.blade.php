@@ -11,6 +11,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    {{-- Favicon --}}
+    <link rel="icon" href="{{ asset(isset(\App\Application::first()->logo) ? 'storage/logos/' . \App\Application::first()->logo : 'defaults/logo.png') }}">
+
     {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> --}}
     <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
 

@@ -8,7 +8,7 @@
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('storage/avatars/' . Auth::user()->avatar) }}" class="img-circle elevation-2" alt="Admin Image">
+                <img src="{{ asset(isset(Auth::user()->avatar) ? 'storage/avatars/' . Auth::user()->avatar : 'defaults/avatar.jpg') }}" class="img-circle elevation-2" alt="Admin Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{ Auth::user()->name }}</a>
@@ -38,7 +38,7 @@
                 </li>
 
                 {{-- Students --}}
-                <li class="nav-header">EXAMS</li>
+                <li class="nav-header">QUIZZES</li>
                 <li class="nav-item">
                     <a href="{{ route('admin.quizzes.index') }}" class="nav-link
                             @if(Route::currentRouteName() == 'admin.quizzes.index'
@@ -68,15 +68,21 @@
                     <a href="{{ route('admin.reports.top-students') }}" class="nav-link
                             @if(Route::currentRouteName() == 'admin.reports.top-students'
                                 || Route::currentRouteName() == 'admin.reports.quiz') active @endif">
-                        <i class="nav-icon fas fa-award"></i>
+                        <i class="nav-icon fas fa-trophy"></i>
                         <p> Top Students </p>
                     </a>
                 </li>
                 <li class="nav-header">SETTINGS</li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.settings.index') }}" class="nav-link @if(Route::currentRouteName() == 'admin.settings') active @endif">
+                    <a href="{{ route('admin.settings.index') }}" class="nav-link @if(Route::currentRouteName() == 'admin.settings.index') active @endif">
                         <i class="nav-icon fas fa-cog"></i>
                         <p> Settings </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.logs') }}" class="nav-link @if(Route::currentRouteName() == 'admin.logs') active @endif">
+                        <i class="nav-icon fas fa-history"></i>
+                        <p> Activity Logs </p>
                     </a>
                 </li>
             </ul>
