@@ -140,6 +140,7 @@
                                                                             </td>
                                                                         </tr>
                                                                     @endforeach
+                                                                </tbody>
                                                                 <tfoot>
                                                                     <tr>
                                                                         <th>#</th>
@@ -176,20 +177,32 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function() {
-            $('.studentScores').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('admin.reports.index') }}',
-                columns: [
-                    {data: 'DT_RowIndex'},
-                    {data: 'name'},
-                    {data: 'quizzes_taken'},
-                    {data: 'last_quiz_taken'},
-                    {data: 'highest_quiz_score'},
-                    {data: 'action'},
-                ]
-            })
-        })
+        // $(document).ready(function(){
+        //     initializeDatatable($("a.nav-link.active").attr("href"))
+
+        //     $("a.nav-link").on("click", function(){
+        //         initializeDatatable($(this).attr("href"))
+        //     })
+        // })
+
+        // function initializeDatatable(href){
+        //     $('.table').DataTable({
+        //         processing: true,
+        //         serverSide: true,
+        //         ajax: '{{ route('admin.quizzes.show', $quiz->id) }}',
+        //         columns: [
+        //             {data: 'DT_RowIndex'},
+        //             {data: 'question'},
+        //             {data: 'a'},
+        //             {data: 'b'},
+        //             {data: 'c'},
+        //             {data: 'd'},
+        //             {data: 'answer'},
+        //             {data: 'answer_explanation', defaultContent: "<i>Not set</i>"},
+        //             {data: 'action'},
+        //         ]
+        //     })
+        // }
     </script>
 @endsection
+

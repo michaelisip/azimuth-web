@@ -58,7 +58,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             // make password min:8 on production
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'mobile' => ['nullable', 'regex:^(09|\+639|9)\d{9}$'],
+            'mobile' => ['nullable', 'regex:/^(09|\+639|9)\d{9}$/'],
             'address' => ['string', 'max:255']
         ]);
     }
@@ -74,6 +74,8 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'mobile' => $data['mobile'],
+            'address' => $data['address'],
             'password' => Hash::make($data['password']),
             'google2fa_secret' => $data['google2fa_secret'],
         ]);
@@ -83,7 +85,7 @@ class RegisterController extends Controller
 
     /**
      * Register with the google 2fa
-     * 
+     *
      * @param Illuminate\Http\Request
      * @return view
     */
@@ -115,17 +117,17 @@ class RegisterController extends Controller
 
         // Pass the QR barcode image to our view
         return view('auth.google2fa.register', [
-            'QR_Image' => $QR_Image, 
+            'QR_Image' => $QR_Image,
             'secret' => $registration_data['google2fa_secret']]);
     }
 
     /**
      * complete registration by merging session to request
-     * 
+     *
      * @param Illuminate\Http\Request
      */
     public function completeRegistration(Request $request)
-    {        
+    {
         // add the session data back to the request input
         $request->merge(session('registration_data'));
 

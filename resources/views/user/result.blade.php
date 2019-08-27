@@ -50,7 +50,6 @@
                                                     <th>Choice C</th>
                                                     <th>Choice D</th>
                                                     <th>Answer</th>
-                                                    <th>Correct Answer</th>
                                                     <th>Answer Explanation</th>
                                                 </tr>
                                             </thead>
@@ -68,6 +67,7 @@
                                                         <td>{{ $question->answer_explanation ?? 'No Explanation' }}</td>
                                                     </tr>
                                                 @endforeach
+                                            </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th>#</th>
@@ -77,7 +77,6 @@
                                                     <th>Choice C</th>
                                                     <th>Choice D</th>
                                                     <th>Answer</th>
-                                                    <th>Correct Answer</th>
                                                     <th>Answer Explanation</th>
                                                 </tr>
                                             </tfoot>
@@ -92,4 +91,35 @@
 
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        // $(document).ready(function(){
+        //     initializeDatatable($("a.nav-link.active").attr("href"))
+
+        //     $("a.nav-link").on("click", function(){
+        //         initializeDatatable($(this).attr("href"))
+        //     })
+        // })
+
+        // function initializeDatatable(href){
+        //     $('.table').DataTable({
+        //         processing: true,
+        //         serverSide: true,
+        //         ajax: '{{ route('admin.quizzes.show', $quiz->id) }}',
+        //         columns: [
+        //             {data: 'DT_RowIndex'},
+        //             {data: 'question'},
+        //             {data: 'a'},
+        //             {data: 'b'},
+        //             {data: 'c'},
+        //             {data: 'd'},
+        //             {data: 'answer'},
+        //             {data: 'answer_explanation', defaultContent: "<i>Not set</i>"},
+        //             {data: 'action'},
+        //         ]
+        //     })
+        // }
+    </script>
 @endsection

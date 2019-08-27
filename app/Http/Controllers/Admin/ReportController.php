@@ -73,33 +73,30 @@ class ReportController extends Controller
         return view('admin.reports.quiz-scores', ['quiz' => $quiz]);
     }
 
-    public function viewStudentScores(Request $request, $user, $quiz = null)
+    public function viewStudentScores(Request $request, $user)
     {
         $user = User::findOrFail($user);
         $quizzes = Quiz::paginate(10);
 
-        if ($request->ajax() && !is_null($quiz)) {
-
-            $quizQuestions = Quiz::findOrFail($quiz)->questions;
-
-            return DataTables::of($quizQuestions)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-                        $btn =
-                            '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-' . $row->id . '">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-'. $row->id .'">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-' . $row->id .'">
-                                <i class="fas fa-trash"></i>
-                            </button>';
-                        return $btn;
-                    })
-                    ->rawColumns(['action'])
-                ->make(true);
-        }
+        // if ($request->ajax()) {
+        //     return DataTables::of($quiz->questions)
+        //             ->addIndexColumn()
+        //             ->addColumn('action', function($row){
+        //                 $btn =
+        //                     '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-' . $row->id . '">
+        //                         <i class="fas fa-eye"></i>
+        //                     </button>
+        //                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-' . $row->id . '">
+        //                         <i class="fas fa-edit"></i>
+        //                     </button>
+        //                     <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-' . $row->id . '">
+        //                         <i class="fas fa-trash"></i>
+        //                     </button>';
+        //                 return $btn;
+        //             })
+        //             ->rawColumns(['action'])
+        //         ->make(true);
+        // }
 
         return view('admin.reports.student-scores', [
             'user' => $user,
