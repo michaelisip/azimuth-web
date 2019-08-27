@@ -70,11 +70,11 @@
             </button>
         </div>
         <div class="modal-body">
-            <em> Once you the timer has started, you <strong>MUST</strong> not reload the page otherwise your current score will be marked as you final score. </em>
+            <em> Once the timer has started, you <strong>MUST</strong> not reload the page otherwise your current score will be marked as you final score. </em>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-            <a class="btn btn-primary px-5" id="target">Confirm</a>
+            <a class="btn btn-secondary px-5" id="target">Okay</a>
         </div>
         </div>
     </div>
