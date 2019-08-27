@@ -49,12 +49,17 @@ class QuizzesController extends Controller
     public function import()
     {
         try {
-            Excel::import(new QuizzesImport, request()->file('file'));
+            $import = new QuizzesImport();
+            $import->import(request()->file('file'));
         } catch(\Maatwebsite\Excel\Validators\ValidationException $e){
             return back()->with('import', $e->failures());
         }
 
         ActivityLog::log(Auth::guard('admin')->user(), 'imported new quizzes');
+
+        if ($import->failures()) {
+            return back()->with('import-warning', $import->failures());
+        }
 
         return back()->with('success', 'Successfully imported quizzes.');
     }

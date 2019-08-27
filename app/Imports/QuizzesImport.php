@@ -8,9 +8,14 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use App\Quiz;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\Importable;
 
-class QuizzesImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation
+class QuizzesImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation, SkipsOnFailure
 {
+    use Importable, SkipsFailures;
+
     /**
     * @param array $row
     *

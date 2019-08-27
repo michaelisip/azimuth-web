@@ -9,9 +9,14 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\Importable;
 
-class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation
+class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation, SkipsOnFailure
 {
+    use Importable, SkipsFailures;
+
     /**
     * @param array $row
     *

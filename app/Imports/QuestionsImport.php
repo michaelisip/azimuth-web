@@ -10,9 +10,14 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Validation\Rule;
 use App\Quiz;
 use App\Question;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\Importable;
 
-class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation
+class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation, SkipsOnFailure
 {
+    use Importable, SkipsFailures;
+
     private $quiz_id;
 
     public function __construct($quiz)

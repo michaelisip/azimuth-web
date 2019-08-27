@@ -84,12 +84,17 @@ class QuestionsController extends Controller
         }
 
         try {
-            Excel::import(new QuestionsImport($quiz), request()->file('file'));
+            $import = new QuestionsImport($quiz);
+            $import->import(request()->file('file'));
         } catch(\Maatwebsite\Excel\Validators\ValidationException $e){
             return back()->with('import', $e->failures());
         }
 
         ActivityLog::log(Auth::guard('admin')->user(), "imported questions");
+
+        if ($import->failures()) {
+            return back()->with('import-warning', $import->failures());
+        }
 
         return back()->with('success', 'Successfully imported quesitons.');
     }

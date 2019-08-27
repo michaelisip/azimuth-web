@@ -65,9 +65,14 @@ class UsersController extends Controller
     public function import()
     {
         try {
-            Excel::import(new UsersImport, request()->file('file'));
+            $import = new UsersImport();
+            $import->import(request()->file('file'));
         } catch(\Maatwebsite\Excel\Validators\ValidationException $e){
-            return back()->with('import', $e->failures());
+            return back()->with('import-danger', $e->failures());
+        }
+
+        if ($import->failures()) {
+            return back()->with('import-warning', $import->failures());
         }
 
         return back()->with('success', 'Successfully imported students.');
