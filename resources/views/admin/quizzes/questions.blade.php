@@ -38,42 +38,46 @@
                                 <div class="d-flex w-100 justify-content-between">
                                     <h3 class="m-0"><strong> Information </strong></h3>
                                     <div class="button-group">
-                                        <button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm d-none" id="cancelEditQuiz"><i class="fas fa-ban"></i></button>
+                                        <button type="button" class="btn btn-outline-primary btn-sm" id="editQuiz"><i class="fas fa-edit"></i></button>
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteQuiz"><i class="fas fa-trash"></i></button>
                                     </div>
                                 </div>
                                 <hr>
-                                <form>
+                                <form method="POST" accept="{{ route('admin.quizzes.update', $quiz->id) }}">
+                                    @method('PUT')
+                                    @csrf
                                     <div class="form-group row">
                                         <label for="title" class="col-12 col-form-label">Title</label>
                                         <div class="col-12">
-                                        <input type="text" readonly class="form-control-plaintext" id="title" value="{{ $quiz->title }}">
+                                        <input type="text" readonly class="form-control-plaintext" name="title" id="title" value="{{ $quiz->title }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="description" class="col-12 col-form-label">Description</label>
                                         <div class="col-12">
-                                        <textarea readonly class="form-control-plaintext" id="description" rows="4">{{$quiz->description}}</textarea>
+                                        <textarea readonly class="form-control-plaintext" name="description" id="description" rows="4">{{$quiz->description}}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="points_per_question" class="col-12 col-form-label">Points Per Question</label>
                                         <div class="col-12">
-                                        <input type="text" readonly class="form-control-plaintext" id="points_per_question" value="{{ $quiz->points_per_question }}">
+                                        <input type="text" readonly class="form-control-plaintext" name="points_per_question" id="points_per_question" value="{{ $quiz->points_per_question }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="timer" class="col-12 col-form-label">Timer</label>
                                         <div class="col-12">
-                                        <input type="text" readonly class="form-control-plaintext" id="timer" value="{{ $quiz->timer }}">
+                                        <input type="text" readonly class="form-control-plaintext" name="timer" id="timer" value="{{ $quiz->timer }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="questions" class="col-12 col-form-label">Total Questions</label>
                                         <div class="col-12">
-                                        <input type="text" readonly class="form-control-plaintext" id="questions" value="{{ $quiz->questions->count() }}" disabled>
+                                            <input type="text" readonly class="form-control-plaintext" id="questions" value="{{ $quiz->questions->count() }}" disabled>
                                         </div>
                                     </div>
+                                    <button type="submit" class="btn btn-success btn-sm float-right px-5 d-none" id="submitEditQuiz">Update</button>
                                 </form>
                             </div>
                         </div>
@@ -270,7 +274,7 @@
                                 <input type="file" class="custom-file-input" id="file" name="file" required>
                             </div>
                         </div>
-                        <p class="muted"> Please read the <a href="">import guides.</a> </p>
+                        <p class="muted"> Please read the <a href="{{ asset('docs/Azimuth - Import Guides.pdf') }}" target="__blank">import guides.</a> </p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
@@ -282,23 +286,6 @@
     </div>
 
     @foreach ($quiz->questions as $key => $quizQuestion)
-
-        {{-- View --}}
-        <div class="modal fade" id="view-{{ $quizQuestion->id }}" tabindex="-1" role="dialog" aria-labelledby="viewQuestionLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="viewQuestionLabel"><strong> {{ $quizQuestion->question }} </strong></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                </div>
-            </div>
-        </div>
 
         {{-- Edit --}}
         <div class="modal fade" id="edit-{{ $quizQuestion->id }}" tabindex="-1" role="dialog" aria-labelledby="editQuestionLabel" aria-hidden="true">
@@ -437,6 +424,25 @@
                     {data: 'answer_explanation', defaultContent: "<i>Not set</i>"},
                     {data: 'action'},
                 ]
+            })
+
+            $("#editQuiz").on("click", function(){
+                $("#cancelEditQuiz").removeClass("d-none")
+                $("#submitEditQuiz").removeClass("d-none")
+                $("#title").removeAttr("readonly")
+                $("#title").focus()
+                $("#description").removeAttr("readonly")
+                $("#points_per_question").removeAttr("readonly")
+                $("#timer").removeAttr("readonly")
+            })
+
+            $("#cancelEditQuiz").on("click", function(){
+                $("#cancelEditQuiz").addClass("d-none")
+                $("#submitEditQuiz").addClass("d-none")
+                $("#title").prop("readonly", true)
+                $("#description").prop("readonly", true)
+                $("#points_per_question").prop("readonly", true)
+                $("#timer").prop("readonly", true)
             })
         })
     </script>

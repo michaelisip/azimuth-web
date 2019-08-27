@@ -41,7 +41,7 @@
 
                                 <div class="form-group row">
                                     <div class="col-12">
-                                        <input id="mobile" type="number" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile" placeholder="Mobile Number">
+                                        <input id="mobile" type="number" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" autocomplete="mobile" placeholder="Mobile Number">
 
                                         @error('mobile')
                                             <span class="invalid-feedback" role="alert">
@@ -53,7 +53,7 @@
 
                                 <div class="form-group row">
                                     <div class="col-12">
-                                        <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address" placeholder="Current Address">
+                                        <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" autocomplete="address" placeholder="Current Address">
 
                                         @error('address')
                                             <span class="invalid-feedback" role="alert">
@@ -83,6 +83,14 @@
                                         <button type="submit" class="btn btn-block btn-primary">
                                             {{ __('Register') }}
                                         </button>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-0 mt-3">
+                                    <div class="col-12 text-center">
+                                        Already have an account?
+                                        <a class="btn-link" href="{{ route('login') }}">
+                                            {{ __(" Login.") }}
+                                        </a>
                                     </div>
                                 </div>
                             </form>

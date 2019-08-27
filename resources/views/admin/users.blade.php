@@ -174,7 +174,7 @@
                                 <input type="file" class="custom-file-input" id="file" name="file" required>
                             </div>
                         </div>
-                        <p class="muted"> Please read the <a href="https://docs.google.com/document/d/17KJto5C3zyu8wYy_qepSweH41KXBC3PxfUvc8N-j-Vc/edit?usp=sharing" target="__blank">import guides.</a> </p>
+                        <p class="muted"> Please read the <a href="{{ asset('docs/Azimuth - Import Guides.pdf') }}" target="__blank">import guides.</a> </p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
@@ -186,23 +186,6 @@
     </div>
 
     @foreach ($users as $key => $user)
-
-        {{-- View --}}
-        <div class="modal fade" id="view-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="viewUserLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="viewUserLabel"><strong> View Student </strong></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                </div>
-            </div>
-        </div>
 
         {{-- Edit --}}
         <div class="modal fade" id="edit-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="editUserLabel" aria-hidden="true">

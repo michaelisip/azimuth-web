@@ -48,8 +48,9 @@
                         </div>
                         <div class="form-group row mb-0 mt-3">
                             <div class="col-12 text-center">
-                                <a class="btn btn-link" href="{{ route('register') }}">
-                                    {{ __("Don't have an account?") }}
+                                Don't have an account?
+                                <a class="btn-link" href="{{ route('register') }}">
+                                    {{ __(" Register.") }}
                                 </a>
                             </div>
                         </div>

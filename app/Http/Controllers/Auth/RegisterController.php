@@ -59,7 +59,7 @@ class RegisterController extends Controller
             // make password min:8 on production
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'mobile' => ['nullable', 'regex:/^(09|\+639|9)\d{9}$/'],
-            'address' => ['string', 'max:255']
+            'address' => ['nullable', 'string', 'max:255']
         ]);
     }
 
@@ -76,7 +76,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'mobile' => $data['mobile'],
             'address' => $data['address'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
             'google2fa_secret' => $data['google2fa_secret'],
         ]);
     }

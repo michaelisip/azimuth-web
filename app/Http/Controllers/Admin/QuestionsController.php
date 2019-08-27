@@ -105,7 +105,7 @@ class QuestionsController extends Controller
 
         ActivityLog::log(Auth::guard('admin')->user(), "exported questions of '{$quizName}'");
 
-        return Excel::download(new QuestionsExport($quiz), $quizName . ' - questions.xlsx');
+        return Excel::download(new QuestionsExport($quiz->id), $quizName . ' - questions.xlsx');
     }
 
     /**
