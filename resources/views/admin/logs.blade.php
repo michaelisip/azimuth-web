@@ -33,7 +33,7 @@
 
                         <div class="card shadow-none border-0">
                             <div class="card-body table-responsive">
-                                <table id="table" class="table table-striped table-hover">
+                                <table id="table" class="table table-striped table-hover logsTable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -42,16 +42,6 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach ($logs as $key => $log)
-                                            <tr>
-                                                <td>{{ ++$key }}</td>
-                                                <td>{{ $log->name }}</td>
-                                                <td>{{ ucfirst($log->action) }}</td>
-                                                <td>{{ $log->created_at->diffForHumans() }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
@@ -71,4 +61,22 @@
 
     </div>
 
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.logsTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('admin.logs') }}',
+                columns: [
+                    {data: 'DT_RowIndex'},
+                    {data: 'name'},
+                    {data: 'action'},
+                    {data: 'created_at'},
+                ]
+            })
+        })
+    </script>
 @endsection

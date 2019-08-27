@@ -100,7 +100,7 @@
                                                             <div class="results mb-5">
                                                                 <h5><strong> Result: </strong> {{ $score->score }} total score | {{ $score->score * $quiz->points_per_question }} total points</h5>
                                                             </div>
-                                                            <table id="table" class="table table-striped table-hover">
+                                                            <table id="table" class="table table-striped table-hover studentScores" data-id="{{ $quiz->id }}">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>#</th>
@@ -123,7 +123,7 @@
                                                                             <td>{{ $question->a }}</td>
                                                                             <td>{{ $question->b }}</td>
                                                                             <td>{{ $question->c }}</td>
-                                                                            <td>{{ $score->id }}</td>
+                                                                            <td>{{ $question->d }}</td>
                                                                             <td>{{ $question->studentAnswer($user->id, $quiz->id, $score->id) }}</td>
                                                                             <td>{{ $question->answer }}</td>
                                                                             <td>{{ $question->answer_explanation ?? 'No Explanation' }}</td>
@@ -172,4 +172,24 @@
         </section>
 
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.studentScores').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('admin.reports.index') }}',
+                columns: [
+                    {data: 'DT_RowIndex'},
+                    {data: 'name'},
+                    {data: 'quizzes_taken'},
+                    {data: 'last_quiz_taken'},
+                    {data: 'highest_quiz_score'},
+                    {data: 'action'},
+                ]
+            })
+        })
+    </script>
 @endsection

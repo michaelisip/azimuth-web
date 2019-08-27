@@ -94,7 +94,7 @@
                                 </div>
                                 <hr>
                                 <div class="table-responsive">
-                                    <table id="table" class="table table-striped table-hover">
+                                    <table id="table" class="table table-striped table-hover quizQuestionsTable">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -105,33 +105,9 @@
                                                 <th>Choice D</th>
                                                 <th>Answer</th>
                                                 <th>Explanation</th>
-                                                <th></th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            @foreach ($quiz->questions as $key => $question)
-                                                <tr>
-                                                    <td>{{ ++$key }}</td>
-                                                    <td class="w-25">{{ $question->question }}</td>
-                                                    <td>{{ str_limit($question->a, 8) }}</td>
-                                                    <td>{{ str_limit($question->b, 8) }}</td>
-                                                    <td>{{ str_limit($question->c, 8) }}</td>
-                                                    <td>{{ str_limit($question->d, 8) }}</td>
-                                                    <td>{{ $question->answer }}</td>
-                                                    <td>{{ $question->answer_explanation ? str_limit($question->answer_explanation, 50) : 'No Explanation' }}</td>
-                                                    <td style="min-width: 110px;">
-                                                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#view-{{$question->id}}">
-                                                            <i class="fas fa-eye"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-{{$question->id}}">
-                                                            <i class="fas fa-edit"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-{{$question->id}}">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
                                         <tfoot>
                                             <tr>
                                                 <th>#</th>
@@ -142,7 +118,7 @@
                                                 <th>Choice D</th>
                                                 <th>Answer</th>
                                                 <th>Explanation</th>
-                                                <th></th>
+                                                <th>Action</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -399,7 +375,7 @@
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="answer_explanation">Answer Explanation</label>
-                                    <textarea class="form-control @error('answer_explanation') is-invalid @enderror" id="answer_explanation" name="answer_explanation" autocomplete="answer_explanation" placeholder="Answer Explanation" rows="5" style="resize: none;">{{ $question->answer_explanation }}</textarea>
+                                    <textarea class="form-control @error('answer_explanation') is-invalid @enderror" id="answer_explanation" name="answer_explanation" autocomplete="answer_explanation" placeholder="Answer Explanation" rows="5" style="resize: none;">{{ $quizQuestion->answer_explanation }}</textarea>
                                     @error('answer_explanation')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -440,4 +416,28 @@
         </div>
 
     @endforeach
+
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.quizQuestionsTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('admin.quizzes.show', $quiz->id) }}',
+                columns: [
+                    {data: 'DT_RowIndex'},
+                    {data: 'question'},
+                    {data: 'a'},
+                    {data: 'b'},
+                    {data: 'c'},
+                    {data: 'd'},
+                    {data: 'answer'},
+                    {data: 'answer_explanation', defaultContent: "<i>Not set</i>"},
+                    {data: 'action'},
+                ]
+            })
+        })
+    </script>
 @endsection
