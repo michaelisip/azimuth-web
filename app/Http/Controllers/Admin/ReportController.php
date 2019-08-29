@@ -10,6 +10,11 @@ use DataTables;
 
 class ReportController extends Controller
 {
+    /**
+     * view student reports
+     *
+     * @return view
+     */
     public function viewReports(Request $request)
     {
         $users = User::latest()->get();
@@ -42,11 +47,21 @@ class ReportController extends Controller
         return view('admin.reports.index', ['users' => $users]);
     }
 
+    /**
+     * view top students per quiz
+     *
+     * @return view
+     */
     public function viewTopStudents()
     {
         return view('admin.reports.top-students', ['quizzes' => Quiz::paginate(8)]);
     }
 
+    /**
+     * view students scores on a quiz
+     *
+     * @return view
+     */
     public function viewQuizScores(Request $request, $quiz)
     {
         $quiz = Quiz::findOrFail($quiz);
@@ -73,6 +88,11 @@ class ReportController extends Controller
         return view('admin.reports.quiz-scores', ['quiz' => $quiz]);
     }
 
+    /**
+     * view a student's scores on quizzes
+     *
+     * @return view
+     */
     public function viewStudentScores(Request $request, $user)
     {
         $user = User::findOrFail($user);

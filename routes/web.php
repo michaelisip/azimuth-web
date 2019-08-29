@@ -19,7 +19,7 @@ use App\Http\Middleware\PreventUserFromAdminAccess;
  */
 Auth::routes();
 
-Route::group(['prefix' => ''], function () {
+Route::group(['prefix' => '', 'middleware' => ['2fa'], function () {
 
     // Route::view('', 'welcome');
     Route::redirect('', 'home');

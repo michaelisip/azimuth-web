@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\PreventUserFromAdminAccess;
 
 class LoginController extends Controller
-{    
+{
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -37,17 +37,27 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(PreventUserFromAdminAccess::class);
+        $this->middleware(PreventUserFromAdminAccess::class); // authenticated student can't access admin login
         $this->middleware('guest:admin')->except('logout');
     }
 
+    /**
+     * admin login page
+     *
+     * @return view
+     */
     public function showLoginForm()
     {
         return view('admin.login');
     }
 
+    /**
+     * attempt login admin
+     *
+     * @return intended
+     */
     public function login(Request $request)
-    {        
+    {
         // Validate the form data
         $this->validate($request, [
             'email'   => 'required|email',
@@ -58,12 +68,17 @@ class LoginController extends Controller
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
             // if successful, then redirect to their intended location
             return redirect()->intended(route('admin.dashboard'));
-        } 
+        }
 
         // if unsuccessful, then redirect back to the login with the form data
         return redirect()->back()->withInput($request->only('email', 'remember'));
     }
-    
+
+    /**
+     * logout admin
+     *
+     * @return login
+     */
     public function logout()
     {
         Auth::guard('admin')->logout();
