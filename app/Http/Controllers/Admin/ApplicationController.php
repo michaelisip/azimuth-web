@@ -14,11 +14,21 @@ use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller
 {
+    /**
+     * view admin settings
+     *
+     * @return view
+     */
     public function index()
     {
         return view('admin.settings', ['user' => Auth::user()]);
     }
 
+    /**
+     * Updating the application's name and/or logo
+     *
+     * @return back
+     */
     public function updateApplication(Request $request, Application $application)
     {
         if ($request->has('logo')) {
@@ -48,6 +58,11 @@ class ApplicationController extends Controller
         return back()->with('success', 'Successfully Updated Settings');
     }
 
+    /**
+     * Update admin profile
+     *
+     * @return back
+     */
     public function updateProfile(UpdateAdminProfile $request, Admin $user)
     {
         if ($request->has('avatar')) {
@@ -78,6 +93,11 @@ class ApplicationController extends Controller
         return back()->with('success', 'Successfully Updated Profile');
     }
 
+    /**
+     * changing password
+     *
+     * @return back
+     */
     public function changePassword(ChangeAdminPassword $request, Admin $user)
     {
         $user->update(['password' => $request->password]);

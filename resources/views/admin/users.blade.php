@@ -185,99 +185,99 @@
         </div>
     </div>
 
-    @foreach ($users as $key => $user)
-
-        {{-- Edit --}}
-        <div class="modal fade" id="edit-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="editUserLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editUserLabel"><strong> Edit {{ $user->name }}'s Data </strong></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    {{-- Edit --}}
+    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-bolder" id="editUserLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" id="editUserForm">
+                    @method('PUT')
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="editName" name="name" autocomplete="name" required autofocus>
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="editEmail" name="email" autocomplete="email" required>
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="mobile">Mobile</label>
+                                <input type="number" class="form-control @error('mobile') is-invalid @enderror" id="editMobile" name="mobile" autocomplete="mobile">
+                                @error('mobile')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control @error('address') is-invalid @enderror" id="editAddress" name="address">
+                            @error('address')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                     </div>
-                    <form method="POST" action="{{ route('admin.users.update', $user->id) }}">
-                        @method('PUT')
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary px-5 py-1">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- Delete --}}
+    <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title font-weight-bolder" id="deleteUserLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <form method="POST" id="deleteUserForm">
+                        @method('DELETE')
                         @csrf
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="name-{{ $key }}">Name</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name-{{ $key }}" name="name" value="{{ $user->name }}" autocomplete="name" required autofocus>
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="email-{{ $key }}">Email</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email-{{ $key }}" name="email" value="{{ $user->email }}" autocomplete="email" required>
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="mobile-{{ $key }}">Mobile</label>
-                                    <input type="number" class="form-control @error('mobile') is-invalid @enderror" id="mobile-{{ $key }}" name="mobile" value="{{ $user->mobile ?: '' }}" autocomplete="mobile">
-                                    @error('mobile')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="address-{{ $key }}">Address</label>
-                                <input type="text" class="form-control @error('address') is-invalid @enderror" id="address-{{ $key }}" name="address" value="{{ $user->address ?: '' }}">
-                                @error('address')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary px-5 py-1">Save</button>
-                        </div>
+                        <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger px-5 py-1">Delete</button>
                     </form>
                 </div>
             </div>
         </div>
-
-        {{-- Delete --}}
-        <div class="modal fade" id="delete-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteUserLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-danger">
-                        <h5 class="modal-title" id="deleteUserLabel"><strong> Are you sure you want to delete {{ $user->name }}? </strong></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-footer">
-                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" id="delete-{{ $user->id }}">
-                            @method('DELETE')
-                            @csrf
-                            <button type="button" class="btn btn-outline-secondary px-5 py-1" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-danger px-5 py-1">Delete</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    @endforeach
+    </div>
 
 @endsection
 
 @section('scripts')
 
     <script>
+
+        var editUserUrl = '{{ route('admin.users.edit', ":id") }}'
+        var updateUserUrl = '{{ route('admin.users.update', ":id") }}'
+        var deleteUserUrl = '{{ route('admin.users.destroy', ":id") }}'
 
         $(document).ready(function() {
             $('.usersTable').DataTable({
@@ -293,7 +293,46 @@
                     {data: 'action'},
                 ]
             })
+
+            $("#editUserModal").on("show.bs.modal", function(e) {
+                var user_id = $(e.relatedTarget).data('id')
+                $.ajax({
+                    type: 'GET',
+                    url: editUserUrl.replace(":id", user_id),
+                    success: function(data){
+                        console.log(data)
+                        populateEditUserModal(data.result)
+                    }
+                })
+            })
+
+            $("#deleteUserModal").on("show.bs.modal", function(e) {
+                var user_id = $(e.relatedTarget).data('id')
+                $.ajax({
+                    type: 'GET',
+                    url: editUserUrl.replace(":id", user_id),
+                    success: function(data){
+                        console.log(data)
+                        populateDeleteUserModal(data.result)
+                    }
+                })
+            })
+
         })
+
+        function populateEditUserModal(data) {
+            $("#editUserLabel").text("Edit " + data.name + "'s Information")
+            $("#editUserForm").attr("action", updateUserUrl.replace(":id", data.id))
+            $("#editName").val(data.name)
+            $("#editEmail").val(data.email)
+            $("#editMobile").val(data.mobile)
+            $("#editAddress").val(data.address)
+        }
+
+        function populateDeleteUserModal(data) {
+            $("#deleteUserLabel").text("Are you sure you want to delete " + data.name + "?")
+            $("#deleteUserForm").attr("action", deleteUserUrl.replace(":id", data.id))
+        }
 
     </script>
 @endsection

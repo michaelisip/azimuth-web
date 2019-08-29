@@ -14,7 +14,10 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quidem minima 
 6. open in browser
 ```
 
-# Credentials
+# Test Data Credentials
+
+Upon seeding, these are the credentials to be used
+
 ```
 ----- Admin ------
 Email: admin@info.com
@@ -25,32 +28,17 @@ Email: user@info.com
 Password: password
 ```
 
-# Generating Data
+# Additional Admin Accounts
 
-By default, ehen migrating the database schemas, seeders for the users, admin, and quiz questions table will automatically generated for us. To add more data for testing purposes, run the following command:
-```
-php artisan db:seed
-```
+Run the command below on command line to generate an admin account.
 
-## Additional Admin Accounts
-
-If for some reason we need to register another admin, we just need to run the below command on our command line and input the desired information.
 ```
 php artisan admin:register
 ```
 
-## Additional Quizzes and Questions
+# Remaining Tasks
 
-To add more quizzes and questions, simply run the following command to generate 5 quizzes with 10 questions for each.
-```
-php artisan db:seed --class=QuizQuestionsSeeder
-```
-
-
-## Additional Users
-
-To add more users, simply run the following command to generate 100 users.
-```
-php artisan db:seed --class=UsersSeeder
-```
-
+1. Datatable ajax on `../quiz/1/score` and `../admin/reports/student/1/scores` pages are not yet finished, initial code is commented for guide and [this](https://github.com/yajra/laravel-datatables) package was used for the datatables.
+2. Issue of practice mode sound effects not working on safari.
+either 3. Further improvements on importing data cause sometimes it throws a `Maximum execution time of 30 seconds exceeded` or `Allowed memory size of 134217728 bytes exhausted (tried to allocate 24 bytes)` error. [This](https://github.com/Maatwebsite/Laravel-Excel) package was used for the import and export features.
+3. 

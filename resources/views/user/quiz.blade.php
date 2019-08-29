@@ -103,12 +103,6 @@
 
     <script>
 
-        function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
-
-        window.onbeforeunload = function(e) {
-            e.preventDefault()
-        }
-
         $(document).ready(function(){
 
             // disable refresh and right click
@@ -218,10 +212,17 @@
         function pageConfiguration() {
 
             // disable right click
-            document.addEventListener('contextmenu', event => event.preventDefault());
+            document.addEventListener('contextmenu', event => event.preventDefault())
 
             // disable refresh
-            $(document).on("keydown", disableF5);
+            $(document).on("keydown", disableF5)
+            function disableF5(e) {
+                if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82)
+                e.preventDefault()
+            }
+            window.onbeforeunload = function(e) {
+                e.preventDefault()
+            }
 
         }
 

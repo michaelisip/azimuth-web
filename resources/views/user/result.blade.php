@@ -49,7 +49,8 @@
                                                     <th>Choice B</th>
                                                     <th>Choice C</th>
                                                     <th>Choice D</th>
-                                                    <th>Answer</th>
+                                                    <th>Your Answer</th>
+                                                    <th>Correct Answer</th>
                                                     <th>Answer Explanation</th>
                                                 </tr>
                                             </thead>
@@ -76,7 +77,8 @@
                                                     <th>Choice B</th>
                                                     <th>Choice C</th>
                                                     <th>Choice D</th>
-                                                    <th>Answer</th>
+                                                    <th>Your Answer</th>
+                                                    <th>Correct Answer</th>
                                                     <th>Answer Explanation</th>
                                                 </tr>
                                             </tfoot>

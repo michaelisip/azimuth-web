@@ -84,12 +84,17 @@ class QuestionsController extends Controller
         }
 
         try {
-            Excel::import(new QuestionsImport($quiz), request()->file('file'));
+            $import = new QuestionsImport($quiz);
+            $import->import(request()->file('file'));
         } catch(\Maatwebsite\Excel\Validators\ValidationException $e){
             return back()->with('import', $e->failures());
         }
 
         ActivityLog::log(Auth::guard('admin')->user(), "imported questions");
+
+        if ($import->failures()) {
+            return back()->with('import-warning', $import->failures());
+        }
 
         return back()->with('success', 'Successfully imported quesitons.');
     }
@@ -120,13 +125,26 @@ class QuestionsController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($quiz, $id)
+    {
+        $question = Question::findOrFail($id);
+
+        return response()->json(['result' => $question]);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AddUpdateQuestion $request, $id)
+    public function update(AddUpdateQuestion $request, $quiz, $id)
     {
         $question = Question::findOrFail($id);
 
