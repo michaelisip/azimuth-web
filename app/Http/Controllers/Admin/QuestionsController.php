@@ -125,13 +125,26 @@ class QuestionsController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($quiz, $id)
+    {
+        $question = Question::findOrFail($id);
+
+        return response()->json(['result' => $question]);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AddUpdateQuestion $request, $id)
+    public function update(AddUpdateQuestion $request, $quiz, $id)
     {
         $question = Question::findOrFail($id);
 

@@ -19,7 +19,7 @@ use App\Http\Middleware\PreventUserFromAdminAccess;
  */
 Auth::routes();
 
-Route::group(['prefix' => '', 'middleware' => ['2fa']], function () {
+Route::group(['prefix' => ''], function () {
 
     // Route::view('', 'welcome');
     Route::redirect('', 'home');
@@ -78,8 +78,10 @@ Route::name('admin.')->group(function(){
             // Admin Functions
             Route::group(['middleware' => ['auth:admin']], function () {
 
+                // Dashboard
                 Route::get('/', 'DashboardController')->name('dashboard');
 
+                // Resource Controllers
                 Route::resources([
                     'users' => 'UsersController',
                     'quizzes' => 'QuizzesController',
@@ -114,6 +116,7 @@ Route::name('admin.')->group(function(){
                     Route::put('/profile/{user}/change-password', 'ApplicationController@changePassword')->name('change-password');
                 });
 
+                // Logs
                 Route::get('activity-logs', 'ActivityLogController')->name('logs');
             });
         });

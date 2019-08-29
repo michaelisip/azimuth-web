@@ -63,7 +63,7 @@ class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, Shou
      */
     public function chunkSize(): int
     {
-        return 200;
+        return 250;
     }
 
     /**
@@ -71,7 +71,7 @@ class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, Shou
      */
     public function batchSize(): int
     {
-        return 500;
+        return 1000;
     }
 
     /**

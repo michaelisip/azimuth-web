@@ -89,10 +89,10 @@ class QuizzesController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
                         $btn =
-                            '<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-' . $row->id . '">
+                            '<button type="button" class="btn btn-sm btn-primary" data-id="' . $row->id . '" data-toggle="modal" data-target="#editQuestionModal">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-' . $row->id . '">
+                            <button type="button" class="btn btn-sm btn-danger" data-id="' . $row->id . '" data-toggle="modal" data-target="#deleteQuestionModal">
                                 <i class="fas fa-trash"></i>
                             </button>';
                         return $btn;
