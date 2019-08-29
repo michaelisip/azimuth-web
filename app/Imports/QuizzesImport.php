@@ -8,9 +8,15 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use App\Quiz;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 
-class QuizzesImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation
+class QuizzesImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation, SkipsOnFailure, WithBatchInserts
 {
+    use Importable, SkipsFailures;
+
     /**
     * @param array $row
     *
@@ -51,16 +57,23 @@ class QuizzesImport implements ToModel, WithHeadingRow, WithChunkReading, Should
      */
     public function chunkSize(): int
     {
-        return 500;
+        return 200;
     }
 
+    /**
+     * Insert questions by batch
+     */
+    public function batchSize(): int
+    {
+        return 500;
+    }
     /**
      * Import validations
      */
     public function rules(): array
     {
         return [
-            'title' => 'required',
+            'title' => 'required|unique:quizzes',
             'points_per_question' => 'required|numeric|min:1',
             'timer' => 'required|numeric|min:1'
         ];

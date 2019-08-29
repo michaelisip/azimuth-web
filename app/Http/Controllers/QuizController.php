@@ -32,7 +32,7 @@ class QuizController extends Controller
     {
         $this->initializeStudentScore($quiz);
 
-        return view('user.quiz', ['quiz' => Quiz::findOrFail($quiz)]);
+        return view('user.quiz', ['quiz' => Quiz::with('questions')->findOrFail($quiz)]);
     }
 
     /**

@@ -10,6 +10,7 @@ use App\Http\Requests\AddNewUser;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Http\Requests\UpdateUser;
+use App\Question;
 use DataTables;
 
 class UsersController extends Controller
@@ -28,10 +29,10 @@ class UsersController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
                         $btn =
-                            '<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#edit-' . $row->id . '">
+                            '<button type="button" class="btn btn-sm btn-primary" data-id=' . $row->id . ' data-toggle="modal" data-target="#editUserModal">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-' . $row->id . '">
+                            <button type="button" class="btn btn-sm btn-danger" data-id=' . $row->id . ' data-toggle="modal" data-target="#deleteUserModal">
                                 <i class="fas fa-trash"></i>
                             </button>';
 
@@ -65,9 +66,14 @@ class UsersController extends Controller
     public function import()
     {
         try {
-            Excel::import(new UsersImport, request()->file('file'));
+            $import = new UsersImport();
+            $import->import(request()->file('file'));
         } catch(\Maatwebsite\Excel\Validators\ValidationException $e){
-            return back()->with('import', $e->failures());
+            return back()->with('import-danger', $e->failures());
+        }
+
+        if ($import->failures()) {
+            return back()->with('import-warning', $import->failures());
         }
 
         return back()->with('success', 'Successfully imported students.');
@@ -91,7 +97,6 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -102,7 +107,9 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return response()->json(['result' => $user]);
     }
 
     /**

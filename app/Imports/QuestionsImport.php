@@ -10,9 +10,15 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Validation\Rule;
 use App\Quiz;
 use App\Question;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 
-class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation
+class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation, SkipsOnFailure, WithBatchInserts
 {
+    use Importable, SkipsFailures;
+
     private $quiz_id;
 
     public function __construct($quiz)
@@ -57,7 +63,15 @@ class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, Shou
      */
     public function chunkSize(): int
     {
-        return 500;
+        return 250;
+    }
+
+    /**
+     * Insert questions by batch
+     */
+    public function batchSize(): int
+    {
+        return 1000;
     }
 
     /**
@@ -66,7 +80,7 @@ class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, Shou
     public function rules(): array
     {
         return [
-            'question' => 'required',
+            'question' => 'required|unique:questions',
             'a' => 'required',
             'b' => 'required',
             'c' => 'required',
