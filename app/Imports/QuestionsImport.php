@@ -13,8 +13,9 @@ use App\Question;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 
-class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation, SkipsOnFailure
+class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation, SkipsOnFailure, WithBatchInserts
 {
     use Importable, SkipsFailures;
 
@@ -62,6 +63,14 @@ class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, Shou
      */
     public function chunkSize(): int
     {
+        return 200;
+    }
+
+    /**
+     * Insert questions by batch
+     */
+    public function batchSize(): int
+    {
         return 500;
     }
 
@@ -71,7 +80,7 @@ class QuestionsImport implements ToModel, WithHeadingRow, WithChunkReading, Shou
     public function rules(): array
     {
         return [
-            'question' => 'required',
+            'question' => 'required|unique:questions',
             'a' => 'required',
             'b' => 'required',
             'c' => 'required',

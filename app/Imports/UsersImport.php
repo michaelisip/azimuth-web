@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 
-class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation, SkipsOnFailure
+class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithValidation, SkipsOnFailure, WithBatchInserts
 {
     use Importable, SkipsFailures;
 
@@ -59,9 +60,16 @@ class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQu
      */
     public function chunkSize(): int
     {
-        return 500;
+        return 200;
     }
 
+    /**
+     * Insert questions by batch
+     */
+    public function batchSize(): int
+    {
+        return 500;
+    }
     /**
      * Import validations
      */
