@@ -57,7 +57,7 @@ class QuizzesImport implements ToModel, WithHeadingRow, WithChunkReading, Should
      */
     public function chunkSize(): int
     {
-        return 200;
+        return 250;
     }
 
     /**
@@ -65,7 +65,7 @@ class QuizzesImport implements ToModel, WithHeadingRow, WithChunkReading, Should
      */
     public function batchSize(): int
     {
-        return 500;
+        return 1000;
     }
     /**
      * Import validations

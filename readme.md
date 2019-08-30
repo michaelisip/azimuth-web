@@ -40,5 +40,5 @@ php artisan admin:register
 
 1. Datatable ajax on `../quiz/1/score` and `../admin/reports/student/1/scores` pages are not yet finished, initial code is commented for guide and [this](https://github.com/yajra/laravel-datatables) package was used for the datatables.
 2. Issue of practice mode sound effects not working on safari.
-either 3. Further improvements on importing data cause sometimes it throws a `Maximum execution time of 30 seconds exceeded` or `Allowed memory size of 134217728 bytes exhausted (tried to allocate 24 bytes)` error. [This](https://github.com/Maatwebsite/Laravel-Excel) package was used for the import and export features.
-3. 
+3. Further improvements on importing data cause sometimes it throws a `Maximum execution time of 30 seconds exceeded` or `Allowed memory size of 134217728 bytes exhausted (tried to allocate 24 bytes)` error. [This](https://github.com/Maatwebsite/Laravel-Excel) package was used for the import and export features.
+4. Responsiveness, especially pages with tables

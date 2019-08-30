@@ -60,7 +60,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQu
      */
     public function chunkSize(): int
     {
-        return 200;
+        return 250;
     }
 
     /**
@@ -68,7 +68,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQu
      */
     public function batchSize(): int
     {
-        return 500;
+        return 1000;
     }
     /**
      * Import validations
